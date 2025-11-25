@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PuzzlerWJ | Unlock the Fun</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 字體設定 */
+        h1, h2, h3, .fun-font { font-family: 'Abril Fatface', cursive; }
+        body { font-family: 'Poppins', sans-serif; }
+        
+        .paypal-container { min-height: 45px; margin-top: 1rem; }
+
+        /* 裝飾性背景圖案 */
+        .pattern-dots {
+            background-image: radial-gradient(#4F46E5 2px, transparent 2px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-[#FDFBF7] text-gray-800">
+
+    <!-- 1. Hero Section: 活潑的琥珀黃 -->
+    <header class="relative w-full bg-amber-400 overflow-hidden">
+        <!-- 背景裝飾 -->
+        <div class="absolute -top-20 -right-20 w-64 h-64 bg-amber-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
+        <div class="absolute bottom-10 left-10 w-32 h-32 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
+
+        <nav class="relative z-10 w-full py-6 px-6 md:px-12 flex justify-between items-center">
+            <div class="text-3xl text-indigo-900 fun-font tracking-wider">PuzzlerWJ</div>
+            <a href="mailto:puzzlerwj@gmail.com" class="text-indigo-900 font-bold border-b-2 border-indigo-900 hover:text-white hover:border-white transition">
+                Say Hi!
+            </a>
+        </nav>
+
+        <div class="relative z-10 max-w-6xl mx-auto px-6 py-20 md:py-32 flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-1/2 text-center md:text-left">
+                <div class="inline-block bg-indigo-900 text-amber-400 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-4 shadow-md">
+                    Handcrafted in Taiwan
+                </div>
+                <h1 class="text-5xl md:text-7xl text-indigo-950 leading-tight mb-6 drop-shadow-sm">
+                    Unlock the <br> <span class="text-white">Hidden Joy.</span>
+                </h1>
+                <p class="text-indigo-900 text-lg md:text-xl font-medium mb-8 max-w-md mx-auto md:mx-0">
+                    "Puzzle is like a life, brimming with beauty." <br>
+                </p>
+                <a href="#products" class="inline-block bg-indigo-900 text-white px-8 py-4 rounded-lg font-bold hover:bg-indigo-800 hover:shadow-lg hover:-translate-y-1 transition duration-300">
+                    Start Exploring ↓
+                </a>
+            </div>
+            
+            <!-- Hero Image -->
+            <div class="md:w-1/2 relative">
+                <div class="absolute inset-0 bg-indigo-900 rounded-2xl transform rotate-3 translate-x-2 translate-y-2"></div>
+                <!-- 請記得換上你的主圖 -->
+                <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                     alt="Puzzle Box Hero" 
+                     class="relative rounded-2xl shadow-xl w-full object-cover transform -rotate-2 hover:rotate-0 transition duration-500 border-4 border-white">
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. Story Section: 沉浸式深藍區塊 (已更新內容) -->
+    <section class="bg-indigo-950 text-white py-24 px-6 pattern-dots">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
+            
+            <!-- 左側：感性文案 -->
+            <div class="md:w-1/2">
+                <h2 class="text-4xl fun-font mb-6 text-amber-400">The Quiet Moment</h2>
+                <p class="text-indigo-100 text-lg leading-relaxed mb-6">
+                    When you solve a puzzle box, it's just you and the box, sharing a quiet moment. As you uncover each clue, you feel a little victory that makes you forget everything else.
+                </p>
+                <p class="text-indigo-100 text-lg leading-relaxed border-l-4 border-amber-400 pl-4">
+                    I aim to design puzzle boxes that aren't too hard but still bring the fun of discovery—simple, affordable, and made for everyone to enjoy.
+                </p>
+            </div>
+
+            <!-- 右側：特色列表 (已更新為 Narrative Design) -->
+            <div class="md:w-1/2 w-full">
+                <div class="bg-indigo-900 p-10 rounded-2xl border border-indigo-800 shadow-2xl relative">
+                    <!-- 裝飾小圓點 -->
+                    <div class="absolute top-4 right-4 w-3 h-3 bg-red-400 rounded-full animate-pulse"></div>
+                    
+                    <p class="text-2xl font-semibold mb-6 text-white fun-font">Why PuzzlerWJ?</p>
+                    <ul class="space-y-4 text-indigo-200 text-lg">
+                        <li class="flex items-center">
+                            <span class="w-3 h-3 bg-amber-400 rounded-full mr-4 flex-shrink-0"></span>
+                            Original Mechanisms
+                        </li>
+                        <!-- 這裡已更新為 Narrative Design -->
+                        <li class="flex items-center">
+                            <span class="w-3 h-3 bg-amber-400 rounded-full mr-4 flex-shrink-0"></span>
+                            Narrative Design
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-3 h-3 bg-amber-400 rounded-full mr-4 flex-shrink-0"></span>
+                            Affordable Fun
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 3. Products Section: 商品區 -->
+    <section id="products" class="max-w-5xl mx-auto px-6 py-24">
+        <div class="text-center mb-16">
+            <h2 class="text-5xl text-indigo-950 fun-font mb-4">Shop Collection</h2>
+            <p class="text-gray-500">Pick your challenge level.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            
+            <!-- Product 1: Ladybug -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-amber-300 transition duration-300 group">
+                <div class="relative h-72 overflow-hidden bg-gray-200">
+                    <div class="absolute top-4 left-4 bg-amber-400 text-indigo-900 text-xs font-bold px-3 py-1 rounded shadow-sm z-10">
+                        Entry Level
+                    </div>
+                    <!-- 圖片 -->
+                    <img src="https://images.unsplash.com/photo-1615360591604-676d6d0d4308?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Ladybug" 
+                         class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                </div>
+                <div class="p-8">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-2xl font-bold text-gray-800">Ladybug</h3>
+                        <span class="text-2xl font-bold text-amber-500">$39.99</span>
+                    </div>
+                    <p class="text-gray-500 mb-6 h-12">
+                        A cute, deceptive box. Seems simple, but hides a clever secret. Great for beginners.
+                    </p>
+                    <!-- PayPal -->
+                    <div id="paypal-button-container-ladybug" class="paypal-container"></div>
+                </div>
+            </div>
+
+            <!-- Product 2: Skyscraper -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-indigo-300 transition duration-300 group">
+                <div class="relative h-72 overflow-hidden bg-gray-200">
+                    <div class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">
+                        Advanced
+                    </div>
+                    <!-- 圖片 -->
+                    <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Skyscraper" 
+                         class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                </div>
+                <div class="p-8">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-2xl font-bold text-gray-800">Skyscraper</h3>
+                        <span class="text-2xl font-bold text-amber-500">$89.99</span>
+                    </div>
+                    <p class="text-gray-500 mb-6 h-12">
+                        Standing tall with multiple layers of logic. Can you reach the top floor?
+                    </p>
+                    <!-- PayPal -->
+                    <div id="paypal-button-container-skyscraper" class="paypal-container"></div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-amber-400 text-indigo-900 py-10 text-center">
+        <div class="fun-font text-3xl mb-4">PuzzlerWJ</div>
+        <p class="font-semibold">Bring Luck & Logic Home.</p>
+        <div class="mt-6 flex justify-center space-x-4">
+            <a href="mailto:puzzlerwj@gmail.com" class="bg-white/50 hover:bg-white px-4 py-2 rounded-full text-sm font-bold transition">
+                Email Me
+            </a>
+        </div>
+        <p class="text-xs mt-8 opacity-70">&copy; 2024 PuzzlerWJ. All Rights Reserved.</p>
+    </footer>
+
+    <!-- PayPal SDK: 請替換 Client ID -->
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=USD"></script>
+
+    <script>
+        const products = [
+            {
+                id: 'ladybug',
+                name: 'Puzzler Box - Ladybug',
+                price: '39.99', 
+                containerId: '#paypal-button-container-ladybug'
+            },
+            {
+                id: 'skyscraper',
+                name: 'Puzzler Box - Skyscraper',
+                price: '89.99',
+                containerId: '#paypal-button-container-skyscraper'
+            }
+        ];
+
+        products.forEach(product => {
+            paypal.Buttons({
+                style: {
+                    shape: 'pill',
+                    color: 'blue', 
+                    layout: 'vertical',
+                    label: 'pay'
+                },
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            description: product.name,
+                            amount: { value: product.price }
+                        }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        alert('Wohoo! Payment successful. Thank you ' + details.payer.name.given_name + '!');
+                    });
+                },
+                onError: function (err) {
+                    console.error(err);
+                    alert('Oops, something went wrong. Please try again.');
+                }
+            }).render(product.containerId);
+        });
+    </script>
+</body>
+</html>
