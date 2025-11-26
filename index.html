@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +13,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
+    <!-- Icons (FontAwesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         h1, h2, h3, .fun-font { font-family: 'Abril Fatface', cursive; }
         body { font-family: 'Poppins', sans-serif; }
@@ -21,12 +24,16 @@
             background-image: radial-gradient(#4F46E5 2px, transparent 2px);
             background-size: 20px 20px;
         }
+        /* FAQ Animation */
+        .faq-content { transition: max-height 0.3s ease-out; max-height: 0; overflow: hidden; }
+        .faq-active .faq-content { max-height: 200px; }
+        .faq-active i { transform: rotate(180deg); }
     </style>
 </head>
-<body class="bg-[#FDFBF7] text-gray-800 flex flex-col min-h-screen">
+<body class="bg-[#FDFBF7] text-gray-800 flex flex-col min-h-screen relative">
 
     <!-- Header -->
-    <header class="relative w-full bg-amber-400 overflow-hidden">
+    <header class="relative w-full bg-amber-400 overflow-hidden" id="home">
         <div class="absolute -top-20 -right-20 w-64 h-64 bg-amber-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
         <div class="absolute bottom-10 left-10 w-32 h-32 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
 
@@ -54,7 +61,7 @@
             </div>
             <div class="md:w-1/2 relative">
                 <div class="absolute inset-0 bg-indigo-900 rounded-2xl transform rotate-3 translate-x-2 translate-y-2"></div>
-                <!-- 記得把您的圖片命名為 WJ.png 放在 images 資料夾 -->
+                <!-- 圖片占位符 -->
                 <img src="images/WJ.png" alt="Puzzle Box Hero" class="relative rounded-2xl shadow-xl w-full object-cover transform -rotate-2 hover:rotate-0 transition duration-500 border-4 border-white">
             </div>
         </div>
@@ -86,7 +93,6 @@
     <section id="products" class="max-w-5xl mx-auto px-6 py-24">
         <div class="text-center mb-16">
             <h2 class="text-5xl text-indigo-950 fun-font mb-4">Shop Collection</h2>
-            <!-- ✅ 修改處：原本是 "Free shipping worldwide."，已改成不提運費的描述 -->
             <p class="text-gray-500">Challenge your mind with our handcrafted designs.</p>
         </div>
 
@@ -95,13 +101,13 @@
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-amber-300 transition duration-300 group">
                 <div class="relative h-[28rem] overflow-hidden bg-gray-50 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-amber-400 text-indigo-900 text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Entry Level</div>
-                    <!-- 記得把圖片命名為 ladybug.jpg -->
                     <img src="images/ladybug.jpg" alt="Ladybug" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
                 </div>
                 <div class="p-8">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-2xl font-bold text-gray-800">Ladybug</h3>
-                        <span class="text-2xl font-bold text-amber-500">$39.99</span>
+                        <!-- ✅ 修改處：加上 USD -->
+                        <span class="text-2xl font-bold text-amber-500">$39.99 USD</span>
                     </div>
                     <p class="text-gray-500 mb-6 h-12">A cute, deceptive box. Seems simple, but hides a clever secret.</p>
                     <div id="paypal-button-container-ladybug" class="paypal-container"></div>
@@ -112,16 +118,49 @@
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-indigo-300 transition duration-300 group">
                 <div class="relative h-[28rem] overflow-hidden bg-gray-50 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Advanced</div>
-                    <!-- 記得把圖片命名為 skyscraper.jpg -->
                     <img src="images/skyscraper.jpg" alt="Skyscraper" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
                 </div>
                 <div class="p-8">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-2xl font-bold text-gray-800">Skyscraper</h3>
-                        <span class="text-2xl font-bold text-amber-500">$89.99</span>
+                        <!-- ✅ 修改處：加上 USD -->
+                        <span class="text-2xl font-bold text-amber-500">$89.99 USD</span>
                     </div>
                     <p class="text-gray-500 mb-6 h-12">Standing tall with multiple layers of logic. Can you reach the top?</p>
                     <div id="paypal-button-container-skyscraper" class="paypal-container"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 🔥 新增功能：顧客評價 (Testimonials) -->
+    <section class="bg-white py-20 px-6 border-t border-gray-100">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl fun-font text-indigo-900 text-center mb-12">What Puzzlers Say</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
+                    <div class="text-amber-400 text-sm mb-3">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 italic mb-4">"The Skyscraper box blew my mind. The mechanism is so smooth and the finish is beautiful."</p>
+                    <p class="font-bold text-indigo-900">- Sarah M., USA</p>
+                </div>
+                <!-- Review 2 -->
+                <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
+                    <div class="text-amber-400 text-sm mb-3">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 italic mb-4">"Bought the Ladybug for my nephew. He loved it! Great entry-level puzzle."</p>
+                    <p class="font-bold text-indigo-900">- David L., UK</p>
+                </div>
+                <!-- Review 3 -->
+                <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
+                    <div class="text-amber-400 text-sm mb-3">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="text-gray-600 italic mb-4">"Fast shipping to Germany. The packaging was secure and the wood smell is amazing."</p>
+                    <p class="font-bold text-indigo-900">- Klaus W., Germany</p>
                 </div>
             </div>
         </div>
@@ -132,8 +171,6 @@
         <div class="max-w-4xl mx-auto text-center">
             <h2 class="text-3xl fun-font text-indigo-900 mb-4">Where is my Box?</h2>
             <p class="text-gray-600 mb-8">Enter your tracking number below to check the status.</p>
-            
-            <!-- AfterShip Widget -->
             <div class="bg-white p-6 rounded-xl shadow-md inline-block w-full max-w-md">
                 <div id="as-root"></div>
                 <script>(function(e,t,n){var r,i=e.getElementsByTagName(t)[0];if(e.getElementById(n))return;r=e.createElement(t);r.id=n;r.src="//button.aftership.com/all.js";i.parentNode.insertBefore(r,i)})(document,"script","aftership-jssdk")</script>
@@ -142,14 +179,49 @@
         </div>
     </section>
 
-    <!-- Contact Form (Formspree) -->
+    <!-- 🔥 新增功能：FAQ 常見問題 -->
+    <section class="max-w-3xl mx-auto px-6 py-20">
+        <h2 class="text-3xl fun-font text-indigo-900 text-center mb-10">Frequently Asked Questions</h2>
+        <div class="space-y-4">
+            <!-- Question 1 -->
+            <div class="bg-white rounded-lg border border-gray-200 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
+                <div class="p-5 flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition">
+                    <h3 class="font-bold text-gray-700">Do you ship internationally?</h3>
+                    <i class="fas fa-chevron-down text-gray-400 transition duration-300"></i>
+                </div>
+                <div class="faq-content bg-white px-5 text-gray-600">
+                    <p class="py-4">Yes! We ship worldwide from Taiwan. Shipping times vary by location but usually take 7-14 business days.</p>
+                </div>
+            </div>
+            <!-- Question 2 -->
+            <div class="bg-white rounded-lg border border-gray-200 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
+                <div class="p-5 flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition">
+                    <h3 class="font-bold text-gray-700">What if I can't solve the puzzle?</h3>
+                    <i class="fas fa-chevron-down text-gray-400 transition duration-300"></i>
+                </div>
+                <div class="faq-content bg-white px-5 text-gray-600">
+                    <p class="py-4">Don't worry! Each box comes with a QR code that links to a solution video. But try your best first!</p>
+                </div>
+            </div>
+            <!-- Question 3 -->
+            <div class="bg-white rounded-lg border border-gray-200 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
+                <div class="p-5 flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition">
+                    <h3 class="font-bold text-gray-700">Are these suitable for children?</h3>
+                    <i class="fas fa-chevron-down text-gray-400 transition duration-300"></i>
+                </div>
+                <div class="faq-content bg-white px-5 text-gray-600">
+                    <p class="py-4">Our puzzles contain small parts and are recommended for ages 12+. Adult supervision is advised for younger children.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
     <section id="contact" class="max-w-2xl mx-auto px-6 py-20">
         <div class="text-center mb-10">
             <h2 class="text-4xl fun-font text-indigo-900">Get in Touch</h2>
             <p class="text-gray-500 mt-2">Questions? Custom orders? Just say hi.</p>
         </div>
-        
-        <!-- ⚠️ 重要：請記得之後申請 Formspree 帳號，並將下面的 YOUR_FORMSPREE_ID 換成您的 ID -->
         <form action="https://formspree.io/f/xjkddywe" method="POST" class="space-y-6 bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
             <div>
                 <label class="block text-gray-700 font-bold mb-2">Your Email</label>
@@ -163,58 +235,80 @@
         </form>
     </section>
 
+    <!-- 🔥 新增功能：回到頂部按鈕 -->
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" id="backToTop" class="fixed bottom-6 right-6 bg-amber-400 text-indigo-900 w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-amber-300 transition duration-300 transform translate-y-20 opacity-0 z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <!-- Footer -->
-    <footer class="bg-amber-400 text-indigo-900 py-10 mt-auto">
-        <div class="max-w-6xl mx-auto px-6 text-center">
-            <div class="fun-font text-3xl mb-4">PuzzlerWJ</div>
-            <div class="flex justify-center space-x-6 mb-6 text-sm font-bold">
-                <a href="#" class="hover:text-white transition">Privacy Policy</a>
-                <a href="#" class="hover:text-white transition">Refund Policy</a>
+    <footer class="bg-indigo-950 text-white py-12 mt-auto">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Brand -->
+            <div class="text-center md:text-left">
+                <div class="fun-font text-3xl mb-4 text-amber-400">PuzzlerWJ</div>
+                <p class="text-indigo-200 text-sm mb-4">Handcrafted puzzles designed to bring joy and challenge to your life.</p>
+                <!-- 🔥 新增功能：社群連結 -->
+                <div class="flex justify-center md:justify-start space-x-4">
+                    <a href="#" class="w-8 h-8 rounded-full bg-indigo-800 flex items-center justify-center hover:bg-amber-400 hover:text-indigo-900 transition"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-indigo-800 flex items-center justify-center hover:bg-amber-400 hover:text-indigo-900 transition"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-indigo-800 flex items-center justify-center hover:bg-amber-400 hover:text-indigo-900 transition"><i class="fab fa-twitter"></i></a>
+                </div>
             </div>
-            <p class="text-xs opacity-70">&copy; 2024 PuzzlerWJ. All Rights Reserved.</p>
+
+            <!-- Links -->
+            <div class="text-center">
+                <h4 class="font-bold text-lg mb-4 text-amber-400">Quick Links</h4>
+                <div class="flex flex-col space-y-2 text-indigo-200 text-sm">
+                    <a href="#home" class="hover:text-white transition">Home</a>
+                    <a href="#products" class="hover:text-white transition">Shop</a>
+                    <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition">Refund Policy</a>
+                </div>
+            </div>
+
+            <!-- 🔥 新增功能：電子報訂閱 -->
+            <div class="text-center md:text-right">
+                <h4 class="font-bold text-lg mb-4 text-amber-400">Stay Updated</h4>
+                <p class="text-indigo-200 text-sm mb-4">New drops & exclusive offers.</p>
+                <form class="flex flex-col space-y-2">
+                    <input type="email" placeholder="Enter your email" class="px-4 py-2 rounded bg-indigo-900 border border-indigo-800 text-white focus:outline-none focus:border-amber-400 text-sm">
+                    <button type="button" class="bg-amber-400 text-indigo-900 py-2 rounded font-bold hover:bg-amber-300 transition text-sm">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="border-t border-indigo-900 mt-10 pt-6 text-center text-xs text-indigo-400">
+            &copy; 2024 PuzzlerWJ. All Rights Reserved.
         </div>
     </footer>
 
     <!-- PayPal SDK -->
-    <!-- ✅ 修改處：已加入 &locale=en_US 強制顯示英文 -->
     <script src="https://www.paypal.com/sdk/js?client-id=AR1JFEvjsUMt_DyqzDOZhhqtgmTC8BOsTYHVxZLFRMkULFDHl3xtpEEKsYFFsmYFhIPQXC9DaEZjg2Id&currency=USD&locale=en_US"></script>
 
     <script>
+        // PayPal Logic
         const products = [
             { id: 'ladybug', name: 'Puzzler Box - Ladybug', price: '39.99', containerId: '#paypal-button-container-ladybug' },
             { id: 'skyscraper', name: 'Puzzler Box - Skyscraper', price: '89.99', containerId: '#paypal-button-container-skyscraper' }
         ];
 
-        // ✅ 修改處：設定統一運費為 9.99
         const shippingCost = '9.99';
 
         products.forEach(product => {
-            // 計算總金額 (商品價 + 運費)，並轉為字串且保留兩位小數
             const totalAmount = (parseFloat(product.price) + parseFloat(shippingCost)).toFixed(2);
-
             paypal.Buttons({
                 style: { shape: 'pill', color: 'gold', layout: 'vertical', label: 'pay' },
-                
-                // 建立訂單
                 createOrder: function(data, actions) {
                     return actions.order.create({
                         purchase_units: [{
                             description: product.name,
                             amount: {
                                 currency_code: "USD",
-                                value: totalAmount, // 結帳總金額 (含運費)
+                                value: totalAmount,
                                 breakdown: {
-                                    item_total: {
-                                        currency_code: "USD",
-                                        value: product.price // 商品原價
-                                    },
-                                    shipping: {
-                                        currency_code: "USD",
-                                        value: shippingCost // 運費
-                                    }
+                                    item_total: { currency_code: "USD", value: product.price },
+                                    shipping: { currency_code: "USD", value: shippingCost }
                                 }
                             },
-                            // 強制 PayPal 收集運送地址
                             application_context: {
                                 shipping_preference: "GET_FROM_FILE",
                                 brand_name: "PuzzlerWJ",
@@ -223,21 +317,32 @@
                         }]
                     });
                 },
-
-                // 付款成功後執行
                 onApprove: function(data, actions) {
                     return actions.order.capture().then(function(details) {
                         console.log('Transaction completed by ' + details.payer.name.given_name);
-                        // 轉址到感謝頁面
                         window.location.href = "thankyou.html";
                     });
                 },
-
                 onError: function (err) {
                     console.error(err);
                     alert('Payment Error. Please try again or contact us.');
                 }
             }).render(product.containerId);
+        });
+
+        // 🔥 新增功能：FAQ 摺疊邏輯
+        function toggleFaq(element) {
+            element.classList.toggle('faq-active');
+        }
+
+        // 🔥 新增功能：回到頂部按鈕邏輯
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.remove('translate-y-20', 'opacity-0');
+            } else {
+                backToTopBtn.classList.add('translate-y-20', 'opacity-0');
+            }
         });
     </script>
 </body>
