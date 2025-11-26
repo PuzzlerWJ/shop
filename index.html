@@ -89,14 +89,12 @@
     </section>
 
     <!-- Products Section -->
-    <!-- ✅ 修改處：max-w-5xl 改為 max-w-7xl 以容納三個商品 -->
     <section id="products" class="max-w-7xl mx-auto px-6 py-24">
         <div class="text-center mb-16">
             <h2 class="text-5xl text-indigo-950 fun-font mb-4">Shop Collection</h2>
             <p class="text-gray-500">Challenge your mind with our handcrafted designs.</p>
         </div>
 
-        <!-- ✅ 修改處：grid-cols-2 改為 grid-cols-3 -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             
             <!-- Product 1: Ladybug -->
@@ -131,16 +129,13 @@
                 </div>
             </div>
 
-            <!-- Product 3: Coming Soon (New Design) -->
-            <!-- ✅ 修改處：新增第三個商品卡片 -->
+            <!-- Product 3: Coming Soon -->
             <div class="bg-gray-50 rounded-2xl shadow-lg overflow-hidden border border-gray-200 opacity-90 relative">
                 <div class="relative h-[24rem] overflow-hidden bg-gray-200 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Coming Soon</div>
-                    <!-- 若無圖片，使用圖示代替 -->
                     <div class="text-gray-400 text-6xl">
                         <i class="fas fa-question-circle"></i>
                     </div>
-                    <!-- 圖片連結預留： <img src="images/coming_soon.jpg" ...> -->
                 </div>
                 <div class="p-8">
                     <div class="flex justify-between items-center mb-4">
@@ -148,26 +143,12 @@
                         <span class="text-lg font-bold text-gray-500">Coming Dec.</span>
                     </div>
                     <p class="text-gray-500 mb-6 h-12 text-sm">A new challenge is being crafted. Prepare your mind for something unique.</p>
-                    <!-- 靜態按鈕 -->
                     <div class="w-full bg-gray-300 text-gray-500 font-bold py-3 rounded-full text-center cursor-not-allowed">
                         Stay Tuned
                     </div>
                 </div>
             </div>
 
-        </div>
-    </section>
-
-    <!-- AfterShip Tracking Section -->
-    <section class="bg-indigo-50 py-16 px-6">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl fun-font text-indigo-900 mb-4">Where is my Box?</h2>
-            <p class="text-gray-600 mb-8">Enter your tracking number below to check the status.</p>
-            <div class="bg-white p-6 rounded-xl shadow-md inline-block w-full max-w-md">
-                <div id="as-root"></div>
-                <script>(function(e,t,n){var r,i=e.getElementsByTagName(t)[0];if(e.getElementById(n))return;r=e.createElement(t);r.id=n;r.src="//button.aftership.com/all.js";i.parentNode.insertBefore(r,i)})(document,"script","aftership-jssdk")</script>
-                <div class="as-track-button" data-size="large" data-domain="track.aftership.com"></div>
-            </div>
         </div>
     </section>
 
@@ -192,7 +173,6 @@
                     <i class="fas fa-chevron-down text-gray-400 transition duration-300"></i>
                 </div>
                 <div class="faq-content bg-white px-5 text-gray-600">
-                    <!-- ✅ 修改處：新增解答紙說明與 Quick Links 超連結 -->
                     <p class="py-4">
                         Don't worry! A solution sheet is included in the package, or you can check the 
                         <a href="https://puzzlerwj.github.io/puzzlerwj-solutions/Solutions" target="_blank" class="text-indigo-600 font-bold underline hover:text-indigo-800">Solutions</a> 
@@ -213,23 +193,45 @@
         </div>
     </section>
 
-    <!-- Contact Form -->
-    <section id="contact" class="max-w-2xl mx-auto px-6 py-20">
-        <div class="text-center mb-10">
-            <h2 class="text-4xl fun-font text-indigo-900">Get in Touch</h2>
-            <p class="text-gray-500 mt-2">Questions? Custom orders? Just say hi.</p>
+    <!-- Merged Section: Support & Tracking (Left) + Get in Touch (Right) -->
+    <section id="contact" class="bg-indigo-50 py-20 px-6">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+            
+            <!-- Left Column: Tracking -->
+            <div>
+                <div class="text-center md:text-left mb-8">
+                    <h2 class="text-3xl fun-font text-indigo-900 mb-4">Where is my Box?</h2>
+                    <p class="text-gray-600">Enter your tracking number below to check the status.</p>
+                </div>
+                <!-- AfterShip Widget -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg border border-indigo-100 w-full">
+                    <div id="as-root"></div>
+                    <script>(function(e,t,n){var r,i=e.getElementsByTagName(t)[0];if(e.getElementById(n))return;r=e.createElement(t);r.id=n;r.src="//button.aftership.com/all.js";i.parentNode.insertBefore(r,i)})(document,"script","aftership-jssdk")</script>
+                    <div class="as-track-button" data-size="large" data-domain="track.aftership.com"></div>
+                </div>
+            </div>
+
+            <!-- Right Column: Contact Form -->
+            <div>
+                <div class="text-center md:text-left mb-8">
+                    <h2 class="text-3xl fun-font text-indigo-900 mb-4">Get in Touch</h2>
+                    <p class="text-gray-600">Questions? Custom orders? Just say hi.</p>
+                </div>
+                <!-- Contact Form -->
+                <form action="https://formspree.io/f/xjkddywe" method="POST" class="space-y-6 bg-white p-8 rounded-2xl shadow-lg border border-indigo-100">
+                    <div>
+                        <label class="block text-gray-700 font-bold mb-2 text-sm">Your Email</label>
+                        <input type="email" name="email" required class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-amber-400 focus:outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-bold mb-2 text-sm">Message</label>
+                        <textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-amber-400 focus:outline-none transition"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-indigo-900 text-white font-bold py-3 rounded-lg hover:bg-indigo-800 transition shadow-md">Send Message</button>
+                </form>
+            </div>
+
         </div>
-        <form action="https://formspree.io/f/xjkddywe" method="POST" class="space-y-6 bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
-            <div>
-                <label class="block text-gray-700 font-bold mb-2">Your Email</label>
-                <input type="email" name="email" required class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-amber-400 focus:outline-none transition">
-            </div>
-            <div>
-                <label class="block text-gray-700 font-bold mb-2">Message</label>
-                <textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-amber-400 focus:outline-none transition"></textarea>
-            </div>
-            <button type="submit" class="w-full bg-indigo-900 text-white font-bold py-3 rounded-lg hover:bg-indigo-800 transition">Send Message</button>
-        </form>
     </section>
 
     <!-- Back to Top Button -->
@@ -239,8 +241,10 @@
 
     <!-- Footer -->
     <footer class="bg-indigo-950 text-white py-12 mt-auto">
-        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Brand -->
+        <!-- ✅ 修改處：改為 grid-cols-2 -->
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- Left: Brand Info -->
             <div class="text-center md:text-left">
                 <div class="fun-font text-3xl mb-4 text-amber-400">PuzzlerWJ</div>
                 <p class="text-indigo-200 text-sm mb-4">Handcrafted puzzles designed to bring joy and challenge to your life.</p>
@@ -251,29 +255,21 @@
                 </div>
             </div>
 
-            <!-- Links -->
-            <div class="text-center">
+            <!-- Right: Links (Aligned Right on Desktop) -->
+            <!-- ✅ 修改處：文字靠右對齊 (md:text-right) -->
+            <div class="text-center md:text-right">
                 <h4 class="font-bold text-lg mb-4 text-amber-400">Quick Links</h4>
-                <div class="flex flex-col space-y-3 text-indigo-200 text-sm items-center">
+                <!-- ✅ 修改處：Flex item 靠右對齊 (md:items-end) -->
+                <div class="flex flex-col space-y-3 text-indigo-200 text-sm items-center md:items-end">
                     <a href="#home" class="hover:text-white transition">Home</a>
                     <a href="#products" class="hover:text-white transition">Shop</a>
-                    <!-- ✅ 修改處：Solutions 連結 - 金色、粗體、加大、閃爍效果 -->
                     <a href="https://puzzlerwj.github.io/puzzlerwj-solutions/Solutions" target="_blank" class="text-amber-400 font-extrabold text-lg hover:text-white transition animate-pulse tracking-wide border-b-2 border-amber-400 pb-1">
                         <i class="fas fa-key mr-1"></i> Solutions
                     </a>
                 </div>
             </div>
-
-            <!-- Newsletter -->
-            <div class="text-center md:text-right">
-                <h4 class="font-bold text-lg mb-4 text-amber-400">Stay Updated</h4>
-                <p class="text-indigo-200 text-sm mb-4">New drops & exclusive offers.</p>
-                <form class="flex flex-col space-y-2">
-                    <input type="email" placeholder="Enter your email" class="px-4 py-2 rounded bg-indigo-900 border border-indigo-800 text-white focus:outline-none focus:border-amber-400 text-sm">
-                    <button type="button" class="bg-amber-400 text-indigo-900 py-2 rounded font-bold hover:bg-amber-300 transition text-sm">Subscribe</button>
-                </form>
-            </div>
         </div>
+        
         <div class="border-t border-indigo-900 mt-10 pt-6 text-center text-xs text-indigo-400">
             &copy; 2024 PuzzlerWJ. All Rights Reserved.
         </div>
