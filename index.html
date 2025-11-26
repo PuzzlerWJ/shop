@@ -61,7 +61,6 @@
             </div>
             <div class="md:w-1/2 relative">
                 <div class="absolute inset-0 bg-indigo-900 rounded-2xl transform rotate-3 translate-x-2 translate-y-2"></div>
-                <!-- 圖片占位符 -->
                 <img src="images/WJ.png" alt="Puzzle Box Hero" class="relative rounded-2xl shadow-xl w-full object-cover transform -rotate-2 hover:rotate-0 transition duration-500 border-4 border-white">
             </div>
         </div>
@@ -72,8 +71,9 @@
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
             <div class="md:w-1/2">
                 <h2 class="text-4xl fun-font mb-6 text-amber-400">The Quiet Moment</h2>
+                <!-- ✅ 修改處：更新後的文案 -->
                 <p class="text-indigo-100 text-lg leading-relaxed mb-6">
-                    When you solve a puzzle box, it's just you and the box...
+                    When you solve a puzzle box, it's just you and the box, sharing a quiet moment. As you uncover each clue, you feel a little victory that makes you forget everything else.
                 </p>
             </div>
             <div class="md:w-1/2 w-full">
@@ -106,7 +106,6 @@
                 <div class="p-8">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-2xl font-bold text-gray-800">Ladybug</h3>
-                        <!-- ✅ 修改處：加上 USD -->
                         <span class="text-2xl font-bold text-amber-500">$39.99 USD</span>
                     </div>
                     <p class="text-gray-500 mb-6 h-12">A cute, deceptive box. Seems simple, but hides a clever secret.</p>
@@ -123,44 +122,10 @@
                 <div class="p-8">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-2xl font-bold text-gray-800">Skyscraper</h3>
-                        <!-- ✅ 修改處：加上 USD -->
                         <span class="text-2xl font-bold text-amber-500">$89.99 USD</span>
                     </div>
                     <p class="text-gray-500 mb-6 h-12">Standing tall with multiple layers of logic. Can you reach the top?</p>
                     <div id="paypal-button-container-skyscraper" class="paypal-container"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 🔥 新增功能：顧客評價 (Testimonials) -->
-    <section class="bg-white py-20 px-6 border-t border-gray-100">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl fun-font text-indigo-900 text-center mb-12">What Puzzlers Say</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Review 1 -->
-                <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
-                    <div class="text-amber-400 text-sm mb-3">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-gray-600 italic mb-4">"The Skyscraper box blew my mind. The mechanism is so smooth and the finish is beautiful."</p>
-                    <p class="font-bold text-indigo-900">- Sarah M., USA</p>
-                </div>
-                <!-- Review 2 -->
-                <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
-                    <div class="text-amber-400 text-sm mb-3">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-gray-600 italic mb-4">"Bought the Ladybug for my nephew. He loved it! Great entry-level puzzle."</p>
-                    <p class="font-bold text-indigo-900">- David L., UK</p>
-                </div>
-                <!-- Review 3 -->
-                <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
-                    <div class="text-amber-400 text-sm mb-3">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <p class="text-gray-600 italic mb-4">"Fast shipping to Germany. The packaging was secure and the wood smell is amazing."</p>
-                    <p class="font-bold text-indigo-900">- Klaus W., Germany</p>
                 </div>
             </div>
         </div>
@@ -171,6 +136,7 @@
         <div class="max-w-4xl mx-auto text-center">
             <h2 class="text-3xl fun-font text-indigo-900 mb-4">Where is my Box?</h2>
             <p class="text-gray-600 mb-8">Enter your tracking number below to check the status.</p>
+            <!-- ✅ AfterShip 功能代碼 -->
             <div class="bg-white p-6 rounded-xl shadow-md inline-block w-full max-w-md">
                 <div id="as-root"></div>
                 <script>(function(e,t,n){var r,i=e.getElementsByTagName(t)[0];if(e.getElementById(n))return;r=e.createElement(t);r.id=n;r.src="//button.aftership.com/all.js";i.parentNode.insertBefore(r,i)})(document,"script","aftership-jssdk")</script>
@@ -179,7 +145,7 @@
         </div>
     </section>
 
-    <!-- 🔥 新增功能：FAQ 常見問題 -->
+    <!-- FAQ Section -->
     <section class="max-w-3xl mx-auto px-6 py-20">
         <h2 class="text-3xl fun-font text-indigo-900 text-center mb-10">Frequently Asked Questions</h2>
         <div class="space-y-4">
@@ -200,7 +166,8 @@
                     <i class="fas fa-chevron-down text-gray-400 transition duration-300"></i>
                 </div>
                 <div class="faq-content bg-white px-5 text-gray-600">
-                    <p class="py-4">Don't worry! Each box comes with a QR code that links to a solution video. But try your best first!</p>
+                    <!-- ✅ 修改處：更新答案 -->
+                    <p class="py-4">Don't worry! A solution sheet is included in the package.</p>
                 </div>
             </div>
             <!-- Question 3 -->
@@ -235,7 +202,7 @@
         </form>
     </section>
 
-    <!-- 🔥 新增功能：回到頂部按鈕 -->
+    <!-- Back to Top Button -->
     <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" id="backToTop" class="fixed bottom-6 right-6 bg-amber-400 text-indigo-900 w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-amber-300 transition duration-300 transform translate-y-20 opacity-0 z-50">
         <i class="fas fa-arrow-up"></i>
     </button>
@@ -247,11 +214,11 @@
             <div class="text-center md:text-left">
                 <div class="fun-font text-3xl mb-4 text-amber-400">PuzzlerWJ</div>
                 <p class="text-indigo-200 text-sm mb-4">Handcrafted puzzles designed to bring joy and challenge to your life.</p>
-                <!-- 🔥 新增功能：社群連結 -->
+                <!-- ✅ 修改處：只保留 Instagram 並設定連結 -->
                 <div class="flex justify-center md:justify-start space-x-4">
-                    <a href="#" class="w-8 h-8 rounded-full bg-indigo-800 flex items-center justify-center hover:bg-amber-400 hover:text-indigo-900 transition"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="w-8 h-8 rounded-full bg-indigo-800 flex items-center justify-center hover:bg-amber-400 hover:text-indigo-900 transition"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="w-8 h-8 rounded-full bg-indigo-800 flex items-center justify-center hover:bg-amber-400 hover:text-indigo-900 transition"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/puzzlerwj/" target="_blank" class="w-8 h-8 rounded-full bg-indigo-800 flex items-center justify-center hover:bg-amber-400 hover:text-indigo-900 transition">
+                        <i class="fab fa-instagram"></i>
+                    </a>
                 </div>
             </div>
 
@@ -261,12 +228,12 @@
                 <div class="flex flex-col space-y-2 text-indigo-200 text-sm">
                     <a href="#home" class="hover:text-white transition">Home</a>
                     <a href="#products" class="hover:text-white transition">Shop</a>
-                    <a href="#" class="hover:text-white transition">Privacy Policy</a>
-                    <a href="#" class="hover:text-white transition">Refund Policy</a>
+                    <!-- ✅ 修改處：加入 Solutions 連結 -->
+                    <a href="https://puzzlerwj.github.io/puzzlerwj-solutions/Solutions" target="_blank" class="hover:text-white transition">Solutions</a>
                 </div>
             </div>
 
-            <!-- 🔥 新增功能：電子報訂閱 -->
+            <!-- Newsletter -->
             <div class="text-center md:text-right">
                 <h4 class="font-bold text-lg mb-4 text-amber-400">Stay Updated</h4>
                 <p class="text-indigo-200 text-sm mb-4">New drops & exclusive offers.</p>
@@ -330,12 +297,12 @@
             }).render(product.containerId);
         });
 
-        // 🔥 新增功能：FAQ 摺疊邏輯
+        // FAQ Toggle Logic
         function toggleFaq(element) {
             element.classList.toggle('faq-active');
         }
 
-        // 🔥 新增功能：回到頂部按鈕邏輯
+        // Back to Top Logic
         const backToTopBtn = document.getElementById('backToTop');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 300) {
