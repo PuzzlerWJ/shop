@@ -61,7 +61,7 @@
             <!-- Hero Image -->
             <div class="md:w-1/2 relative">
                 <div class="absolute inset-0 bg-indigo-900 rounded-2xl transform rotate-3 translate-x-2 translate-y-2"></div>
-                <!-- 修改處：已更換為本地圖片路徑 -->
+                <!-- 圖片 -->
                 <img src="images/WJ.png" 
                      alt="Puzzle Box Hero" 
                      class="relative rounded-2xl shadow-xl w-full object-cover transform -rotate-2 hover:rotate-0 transition duration-500 border-4 border-white">
@@ -122,14 +122,24 @@
             
             <!-- Product 1: Ladybug -->
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-amber-300 transition duration-300 group">
-                <div class="relative h-72 overflow-hidden bg-gray-200">
+                <!-- 
+                     修改處說明：
+                     1. h-[28rem] : 設定較高的直立式高度 (約450px)。
+                     2. bg-gray-50 : 背景改為極淺灰/白色，讓未填滿處更好看。
+                     3. flex items-center justify-center : 讓圖片上下左右居中。
+                -->
+                <div class="relative h-[28rem] overflow-hidden bg-gray-50 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-amber-400 text-indigo-900 text-xs font-bold px-3 py-1 rounded shadow-sm z-10">
                         Entry Level
                     </div>
-                    <!-- 修改處：更換為本地圖片 -->
+                    <!-- 
+                         修改處說明：
+                         1. object-contain : 確保圖片完整顯示，不裁切。
+                         2. p-4 : 增加內距，讓圖片不貼邊。
+                    -->
                     <img src="images/ladybug.jpg" 
                          alt="Ladybug" 
-                         class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                         class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
                 </div>
                 <div class="p-8">
                     <div class="flex justify-between items-center mb-4">
@@ -146,14 +156,15 @@
 
             <!-- Product 2: Skyscraper -->
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-indigo-300 transition duration-300 group">
-                <div class="relative h-72 overflow-hidden bg-gray-200">
+                <!-- 同上設定：直立式方框 + 居中 -->
+                <div class="relative h-[28rem] overflow-hidden bg-gray-50 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">
                         Advanced
                     </div>
-                    <!-- 修改處：更換為本地圖片 -->
+                    <!-- 同上設定：完整顯示不裁切 -->
                     <img src="images/skyscraper.jpg" 
                          alt="Skyscraper" 
-                         class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                         class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
                 </div>
                 <div class="p-8">
                     <div class="flex justify-between items-center mb-4">
@@ -183,7 +194,7 @@
         <p class="text-xs mt-8 opacity-70">&copy; 2024 PuzzlerWJ. All Rights Reserved.</p>
     </footer>
 
-    <!-- PayPal SDK: 請記得填寫你的 Client ID -->
+    <!-- PayPal SDK -->
     <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=USD"></script>
 
     <script>
