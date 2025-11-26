@@ -1,0 +1,54 @@
+<!-- 密碼輸入彈窗 -->
+<div id="passwordModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h3 id="modalHint"></h3>
+        <input type="password" id="passwordInput" placeholder="Enter answer">
+        <button onclick="checkPassword()">Submit</button>
+    </div>
+</div>
+
+<script>
+    let currentFile = "";
+
+    function openModal(file) {
+        currentFile = file;
+        const modal = document.getElementById("passwordModal");
+        const hint = document.getElementById("modalHint");
+
+        if (file === "ladybug") {
+            hint.textContent = "Who am I?";
+        } else if (file === "skyscraper") {
+            hint.textContent = "What is the answer to the number lock in Ladybug?";
+        }
+
+        modal.style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("passwordModal").style.display = "none";
+        document.getElementById("passwordInput").value = "";
+    }
+
+    function checkPassword() {
+        const input = document.getElementById("passwordInput").value;
+        //It looks like you have some basic web knowledge and have successfully discovered the password.
+        //It's time to support my puzzle box! After all, it can't just have answers found like this!
+        if (currentFile === "ladybug" && (input === "PuzzlerWJ" || input === "puzzlerwj")) {
+            window.location.href = "ladybug.pdf";
+        } else if (currentFile === "skyscraper" && input === "777") {
+            window.location.href = "skyscraper.pdf";
+        } else {
+            alert("Incorrect answer.");
+        }
+
+        closeModal();
+    }
+
+    window.onclick = function(event) {
+        const modal = document.getElementById("passwordModal");
+        if (event.target === modal) {
+            closeModal();
+        }
+    }
+</script>
