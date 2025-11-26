@@ -19,7 +19,6 @@
     <style>
         h1, h2, h3, .fun-font { font-family: 'Abril Fatface', cursive; }
         body { font-family: 'Poppins', sans-serif; }
-        .paypal-container { min-height: 45px; margin-top: 1rem; }
         .pattern-dots {
             background-image: radial-gradient(#4F46E5 2px, transparent 2px);
             background-size: 20px 20px;
@@ -28,23 +27,39 @@
         .faq-content { transition: max-height 0.3s ease-out; max-height: 0; overflow: hidden; }
         .faq-active .faq-content { max-height: 200px; }
         .faq-active i { transform: rotate(180deg); }
+        
+        /* Cart Modal Animation */
+        #cartModal { transition: opacity 0.3s ease-in-out; }
+        #cartContent { transition: transform 0.3s ease-in-out; }
+        .cart-open { transform: translateX(0) !important; }
     </style>
 </head>
 <body class="bg-[#FDFBF7] text-gray-800 flex flex-col min-h-screen relative">
 
-    <!-- Header -->
-    <header class="relative w-full bg-amber-400 overflow-hidden" id="home">
+    <!-- ✅ 修改處：Sticky Navbar (固定在頂部) -->
+    <nav class="sticky top-0 z-50 w-full py-4 px-6 md:px-12 flex justify-between items-center bg-amber-400 shadow-md transition-all duration-300">
+        <div class="text-3xl text-indigo-900 fun-font tracking-wider cursor-pointer" onclick="window.scrollTo(0,0)">PuzzlerWJ</div>
+        
+        <div class="flex items-center space-x-6">
+            <a href="#contact" class="hidden md:inline-block text-indigo-900 font-bold border-b-2 border-indigo-900 hover:text-white hover:border-white transition">
+                Contact
+            </a>
+            
+            <!-- 🔥 新增功能：購物車按鈕 -->
+            <button onclick="toggleCart()" class="relative text-indigo-900 hover:text-white transition group">
+                <i class="fas fa-shopping-cart text-2xl"></i>
+                <!-- 購物車數量紅點 -->
+                <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full opacity-0 transition-opacity duration-300">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="relative w-full bg-amber-400 overflow-hidden pt-10 pb-20 md:pt-20 md:pb-32" id="home">
         <div class="absolute -top-20 -right-20 w-64 h-64 bg-amber-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
         <div class="absolute bottom-10 left-10 w-32 h-32 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
 
-        <nav class="relative z-10 w-full py-6 px-6 md:px-12 flex justify-between items-center">
-            <div class="text-3xl text-indigo-900 fun-font tracking-wider">PuzzlerWJ</div>
-            <a href="#contact" class="text-indigo-900 font-bold border-b-2 border-indigo-900 hover:text-white hover:border-white transition">
-                Contact
-            </a>
-        </nav>
-
-        <div class="relative z-10 max-w-6xl mx-auto px-6 py-20 md:py-32 flex flex-col md:flex-row items-center gap-12">
+        <div class="relative z-10 max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
             <div class="md:w-1/2 text-center md:text-left">
                 <div class="inline-block bg-indigo-900 text-amber-400 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-4 shadow-md">
                     Handcrafted in Taiwan
@@ -98,51 +113,70 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             
             <!-- Product 1: Ladybug -->
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-amber-300 transition duration-300 group">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-amber-300 transition duration-300 group flex flex-col">
                 <div class="relative h-[24rem] overflow-hidden bg-gray-50 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-amber-400 text-indigo-900 text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Entry Level</div>
                     <img src="images/ladybug.jpg" alt="Ladybug" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
                 </div>
-                <div class="p-8">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-bold text-gray-800">Ladybug</h3>
-                        <span class="text-xl font-bold text-amber-500">$39.99 USD</span>
+                <div class="p-8 flex-1 flex flex-col">
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="text-xl font-bold text-gray-800">Ladybug</h3>
+                            <span class="text-xl font-bold text-amber-500">$39.99 USD</span>
+                        </div>
+                        <!-- ✅ 修改處：新增重量資訊 -->
+                        <p class="text-xs text-gray-400 font-medium">Weight: 60g</p>
                     </div>
-                    <p class="text-gray-500 mb-6 h-12 text-sm">A cute, deceptive box. Seems simple, but hides a clever secret.</p>
-                    <div id="paypal-button-container-ladybug" class="paypal-container"></div>
+                    <p class="text-gray-500 mb-6 text-sm flex-1">A cute, deceptive box. Seems simple, but hides a clever secret.</p>
+                    
+                    <!-- 🔥 修改處：改為 Add to Cart 按鈕 -->
+                    <button onclick="addToCart('ladybug', 'Ladybug', 39.99, 'images/ladybug.jpg')" class="w-full bg-indigo-900 text-white font-bold py-3 rounded-full hover:bg-indigo-800 transition shadow-md flex items-center justify-center gap-2">
+                        <i class="fas fa-cart-plus"></i> Add to Cart
+                    </button>
                 </div>
             </div>
 
             <!-- Product 2: Skyscraper -->
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-indigo-300 transition duration-300 group">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-indigo-300 transition duration-300 group flex flex-col">
                 <div class="relative h-[24rem] overflow-hidden bg-gray-50 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Advanced</div>
                     <img src="images/skyscraper.jpg" alt="Skyscraper" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
                 </div>
-                <div class="p-8">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-bold text-gray-800">Skyscraper</h3>
-                        <span class="text-xl font-bold text-amber-500">$89.99 USD</span>
+                <div class="p-8 flex-1 flex flex-col">
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="text-xl font-bold text-gray-800">Skyscraper</h3>
+                            <span class="text-xl font-bold text-amber-500">$89.99 USD</span>
+                        </div>
+                        <!-- ✅ 修改處：新增重量資訊 -->
+                        <p class="text-xs text-gray-400 font-medium">Weight: 160g</p>
                     </div>
-                    <p class="text-gray-500 mb-6 h-12 text-sm">Standing tall with multiple layers of logic. Can you reach the top?</p>
-                    <div id="paypal-button-container-skyscraper" class="paypal-container"></div>
+                    <p class="text-gray-500 mb-6 text-sm flex-1">Standing tall with multiple layers of logic. Can you reach the top?</p>
+                    
+                    <!-- 🔥 修改處：改為 Add to Cart 按鈕 -->
+                    <button onclick="addToCart('skyscraper', 'Skyscraper', 89.99, 'images/skyscraper.jpg')" class="w-full bg-indigo-900 text-white font-bold py-3 rounded-full hover:bg-indigo-800 transition shadow-md flex items-center justify-center gap-2">
+                        <i class="fas fa-cart-plus"></i> Add to Cart
+                    </button>
                 </div>
             </div>
 
             <!-- Product 3: Coming Soon -->
-            <div class="bg-gray-50 rounded-2xl shadow-lg overflow-hidden border border-gray-200 opacity-90 relative">
+            <div class="bg-gray-50 rounded-2xl shadow-lg overflow-hidden border border-gray-200 opacity-90 relative flex flex-col">
                 <div class="relative h-[24rem] overflow-hidden bg-gray-200 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Coming Soon</div>
                     <div class="text-gray-400 text-6xl">
                         <i class="fas fa-question-circle"></i>
                     </div>
                 </div>
-                <div class="p-8">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-bold text-gray-700">Mystery Box</h3>
-                        <span class="text-lg font-bold text-gray-500">Coming Dec.</span>
+                <div class="p-8 flex-1 flex flex-col">
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="text-xl font-bold text-gray-700">Mystery Box</h3>
+                            <span class="text-lg font-bold text-gray-500">Coming Dec.</span>
+                        </div>
+                        <p class="text-xs text-gray-400 font-medium">Weight: ???</p>
                     </div>
-                    <p class="text-gray-500 mb-6 h-12 text-sm">A new challenge is being crafted. Prepare your mind for something unique.</p>
+                    <p class="text-gray-500 mb-6 text-sm flex-1">A new challenge is being crafted. Prepare your mind for something unique.</p>
                     <div class="w-full bg-gray-300 text-gray-500 font-bold py-3 rounded-full text-center cursor-not-allowed">
                         Stay Tuned
                     </div>
@@ -156,7 +190,6 @@
     <section class="max-w-3xl mx-auto px-6 py-20">
         <h2 class="text-3xl fun-font text-indigo-900 text-center mb-10">Frequently Asked Questions</h2>
         <div class="space-y-4">
-            <!-- Question 1 -->
             <div class="bg-white rounded-lg border border-gray-200 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
                 <div class="p-5 flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition">
                     <h3 class="font-bold text-gray-700">Do you ship internationally?</h3>
@@ -166,7 +199,6 @@
                     <p class="py-4">Yes! We ship worldwide from Taiwan. Shipping times vary by location but usually take 7-14 business days.</p>
                 </div>
             </div>
-            <!-- Question 2 -->
             <div class="bg-white rounded-lg border border-gray-200 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
                 <div class="p-5 flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition">
                     <h3 class="font-bold text-gray-700">What if I can't solve the puzzle?</h3>
@@ -175,12 +207,11 @@
                 <div class="faq-content bg-white px-5 text-gray-600">
                     <p class="py-4">
                         Don't worry! A solution sheet is included in the package, or you can check the 
-                        <a href="https://puzzlerwj.github.io/puzzlerwj-solutions/Solutions" target="_blank" class="text-indigo-600 font-bold underline hover:text-indigo-800">Solutions</a> 
+                        <a href="https://puzzlerwj.github.io/puzzlerwj-solutions/Solutions" class="text-indigo-600 font-bold underline hover:text-indigo-800">Solutions</a> 
                         page in Quick Links.
                     </p>
                 </div>
             </div>
-            <!-- Question 3 -->
             <div class="bg-white rounded-lg border border-gray-200 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
                 <div class="p-5 flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition">
                     <h3 class="font-bold text-gray-700">Are these suitable for children?</h3>
@@ -193,17 +224,14 @@
         </div>
     </section>
 
-    <!-- Merged Section: Support & Tracking (Left) + Get in Touch (Right) -->
+    <!-- Support & Contact -->
     <section id="contact" class="bg-indigo-50 py-20 px-6">
         <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
-            
-            <!-- Left Column: Tracking -->
             <div>
                 <div class="text-center md:text-left mb-8">
                     <h2 class="text-3xl fun-font text-indigo-900 mb-4">Where is my Box?</h2>
                     <p class="text-gray-600">Enter your tracking number below to check the status.</p>
                 </div>
-                <!-- AfterShip Widget -->
                 <div class="bg-white p-8 rounded-2xl shadow-lg border border-indigo-100 w-full">
                     <div id="as-root"></div>
                     <script>(function(e,t,n){var r,i=e.getElementsByTagName(t)[0];if(e.getElementById(n))return;r=e.createElement(t);r.id=n;r.src="//button.aftership.com/all.js";i.parentNode.insertBefore(r,i)})(document,"script","aftership-jssdk")</script>
@@ -211,13 +239,11 @@
                 </div>
             </div>
 
-            <!-- Right Column: Contact Form -->
             <div>
                 <div class="text-center md:text-left mb-8">
                     <h2 class="text-3xl fun-font text-indigo-900 mb-4">Get in Touch</h2>
                     <p class="text-gray-600">Questions? Custom orders? Just say hi.</p>
                 </div>
-                <!-- Contact Form -->
                 <form action="https://formspree.io/f/xjkddywe" method="POST" class="space-y-6 bg-white p-8 rounded-2xl shadow-lg border border-indigo-100">
                     <div>
                         <label class="block text-gray-700 font-bold mb-2 text-sm">Your Email</label>
@@ -230,7 +256,6 @@
                     <button type="submit" class="w-full bg-indigo-900 text-white font-bold py-3 rounded-lg hover:bg-indigo-800 transition shadow-md">Send Message</button>
                 </form>
             </div>
-
         </div>
     </section>
 
@@ -241,10 +266,7 @@
 
     <!-- Footer -->
     <footer class="bg-indigo-950 text-white py-12 mt-auto">
-        <!-- ✅ 修改處：改為 grid-cols-2 -->
         <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
-            
-            <!-- Left: Brand Info -->
             <div class="text-center md:text-left">
                 <div class="fun-font text-3xl mb-4 text-amber-400">PuzzlerWJ</div>
                 <p class="text-indigo-200 text-sm mb-4">Handcrafted puzzles designed to bring joy and challenge to your life.</p>
@@ -254,55 +276,203 @@
                     </a>
                 </div>
             </div>
-
-            <!-- Right: Links (Aligned Right on Desktop) -->
-            <!-- ✅ 修改處：文字靠右對齊 (md:text-right) -->
             <div class="text-center md:text-right">
                 <h4 class="font-bold text-lg mb-4 text-amber-400">Quick Links</h4>
-                <!-- ✅ 修改處：Flex item 靠右對齊 (md:items-end) -->
                 <div class="flex flex-col space-y-3 text-indigo-200 text-sm items-center md:items-end">
                     <a href="#home" class="hover:text-white transition">Home</a>
                     <a href="#products" class="hover:text-white transition">Shop</a>
-                    <a href="https://puzzlerwj.github.io/puzzlerwj-solutions/Solutions" target="_blank" class="text-amber-400 font-extrabold text-lg hover:text-white transition animate-pulse tracking-wide border-b-2 border-amber-400 pb-1">
+                    <a href="https://puzzlerwj.github.io/puzzlerwj-solutions/Solutions" class="text-amber-400 font-extrabold text-lg hover:text-white transition animate-pulse tracking-wide border-b-2 border-amber-400 pb-1">
                         <i class="fas fa-key mr-1"></i> Solutions
                     </a>
                 </div>
             </div>
         </div>
-        
         <div class="border-t border-indigo-900 mt-10 pt-6 text-center text-xs text-indigo-400">
             &copy; 2024 PuzzlerWJ. All Rights Reserved.
         </div>
     </footer>
 
+    <!-- 🔥 新增功能：購物車彈窗 (Shopping Cart Modal) -->
+    <div id="cartModal" class="fixed inset-0 bg-indigo-900/50 backdrop-blur-sm z-[60] hidden opacity-0">
+        <div id="cartContent" class="absolute top-0 right-0 w-full md:w-[400px] h-full bg-white shadow-2xl transform translate-x-full flex flex-col">
+            
+            <!-- Cart Header -->
+            <div class="bg-amber-400 p-5 flex justify-between items-center shadow-sm">
+                <h2 class="text-indigo-900 text-xl font-bold fun-font"><i class="fas fa-shopping-bag mr-2"></i>Your Cart</h2>
+                <button onclick="toggleCart()" class="text-indigo-900 hover:text-white transition">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+
+            <!-- Cart Items (Scrollable) -->
+            <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-5 space-y-4">
+                <!-- Javascript will populate items here -->
+                <div class="text-center text-gray-400 mt-10">Your cart is empty.</div>
+            </div>
+
+            <!-- Cart Footer (Summary & Checkout) -->
+            <div class="border-t border-gray-100 p-6 bg-gray-50">
+                <div class="flex justify-between text-sm mb-2 text-gray-600">
+                    <span>Subtotal</span>
+                    <span id="cartSubtotal">$0.00</span>
+                </div>
+                <div class="flex justify-between text-sm mb-4 text-gray-600">
+                    <span>Shipping <span class="text-xs text-gray-400">(Free over $100)</span></span>
+                    <span id="cartShipping">$9.99</span>
+                </div>
+                <div class="flex justify-between text-xl font-bold text-indigo-900 mb-6">
+                    <span>Total</span>
+                    <span id="cartTotal">$0.00</span>
+                </div>
+                
+                <!-- PayPal Button Container -->
+                <div id="paypal-button-container" class="w-full"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- PayPal SDK -->
     <script src="https://www.paypal.com/sdk/js?client-id=AR1JFEvjsUMt_DyqzDOZhhqtgmTC8BOsTYHVxZLFRMkULFDHl3xtpEEKsYFFsmYFhIPQXC9DaEZjg2Id&currency=USD&locale=en_US"></script>
 
     <script>
-        // PayPal Logic
-        const products = [
-            { id: 'ladybug', name: 'Puzzler Box - Ladybug', price: '39.99', containerId: '#paypal-button-container-ladybug' },
-            { id: 'skyscraper', name: 'Puzzler Box - Skyscraper', price: '89.99', containerId: '#paypal-button-container-skyscraper' }
-        ];
+        // --- 🛒 Shopping Cart Logic ---
+        
+        let cart = []; // 購物車陣列
+        
+        // 1. 初始化: 從 localStorage 讀取購物車
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedCart = localStorage.getItem('puzzlerCart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCartBadge();
+            }
+        });
 
-        const shippingCost = '9.99';
+        // 2. 加入購物車
+        function addToCart(id, name, price, img) {
+            cart.push({ id, name, price, img });
+            saveCart();
+            updateCartBadge();
+            // 提示動畫
+            toggleCart(true); 
+        }
 
-        products.forEach(product => {
-            const totalAmount = (parseFloat(product.price) + parseFloat(shippingCost)).toFixed(2);
+        // 3. 移除商品
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            saveCart();
+            updateCartUI();
+            updateCartBadge();
+        }
+
+        // 4. 儲存與更新數量
+        function saveCart() {
+            localStorage.setItem('puzzlerCart', JSON.stringify(cart));
+        }
+
+        function updateCartBadge() {
+            const badge = document.getElementById('cartCount');
+            badge.innerText = cart.length;
+            if(cart.length > 0) badge.classList.remove('opacity-0');
+            else badge.classList.add('opacity-0');
+        }
+
+        // 5. 開啟/關閉購物車
+        function toggleCart(forceOpen = false) {
+            const modal = document.getElementById('cartModal');
+            const content = document.getElementById('cartContent');
+            
+            if (forceOpen || modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                // Small delay to allow display:block to apply before transition
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    content.classList.add('cart-open');
+                }, 10);
+                updateCartUI(); // Open 時重新渲染內容
+            } else {
+                modal.classList.add('opacity-0');
+                content.classList.remove('cart-open');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        // 6. 渲染購物車內容與計算金額 (核心邏輯)
+        function updateCartUI() {
+            const container = document.getElementById('cartItemsContainer');
+            const subtotalEl = document.getElementById('cartSubtotal');
+            const shippingEl = document.getElementById('cartShipping');
+            const totalEl = document.getElementById('cartTotal');
+            const paypalContainer = document.getElementById('paypal-button-container');
+
+            // 清空內容
+            container.innerHTML = '';
+            paypalContainer.innerHTML = ''; // 清空舊的 PayPal 按鈕，避免重複渲染
+
+            if (cart.length === 0) {
+                container.innerHTML = '<div class="text-center text-gray-400 mt-10"><i class="fas fa-shopping-basket text-4xl mb-3"></i><br>Your cart is empty.</div>';
+                subtotalEl.innerText = '$0.00';
+                shippingEl.innerText = '$0.00';
+                totalEl.innerText = '$0.00';
+                return;
+            }
+
+            // 渲染列表
+            let subtotal = 0;
+            cart.forEach((item, index) => {
+                subtotal += item.price;
+                const itemEl = document.createElement('div');
+                itemEl.className = 'flex items-center justify-between border-b border-gray-100 pb-3';
+                itemEl.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <img src="${item.img}" class="w-12 h-12 object-contain bg-gray-50 rounded p-1">
+                        <div>
+                            <div class="font-bold text-gray-800 text-sm">${item.name}</div>
+                            <div class="text-amber-500 text-sm">$${item.price}</div>
+                        </div>
+                    </div>
+                    <button onclick="removeFromCart(${index})" class="text-gray-300 hover:text-red-500 transition">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                `;
+                container.appendChild(itemEl);
+            });
+
+            // 🔥 計算運費規則
+            // 滿 100 免運，否則 9.99
+            let shipping = subtotal >= 100 ? 0 : 9.99;
+            let total = subtotal + shipping;
+
+            // 更新顯示
+            subtotalEl.innerText = '$' + subtotal.toFixed(2);
+            shippingEl.innerText = shipping === 0 ? 'Free' : '$' + shipping.toFixed(2);
+            totalEl.innerText = '$' + total.toFixed(2);
+
+            // 重新渲染 PayPal 按鈕 (只在有商品時)
+            renderPayPalButton(total, subtotal, shipping);
+        }
+
+        // --- 💳 PayPal Logic (Dynamic) ---
+        function renderPayPalButton(totalAmount, itemTotal, shippingCost) {
             paypal.Buttons({
-                style: { shape: 'pill', color: 'gold', layout: 'vertical', label: 'pay' },
+                style: { shape: 'pill', color: 'gold', layout: 'vertical', label: 'checkout' },
+                
                 createOrder: function(data, actions) {
+                    // 這裡動態產生訂單內容
                     return actions.order.create({
                         purchase_units: [{
-                            description: product.name,
+                            description: "PuzzlerWJ Order",
                             amount: {
                                 currency_code: "USD",
-                                value: totalAmount,
+                                value: totalAmount.toFixed(2), // 總金額
                                 breakdown: {
-                                    item_total: { currency_code: "USD", value: product.price },
-                                    shipping: { currency_code: "USD", value: shippingCost }
+                                    item_total: { currency_code: "USD", value: itemTotal.toFixed(2) },
+                                    shipping: { currency_code: "USD", value: shippingCost.toFixed(2) }
                                 }
                             },
+                            // 強制收集地址
                             application_context: {
                                 shipping_preference: "GET_FROM_FILE",
                                 brand_name: "PuzzlerWJ",
@@ -311,25 +481,34 @@
                         }]
                     });
                 },
+
                 onApprove: function(data, actions) {
                     return actions.order.capture().then(function(details) {
                         console.log('Transaction completed by ' + details.payer.name.given_name);
+                        
+                        // 清空購物車
+                        cart = [];
+                        saveCart();
+                        updateCartBadge();
+                        toggleCart(); // 關閉視窗
+                        
+                        // 跳轉到感謝頁
                         window.location.href = "thankyou.html";
                     });
                 },
+
                 onError: function (err) {
                     console.error(err);
-                    alert('Payment Error. Please try again or contact us.');
+                    alert('Payment Error. Please try again.');
                 }
-            }).render(product.containerId);
-        });
+            }).render('#paypal-button-container');
+        }
 
-        // FAQ Toggle Logic
+        // --- Other Interactions ---
         function toggleFaq(element) {
             element.classList.toggle('faq-active');
         }
 
-        // Back to Top Logic
         const backToTopBtn = document.getElementById('backToTop');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 300) {
