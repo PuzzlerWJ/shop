@@ -14,31 +14,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* 字體設定 */
         h1, h2, h3, .fun-font { font-family: 'Abril Fatface', cursive; }
         body { font-family: 'Poppins', sans-serif; }
-        
         .paypal-container { min-height: 45px; margin-top: 1rem; }
-
-        /* 裝飾性背景圖案 */
         .pattern-dots {
             background-image: radial-gradient(#4F46E5 2px, transparent 2px);
             background-size: 20px 20px;
         }
     </style>
 </head>
-<body class="bg-[#FDFBF7] text-gray-800">
+<body class="bg-[#FDFBF7] text-gray-800 flex flex-col min-h-screen">
 
-    <!-- 1. Hero Section: 活潑的琥珀黃 -->
+    <!-- Header -->
     <header class="relative w-full bg-amber-400 overflow-hidden">
-        <!-- 背景裝飾 -->
         <div class="absolute -top-20 -right-20 w-64 h-64 bg-amber-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
         <div class="absolute bottom-10 left-10 w-32 h-32 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
 
         <nav class="relative z-10 w-full py-6 px-6 md:px-12 flex justify-between items-center">
             <div class="text-3xl text-indigo-900 fun-font tracking-wider">PuzzlerWJ</div>
-            <a href="mailto:puzzlerwj@gmail.com" class="text-indigo-900 font-bold border-b-2 border-indigo-900 hover:text-white hover:border-white transition">
-                Say Hi!
+            <a href="#contact" class="text-indigo-900 font-bold border-b-2 border-indigo-900 hover:text-white hover:border-white transition">
+                Contact
             </a>
         </nav>
 
@@ -51,192 +46,175 @@
                     Unlock the <br> <span class="text-white">Hidden Joy.</span>
                 </h1>
                 <p class="text-indigo-900 text-lg md:text-xl font-medium mb-8 max-w-md mx-auto md:mx-0">
-                    "Puzzle is like a life, brimming with beauty." <br>
+                    "Puzzle is like a life, brimming with beauty."
                 </p>
                 <a href="#products" class="inline-block bg-indigo-900 text-white px-8 py-4 rounded-lg font-bold hover:bg-indigo-800 hover:shadow-lg hover:-translate-y-1 transition duration-300">
                     Start Exploring ↓
                 </a>
             </div>
-            
-            <!-- Hero Image -->
             <div class="md:w-1/2 relative">
                 <div class="absolute inset-0 bg-indigo-900 rounded-2xl transform rotate-3 translate-x-2 translate-y-2"></div>
-                <!-- 圖片 -->
-                <img src="images/WJ.png" 
-                     alt="Puzzle Box Hero" 
-                     class="relative rounded-2xl shadow-xl w-full object-cover transform -rotate-2 hover:rotate-0 transition duration-500 border-4 border-white">
+                <!-- 記得把您的圖片命名為 WJ.png 放在 images 資料夾 -->
+                <img src="images/WJ.png" alt="Puzzle Box Hero" class="relative rounded-2xl shadow-xl w-full object-cover transform -rotate-2 hover:rotate-0 transition duration-500 border-4 border-white">
             </div>
         </div>
     </header>
 
-    <!-- 2. Story Section: 沉浸式深藍區塊 -->
+    <!-- Story Section -->
     <section class="bg-indigo-950 text-white py-24 px-6 pattern-dots">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
-            
-            <!-- 左側：感性文案 -->
             <div class="md:w-1/2">
                 <h2 class="text-4xl fun-font mb-6 text-amber-400">The Quiet Moment</h2>
                 <p class="text-indigo-100 text-lg leading-relaxed mb-6">
-                    When you solve a puzzle box, it's just you and the box, sharing a quiet moment. As you uncover each clue, you feel a little victory that makes you forget everything else.
-                </p>
-                <p class="text-indigo-100 text-lg leading-relaxed border-l-4 border-amber-400 pl-4">
-                    I aim to design puzzle boxes that aren't too hard but still bring the fun of discovery—simple, affordable, and made for everyone to enjoy.
+                    When you solve a puzzle box, it's just you and the box...
                 </p>
             </div>
-
-            <!-- 右側：特色列表 -->
             <div class="md:w-1/2 w-full">
-                <div class="bg-indigo-900 p-10 rounded-2xl border border-indigo-800 shadow-2xl relative">
-                    <!-- 裝飾小圓點 -->
-                    <div class="absolute top-4 right-4 w-3 h-3 bg-red-400 rounded-full animate-pulse"></div>
-                    
+                <div class="bg-indigo-900 p-10 rounded-2xl border border-indigo-800 shadow-2xl">
                     <p class="text-2xl font-semibold mb-6 text-white fun-font">Why PuzzlerWJ?</p>
                     <ul class="space-y-4 text-indigo-200 text-lg">
-                        <li class="flex items-center">
-                            <span class="w-3 h-3 bg-amber-400 rounded-full mr-4 flex-shrink-0"></span>
-                            Original Mechanisms
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-3 h-3 bg-amber-400 rounded-full mr-4 flex-shrink-0"></span>
-                            Narrative Design
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-3 h-3 bg-amber-400 rounded-full mr-4 flex-shrink-0"></span>
-                            Affordable Fun
-                        </li>
+                        <li class="flex items-center"><span class="w-3 h-3 bg-amber-400 rounded-full mr-4"></span>Original Mechanisms</li>
+                        <li class="flex items-center"><span class="w-3 h-3 bg-amber-400 rounded-full mr-4"></span>Narrative Design</li>
+                        <li class="flex items-center"><span class="w-3 h-3 bg-amber-400 rounded-full mr-4"></span>Affordable Fun</li>
                     </ul>
                 </div>
             </div>
-
         </div>
     </section>
 
-    <!-- 3. Products Section: 商品區 -->
+    <!-- Products Section -->
     <section id="products" class="max-w-5xl mx-auto px-6 py-24">
         <div class="text-center mb-16">
             <h2 class="text-5xl text-indigo-950 fun-font mb-4">Shop Collection</h2>
-            <p class="text-gray-500">Pick your challenge level.</p>
+            <p class="text-gray-500">Free shipping worldwide.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-            
             <!-- Product 1: Ladybug -->
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-amber-300 transition duration-300 group">
-                <!-- 
-                     修改處說明：
-                     1. h-[28rem] : 設定較高的直立式高度 (約450px)。
-                     2. bg-gray-50 : 背景改為極淺灰/白色，讓未填滿處更好看。
-                     3. flex items-center justify-center : 讓圖片上下左右居中。
-                -->
                 <div class="relative h-[28rem] overflow-hidden bg-gray-50 flex items-center justify-center">
-                    <div class="absolute top-4 left-4 bg-amber-400 text-indigo-900 text-xs font-bold px-3 py-1 rounded shadow-sm z-10">
-                        Entry Level
-                    </div>
-                    <!-- 
-                         修改處說明：
-                         1. object-contain : 確保圖片完整顯示，不裁切。
-                         2. p-4 : 增加內距，讓圖片不貼邊。
-                    -->
-                    <img src="images/ladybug.jpg" 
-                         alt="Ladybug" 
-                         class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
+                    <div class="absolute top-4 left-4 bg-amber-400 text-indigo-900 text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Entry Level</div>
+                    <!-- 記得把圖片命名為 ladybug.jpg -->
+                    <img src="images/ladybug.jpg" alt="Ladybug" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
                 </div>
                 <div class="p-8">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-2xl font-bold text-gray-800">Ladybug</h3>
                         <span class="text-2xl font-bold text-amber-500">$39.99</span>
                     </div>
-                    <p class="text-gray-500 mb-6 h-12">
-                        A cute, deceptive box. Seems simple, but hides a clever secret. Great for beginners.
-                    </p>
-                    <!-- PayPal -->
+                    <p class="text-gray-500 mb-6 h-12">A cute, deceptive box. Seems simple, but hides a clever secret.</p>
                     <div id="paypal-button-container-ladybug" class="paypal-container"></div>
                 </div>
             </div>
 
             <!-- Product 2: Skyscraper -->
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-indigo-300 transition duration-300 group">
-                <!-- 同上設定：直立式方框 + 居中 -->
                 <div class="relative h-[28rem] overflow-hidden bg-gray-50 flex items-center justify-center">
-                    <div class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">
-                        Advanced
-                    </div>
-                    <!-- 同上設定：完整顯示不裁切 -->
-                    <img src="images/skyscraper.jpg" 
-                         alt="Skyscraper" 
-                         class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
+                    <div class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Advanced</div>
+                    <!-- 記得把圖片命名為 skyscraper.jpg -->
+                    <img src="images/skyscraper.jpg" alt="Skyscraper" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
                 </div>
                 <div class="p-8">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-2xl font-bold text-gray-800">Skyscraper</h3>
                         <span class="text-2xl font-bold text-amber-500">$89.99</span>
                     </div>
-                    <p class="text-gray-500 mb-6 h-12">
-                        Standing tall with multiple layers of logic. Can you reach the top floor?
-                    </p>
-                    <!-- PayPal -->
+                    <p class="text-gray-500 mb-6 h-12">Standing tall with multiple layers of logic. Can you reach the top?</p>
                     <div id="paypal-button-container-skyscraper" class="paypal-container"></div>
                 </div>
             </div>
-
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-amber-400 text-indigo-900 py-10 text-center">
-        <div class="fun-font text-3xl mb-4">PuzzlerWJ</div>
-        <p class="font-semibold">Bring Luck & Logic Home.</p>
-        <div class="mt-6 flex justify-center space-x-4">
-            <a href="mailto:puzzlerwj@gmail.com" class="bg-white/50 hover:bg-white px-4 py-2 rounded-full text-sm font-bold transition">
-                Email Me
-            </a>
+    <!-- AfterShip Tracking Section -->
+    <section class="bg-indigo-50 py-16 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl fun-font text-indigo-900 mb-4">Where is my Box?</h2>
+            <p class="text-gray-600 mb-8">Enter your tracking number below to check the status.</p>
+            
+            <!-- AfterShip Widget -->
+            <div class="bg-white p-6 rounded-xl shadow-md inline-block w-full max-w-md">
+                <div id="as-root"></div>
+                <script>(function(e,t,n){var r,i=e.getElementsByTagName(t)[0];if(e.getElementById(n))return;r=e.createElement(t);r.id=n;r.src="//button.aftership.com/all.js";i.parentNode.insertBefore(r,i)})(document,"script","aftership-jssdk")</script>
+                <div class="as-track-button" data-size="large" data-domain="track.aftership.com"></div>
+            </div>
         </div>
-        <p class="text-xs mt-8 opacity-70">&copy; 2024 PuzzlerWJ. All Rights Reserved.</p>
+    </section>
+
+    <!-- Contact Form (Formspree) -->
+    <section id="contact" class="max-w-2xl mx-auto px-6 py-20">
+        <div class="text-center mb-10">
+            <h2 class="text-4xl fun-font text-indigo-900">Get in Touch</h2>
+            <p class="text-gray-500 mt-2">Questions? Custom orders? Just say hi.</p>
+        </div>
+        
+        <!-- ⚠️ 重要：請記得之後申請 Formspree 帳號，並將下面的 YOUR_FORMSPREE_ID 換成您的 ID -->
+        <form action="https://formspree.io/f/xjkddywe" method="POST" class="space-y-6 bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+            <div>
+                <label class="block text-gray-700 font-bold mb-2">Your Email</label>
+                <input type="email" name="email" required class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-amber-400 focus:outline-none transition">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-bold mb-2">Message</label>
+                <textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-amber-400 focus:outline-none transition"></textarea>
+            </div>
+            <button type="submit" class="w-full bg-indigo-900 text-white font-bold py-3 rounded-lg hover:bg-indigo-800 transition">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-amber-400 text-indigo-900 py-10 mt-auto">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <div class="fun-font text-3xl mb-4">PuzzlerWJ</div>
+            <div class="flex justify-center space-x-6 mb-6 text-sm font-bold">
+                <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                <a href="#" class="hover:text-white transition">Refund Policy</a>
+            </div>
+            <p class="text-xs opacity-70">&copy; 2024 PuzzlerWJ. All Rights Reserved.</p>
+        </div>
     </footer>
 
     <!-- PayPal SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=USD"></script>
+    <!-- ✅ 您的 ID 已經整合在下面了 -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AR1JFEvjsUMt_DyqzDOZhhqtgmTC8BOsTYHVxZLFRMkULFDHl3xtpEEKsYFFsmYFhIPQXC9DaEZjg2Id&currency=USD"></script>
 
     <script>
         const products = [
-            {
-                id: 'ladybug',
-                name: 'Puzzler Box - Ladybug',
-                price: '39.99', 
-                containerId: '#paypal-button-container-ladybug'
-            },
-            {
-                id: 'skyscraper',
-                name: 'Puzzler Box - Skyscraper',
-                price: '89.99',
-                containerId: '#paypal-button-container-skyscraper'
-            }
+            { id: 'ladybug', name: 'Puzzler Box - Ladybug', price: '39.99', containerId: '#paypal-button-container-ladybug' },
+            { id: 'skyscraper', name: 'Puzzler Box - Skyscraper', price: '89.99', containerId: '#paypal-button-container-skyscraper' }
         ];
 
         products.forEach(product => {
             paypal.Buttons({
-                style: {
-                    shape: 'pill',
-                    color: 'blue', 
-                    layout: 'vertical',
-                    label: 'pay'
-                },
+                style: { shape: 'pill', color: 'gold', layout: 'vertical', label: 'pay' },
+                
+                // 建立訂單
                 createOrder: function(data, actions) {
                     return actions.order.create({
                         purchase_units: [{
                             description: product.name,
                             amount: { value: product.price }
-                        }]
+                        }],
+                        // 強制 PayPal 收集運送地址 (GET_FROM_FILE)
+                        application_context: {
+                            shipping_preference: "GET_FROM_FILE",
+                            brand_name: "PuzzlerWJ",
+                            user_action: "PAY_NOW"
+                        }
                     });
                 },
+
+                // 付款成功後執行
                 onApprove: function(data, actions) {
                     return actions.order.capture().then(function(details) {
-                        alert('Wohoo! Payment successful. Thank you ' + details.payer.name.given_name + '!');
+                        // 轉址到感謝頁面
+                        window.location.href = "thankyou.html";
                     });
                 },
+
                 onError: function (err) {
                     console.error(err);
-                    alert('Oops, something went wrong. Please try again.');
+                    alert('Payment Error. Please try again or contact us.');
                 }
             }).render(product.containerId);
         });
