@@ -11,7 +11,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     
     <!-- Icons (FontAwesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -71,7 +71,6 @@
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
             <div class="md:w-1/2">
                 <h2 class="text-4xl fun-font mb-6 text-amber-400">The Quiet Moment</h2>
-                <!-- ✅ 修改處：更新後的文案 -->
                 <p class="text-indigo-100 text-lg leading-relaxed mb-6">
                     When you solve a puzzle box, it's just you and the box, sharing a quiet moment. As you uncover each clue, you feel a little victory that makes you forget everything else.
                 </p>
@@ -90,44 +89,72 @@
     </section>
 
     <!-- Products Section -->
-    <section id="products" class="max-w-5xl mx-auto px-6 py-24">
+    <!-- ✅ 修改處：max-w-5xl 改為 max-w-7xl 以容納三個商品 -->
+    <section id="products" class="max-w-7xl mx-auto px-6 py-24">
         <div class="text-center mb-16">
             <h2 class="text-5xl text-indigo-950 fun-font mb-4">Shop Collection</h2>
             <p class="text-gray-500">Challenge your mind with our handcrafted designs.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <!-- ✅ 修改處：grid-cols-2 改為 grid-cols-3 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
             <!-- Product 1: Ladybug -->
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-amber-300 transition duration-300 group">
-                <div class="relative h-[28rem] overflow-hidden bg-gray-50 flex items-center justify-center">
+                <div class="relative h-[24rem] overflow-hidden bg-gray-50 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-amber-400 text-indigo-900 text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Entry Level</div>
                     <img src="images/ladybug.jpg" alt="Ladybug" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
                 </div>
                 <div class="p-8">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-2xl font-bold text-gray-800">Ladybug</h3>
-                        <span class="text-2xl font-bold text-amber-500">$39.99 USD</span>
+                        <h3 class="text-xl font-bold text-gray-800">Ladybug</h3>
+                        <span class="text-xl font-bold text-amber-500">$39.99 USD</span>
                     </div>
-                    <p class="text-gray-500 mb-6 h-12">A cute, deceptive box. Seems simple, but hides a clever secret.</p>
+                    <p class="text-gray-500 mb-6 h-12 text-sm">A cute, deceptive box. Seems simple, but hides a clever secret.</p>
                     <div id="paypal-button-container-ladybug" class="paypal-container"></div>
                 </div>
             </div>
 
             <!-- Product 2: Skyscraper -->
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-indigo-300 transition duration-300 group">
-                <div class="relative h-[28rem] overflow-hidden bg-gray-50 flex items-center justify-center">
+                <div class="relative h-[24rem] overflow-hidden bg-gray-50 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Advanced</div>
                     <img src="images/skyscraper.jpg" alt="Skyscraper" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
                 </div>
                 <div class="p-8">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-2xl font-bold text-gray-800">Skyscraper</h3>
-                        <span class="text-2xl font-bold text-amber-500">$89.99 USD</span>
+                        <h3 class="text-xl font-bold text-gray-800">Skyscraper</h3>
+                        <span class="text-xl font-bold text-amber-500">$89.99 USD</span>
                     </div>
-                    <p class="text-gray-500 mb-6 h-12">Standing tall with multiple layers of logic. Can you reach the top?</p>
+                    <p class="text-gray-500 mb-6 h-12 text-sm">Standing tall with multiple layers of logic. Can you reach the top?</p>
                     <div id="paypal-button-container-skyscraper" class="paypal-container"></div>
                 </div>
             </div>
+
+            <!-- Product 3: Coming Soon (New Design) -->
+            <!-- ✅ 修改處：新增第三個商品卡片 -->
+            <div class="bg-gray-50 rounded-2xl shadow-lg overflow-hidden border border-gray-200 opacity-90 relative">
+                <div class="relative h-[24rem] overflow-hidden bg-gray-200 flex items-center justify-center">
+                    <div class="absolute top-4 left-4 bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Coming Soon</div>
+                    <!-- 若無圖片，使用圖示代替 -->
+                    <div class="text-gray-400 text-6xl">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <!-- 圖片連結預留： <img src="images/coming_soon.jpg" ...> -->
+                </div>
+                <div class="p-8">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-gray-700">Mystery Box</h3>
+                        <span class="text-lg font-bold text-gray-500">Coming Dec.</span>
+                    </div>
+                    <p class="text-gray-500 mb-6 h-12 text-sm">A new challenge is being crafted. Prepare your mind for something unique.</p>
+                    <!-- 靜態按鈕 -->
+                    <div class="w-full bg-gray-300 text-gray-500 font-bold py-3 rounded-full text-center cursor-not-allowed">
+                        Stay Tuned
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -136,7 +163,6 @@
         <div class="max-w-4xl mx-auto text-center">
             <h2 class="text-3xl fun-font text-indigo-900 mb-4">Where is my Box?</h2>
             <p class="text-gray-600 mb-8">Enter your tracking number below to check the status.</p>
-            <!-- ✅ AfterShip 功能代碼 -->
             <div class="bg-white p-6 rounded-xl shadow-md inline-block w-full max-w-md">
                 <div id="as-root"></div>
                 <script>(function(e,t,n){var r,i=e.getElementsByTagName(t)[0];if(e.getElementById(n))return;r=e.createElement(t);r.id=n;r.src="//button.aftership.com/all.js";i.parentNode.insertBefore(r,i)})(document,"script","aftership-jssdk")</script>
@@ -166,8 +192,12 @@
                     <i class="fas fa-chevron-down text-gray-400 transition duration-300"></i>
                 </div>
                 <div class="faq-content bg-white px-5 text-gray-600">
-                    <!-- ✅ 修改處：更新答案 -->
-                    <p class="py-4">Don't worry! A solution sheet is included in the package.</p>
+                    <!-- ✅ 修改處：新增解答紙說明與 Quick Links 超連結 -->
+                    <p class="py-4">
+                        Don't worry! A solution sheet is included in the package, or you can check the 
+                        <a href="https://puzzlerwj.github.io/puzzlerwj-solutions/Solutions" target="_blank" class="text-indigo-600 font-bold underline hover:text-indigo-800">Solutions</a> 
+                        page in Quick Links.
+                    </p>
                 </div>
             </div>
             <!-- Question 3 -->
@@ -214,7 +244,6 @@
             <div class="text-center md:text-left">
                 <div class="fun-font text-3xl mb-4 text-amber-400">PuzzlerWJ</div>
                 <p class="text-indigo-200 text-sm mb-4">Handcrafted puzzles designed to bring joy and challenge to your life.</p>
-                <!-- ✅ 修改處：只保留 Instagram 並設定連結 -->
                 <div class="flex justify-center md:justify-start space-x-4">
                     <a href="https://www.instagram.com/puzzlerwj/" target="_blank" class="w-8 h-8 rounded-full bg-indigo-800 flex items-center justify-center hover:bg-amber-400 hover:text-indigo-900 transition">
                         <i class="fab fa-instagram"></i>
@@ -225,11 +254,13 @@
             <!-- Links -->
             <div class="text-center">
                 <h4 class="font-bold text-lg mb-4 text-amber-400">Quick Links</h4>
-                <div class="flex flex-col space-y-2 text-indigo-200 text-sm">
+                <div class="flex flex-col space-y-3 text-indigo-200 text-sm items-center">
                     <a href="#home" class="hover:text-white transition">Home</a>
                     <a href="#products" class="hover:text-white transition">Shop</a>
-                    <!-- ✅ 修改處：加入 Solutions 連結 -->
-                    <a href="https://puzzlerwj.github.io/puzzlerwj-solutions/Solutions" target="_blank" class="hover:text-white transition">Solutions</a>
+                    <!-- ✅ 修改處：Solutions 連結 - 金色、粗體、加大、閃爍效果 -->
+                    <a href="https://puzzlerwj.github.io/puzzlerwj-solutions/Solutions" target="_blank" class="text-amber-400 font-extrabold text-lg hover:text-white transition animate-pulse tracking-wide border-b-2 border-amber-400 pb-1">
+                        <i class="fas fa-key mr-1"></i> Solutions
+                    </a>
                 </div>
             </div>
 
