@@ -238,7 +238,7 @@
     <!-- Header Section -->
     <header class="relative w-full bg-amber-400 overflow-hidden pt-10 pb-20 md:pt-20 md:pb-32" id="home">
         
-        <!-- 📍 Marker 1: Top (Hidden Joy) -->
+        <!-- 📍 Marker: Top (Hidden Joy) -->
         <div id="marker-top" class="scroll-marker" style="top: 55%;"></div>
 
         <div class="absolute -top-20 -right-20 w-64 h-64 bg-amber-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
@@ -279,7 +279,7 @@
             <div class="md:w-1/2">
                 <h2 class="text-4xl fun-font mb-6 text-amber-400">The Quiet Moment</h2>
                 <p class="text-indigo-100 text-lg leading-relaxed mb-6 relative">
-                    <!-- 📍 Marker 2: Middle (Quiet Moment) -->
+                    <!-- 📍 Marker: Middle (Quiet Moment) -->
                     <div id="marker-middle" class="scroll-marker" style="top: 0;"></div>
                     
                     When you solve a puzzle box, it's just you and the box, sharing a quiet moment. As you uncover each clue, you feel a little victory that makes you forget everything else.
@@ -330,7 +330,7 @@
             <!-- Product 2 (Target 3) -->
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-indigo-300 transition duration-300 group flex flex-col relative">
                 
-                <!-- 📍 Marker 3: Bottom (Skyscraper) -->
+                <!-- 📍 Marker: Bottom (Skyscraper) -->
                 <div id="marker-bottom" class="scroll-marker" style="top: 50%;"></div>
 
                 <div class="relative h-[24rem] overflow-hidden bg-gray-50 flex items-center justify-center">
@@ -446,8 +446,7 @@
     <div id="gear-lock-system" class="fixed bottom-6 left-6 z-40">
         
         <div class="hint-bubble" id="gearHint">
-            Mechanism Active.<br>
-            <span class="text-amber-300">1. Seek the "Quiet Moment".</span>
+            Mechanism Active.
         </div>
 
         <div class="gear-container" onclick="checkLock()">
@@ -574,13 +573,12 @@
             system.classList.remove('opacity-0', 'pointer-events-none');
             system.classList.add('repaired');
 
-            // Play a mechanical sound if possible (optional) or just visual
             showToast("Mechanism Repaired. Initiate Sequence.");
 
-            // Show initial hint
+            // Show initial hint (Hard Mode: No location hints)
             setTimeout(() => {
                 hint.classList.add('show');
-                setTimeout(() => hint.classList.remove('show'), 6000);
+                setTimeout(() => hint.classList.remove('show'), 4000);
             }, 1000);
         }
 
@@ -596,11 +594,12 @@
             document.getElementById('light-3')
         ];
 
-        // 🎯 TARGETS ORDER: Middle -> Top -> Bottom
+        // 🎯 TARGETS ORDER (Hard Mode: Hints Removed)
+        // 1. Middle -> 2. Top -> 3. Bottom
         const targets = [
-            { id: 'marker-middle', hint: '1. Seek the "Quiet Moment".' },   // Middle
-            { id: 'marker-top', hint: '2. Return to the Start.' },          // Top
-            { id: 'marker-bottom', hint: '3. Inspect the "Skyscraper".' }   // Bottom
+            { id: 'marker-middle', hint: 'Sequence Initiated.' }, 
+            { id: 'marker-top', hint: 'Phase 2 Pending.' },       
+            { id: 'marker-bottom', hint: 'Final Phase.' }  
         ];
 
         let currentStage = 0; 
@@ -609,7 +608,7 @@
 
         // Scroll Event
         window.addEventListener('scroll', () => {
-            // BackToTop (Standard)
+            // BackToTop
             const backToTopBtn = document.getElementById('backToTop');
             if (window.scrollY > 300) {
                 backToTopBtn.classList.remove('translate-y-20', 'opacity-0');
@@ -638,7 +637,7 @@
             const markerCenter = rect.top + (rect.height / 2);
             const distance = Math.abs(markerCenter - viewportCenter);
 
-            // 75px tolerance (matches half marker height)
+            // 75px tolerance
             if (distance < 75) { 
                 if (!isResonating) {
                     // Enter Sweet Spot
@@ -700,7 +699,7 @@
 
         function failFeedback() {
             container.classList.add('jammed');
-            hintBubble.innerHTML = `<span class="text-red-400">Mechanism Jammed!</span><br>Resetting...`;
+            hintBubble.innerHTML = `<span class="text-red-400">Alignment Error.</span><br>Resetting...`;
             hintBubble.classList.add('show');
 
             setTimeout(() => {
@@ -713,7 +712,7 @@
         function resetLock() {
             currentStage = 0;
             lights.forEach(l => l.classList.remove('active'));
-            hintBubble.innerHTML = `Mechanism Active.<br><span class="text-amber-300">${targets[0].hint}</span>`;
+            hintBubble.innerHTML = `System Reset.<br><span class="text-amber-300">Mechanism Active.</span>`;
             checkProximity();
         }
 
@@ -735,7 +734,7 @@
             document.getElementById('rewardModal').classList.remove('hidden');
         }
 
-        // --- 🎮 Keyboard Secret (Preserved) ---
+        // --- 🎮 Keyboard Secret ---
         let keyBuffer = "";
         const secretCode = "JOY";
         document.addEventListener('keydown', (e) => {
@@ -749,7 +748,7 @@
             }
         });
 
-        // --- 🛒 Shopping Cart Logic (Preserved) ---
+        // --- 🛒 Shopping Cart Logic (With Base64 Security & Humor) ---
         let cart = [];
         let appliedDiscount = 0; 
 
@@ -808,19 +807,32 @@
         function applyPromo() {
             const input = document.getElementById('promoInput');
             const msg = document.getElementById('promoMessage');
-            const code = input.value.trim().toUpperCase();
+            const inputCode = input.value.trim().toUpperCase();
 
             msg.classList.remove('hidden', 'text-green-600', 'text-red-500');
 
-            if (code === 'PUZZLER99') {
+            /* 
+             * 🕵️ Hey there, Smart Developer!
+             * I see you checking the source code. Yes, you found the logic below!
+             * While you could just grab the code here, you'd miss out on the fun mechanical puzzle we built.
+             * We are a small handcrafted business, so your support means the world to us. 
+             * Enjoy the discount, and thank you for being curious! 🧩
+             */
+
+            // Codes are obfuscated with Base64 to prevent casual peeking
+            // PUZZLER99 -> UFVaWkxFUjk5
+            // PUZZLER999 -> UFVaWkxFUjk5OQ==
+            // GEARMASTER -> R0VBUk1BU1RFUg==
+
+            if (inputCode === atob('UFVaWkxFUjk5')) {
                 appliedDiscount = 0.99;
                 msg.innerText = "Code applied! $0.99 off.";
                 msg.classList.add('text-green-600');
-            } else if (code === 'PUZZLER999') {
+            } else if (inputCode === atob('UFVaWkxFUjk5OQ==')) {
                 appliedDiscount = 9.99;
                 msg.innerText = "Secret Code applied! $9.99 off.";
                 msg.classList.add('text-green-600');
-            } else if (code === 'GEARMASTER') {
+            } else if (inputCode === atob('R0VBUk1BU1RFUg==')) {
                 appliedDiscount = 20.00; 
                 msg.innerText = "Master Code applied! $20.00 off.";
                 msg.classList.add('text-green-600');
