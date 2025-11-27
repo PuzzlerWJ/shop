@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>PuzzlerWJ | The Broken Mechanism</title>
     
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Fonts -->
@@ -18,16 +18,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- 🔧 CRITICAL MOBILE FIXES --- */
+        /* --- 🚨 關鍵修正：防止 Tailwind 失效時的跑版 (Fallback CSS) --- */
         html, body {
             overflow-x: hidden; /* 禁止左右滑動 */
             width: 100%;
-            position: relative;
-            -webkit-overflow-scrolling: touch; /* iOS 滾動優化 */
+            margin: 0;
+            padding: 0;
+            -webkit-overflow-scrolling: touch;
+            background-color: #FDFBF7; /* 強制設定背景色 */
         }
-        
+
+        /* 強制限制所有圖片，防止 Tailwind 沒載入時圖片巨大化 */
+        img, video, canvas, svg {
+            display: block;
+            max-width: 100%; /* 關鍵：圖片永遠不超過螢幕寬度 */
+            height: auto;
+        }
+
+        /* 基本字體設定 */
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            color: #1f2937; /* 預設深灰色文字 */
+            transition: background-color 0.5s, filter 0.5s; 
+        }
+
+        /* --------------------------------------------------- */
+
         h1, h2, h3, .fun-font { font-family: 'Abril Fatface', cursive; }
-        body { font-family: 'Poppins', sans-serif; transition: background-color 0.5s, filter 0.5s; }
+        
         .pattern-dots {
             background-image: radial-gradient(#4F46E5 2px, transparent 2px);
             background-size: 20px 20px;
@@ -361,8 +379,8 @@
             gap: 10px;
             pointer-events: none;
             opacity: 0; 
-            width: max-content; /* Fix width issues */
-            max-width: 90vw; /* Prevent overflow */
+            width: max-content; 
+            max-width: 90vw; 
         }
         #toast.show { 
             transform: translateX(-50%) translateY(0); 
@@ -391,7 +409,7 @@
         .faq-active i { transform: rotate(180deg); }
     </style>
 </head>
-<body class="bg-[#FDFBF7] text-gray-800 flex flex-col min-h-screen relative w-full overflow-x-hidden">
+<body class="text-gray-800 flex flex-col min-h-screen relative w-full overflow-x-hidden" style="background-color: #FDFBF7;">
 
     <!-- Sticky Navbar -->
     <nav class="sticky top-0 z-50 w-full py-4 px-6 md:px-12 flex justify-between items-center bg-amber-400 shadow-md transition-all duration-300">
@@ -441,7 +459,7 @@
         </div>
     </header>
 
-    <!-- Story Section (Added overflow-hidden) -->
+    <!-- Story Section -->
     <section class="bg-indigo-950 text-white py-24 px-6 pattern-dots relative overflow-hidden">
         <i class="fas fa-cog gear-fragment" style="bottom: 20px; left: 20px; color: #818cf8;" 
            onclick="collectFragment(this, 'Drive Shaft')" 
