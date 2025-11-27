@@ -104,40 +104,40 @@
             transition: all 0.3s;
         }
 
-        /* Status Lights */
+        /* Status Lights (Indicators) */
         .status-lights {
             position: absolute;
             bottom: -5px;
             display: flex;
-            gap: 3px;
+            gap: 4px;
             z-index: 30;
         }
         .light {
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            background-color: #d1d5db; 
+            background-color: #d1d5db; /* Gray-300 (OFF) */
             border: 1px solid #9ca3af;
             transition: background-color 0.3s, box-shadow 0.3s;
         }
         .light.active {
-            background-color: #10b981; 
+            background-color: #10b981; /* Emerald-500 (ON) */
             box-shadow: 0 0 4px #10b981;
         }
 
         /* States */
         .gear-container.resonating .main-gear {
-            color: #fbbf24; 
+            color: #fbbf24; /* Amber-400 (Ready to Click) */
             text-shadow: 0 0 10px rgba(251, 191, 36, 0.6);
         }
         .gear-container.jammed {
             animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
         }
         .gear-container.jammed .main-gear {
-            color: #ef4444 !important; 
+            color: #ef4444 !important; /* Red (Error) */
         }
         .gear-container.unlocked .main-gear {
-            color: #10b981; 
+            color: #10b981; /* Green (Success) */
             animation: spin-unlock 1s ease-out forwards;
         }
 
@@ -160,29 +160,6 @@
             left: 0;
             pointer-events: none;
             opacity: 0; 
-        }
-
-        /* Hint Bubble */
-        .hint-bubble {
-            position: absolute;
-            left: 70px;
-            bottom: 20px;
-            background: rgba(30, 27, 75, 0.95);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            width: 180px;
-            opacity: 0;
-            transform: translateX(-10px);
-            transition: all 0.3s;
-            pointer-events: none;
-            z-index: 50;
-            border: 1px solid #fbbf24;
-        }
-        .hint-bubble.show {
-            opacity: 1;
-            transform: translateX(0);
         }
 
         /* Toast Notification for Fragments */
@@ -238,7 +215,7 @@
     <!-- Header Section -->
     <header class="relative w-full bg-amber-400 overflow-hidden pt-10 pb-20 md:pt-20 md:pb-32" id="home">
         
-        <!-- 📍 Marker: Top (Hidden Joy) -->
+        <!-- 📍 Marker: Top (Step 2) -->
         <div id="marker-top" class="scroll-marker" style="top: 55%;"></div>
 
         <div class="absolute -top-20 -right-20 w-64 h-64 bg-amber-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
@@ -279,7 +256,7 @@
             <div class="md:w-1/2">
                 <h2 class="text-4xl fun-font mb-6 text-amber-400">The Quiet Moment</h2>
                 <p class="text-indigo-100 text-lg leading-relaxed mb-6 relative">
-                    <!-- 📍 Marker: Middle (Quiet Moment) -->
+                    <!-- 📍 Marker: Middle (Step 1) -->
                     <div id="marker-middle" class="scroll-marker" style="top: 0;"></div>
                     
                     When you solve a puzzle box, it's just you and the box, sharing a quiet moment. As you uncover each clue, you feel a little victory that makes you forget everything else.
@@ -330,7 +307,7 @@
             <!-- Product 2 (Target 3) -->
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-indigo-300 transition duration-300 group flex flex-col relative">
                 
-                <!-- 📍 Marker: Bottom (Skyscraper) -->
+                <!-- 📍 Marker: Bottom (Step 3) -->
                 <div id="marker-bottom" class="scroll-marker" style="top: 50%;"></div>
 
                 <div class="relative h-[24rem] overflow-hidden bg-gray-50 flex items-center justify-center">
@@ -444,11 +421,8 @@
 
     <!-- ⚙️ The Gear Lock Widget (Hidden until repaired) -->
     <div id="gear-lock-system" class="fixed bottom-6 left-6 z-40">
+        <!-- NO HINT BUBBLE HERE (Removed as requested) -->
         
-        <div class="hint-bubble" id="gearHint">
-            Mechanism Active.
-        </div>
-
         <div class="gear-container" onclick="checkLock()">
             <!-- The Gear -->
             <i class="fas fa-gear main-gear" id="mainGear"></i>
@@ -456,7 +430,7 @@
             <!-- Center Icon -->
             <i class="fas fa-lock gear-core" id="gearIcon"></i>
 
-            <!-- Status Lights -->
+            <!-- Status Lights (The ONLY feedback) -->
             <div class="status-lights">
                 <div class="light" id="light-1"></div>
                 <div class="light" id="light-2"></div>
@@ -567,39 +541,30 @@
         function repairMechanism() {
             isMechanismRepaired = true;
             const system = document.getElementById('gear-lock-system');
-            const hint = document.getElementById('gearHint');
             
             // Remove hidden state, add repaired state
             system.classList.remove('opacity-0', 'pointer-events-none');
             system.classList.add('repaired');
 
-            showToast("Mechanism Repaired. Initiate Sequence.");
-
-            // Show initial hint (Hard Mode: No location hints)
-            setTimeout(() => {
-                hint.classList.add('show');
-                setTimeout(() => hint.classList.remove('show'), 4000);
-            }, 1000);
+            showToast("Mechanism Repaired. System Online.");
         }
 
-        // --- ⚙️ Part 2: The Trinity Lock Logic ---
+        // --- ⚙️ Part 2: The Trinity Lock Logic (Hard Mode - No Text Hints) ---
         const gear = document.getElementById('mainGear');
         const systemContainer = document.getElementById('gear-lock-system');
         const container = document.querySelector('.gear-container');
         const gearIcon = document.getElementById('gearIcon');
-        const hintBubble = document.getElementById('gearHint');
         const lights = [
             document.getElementById('light-1'),
             document.getElementById('light-2'),
             document.getElementById('light-3')
         ];
 
-        // 🎯 TARGETS ORDER (Hard Mode: Hints Removed)
-        // 1. Middle -> 2. Top -> 3. Bottom
+        // 🎯 TARGETS ORDER: Middle -> Top -> Bottom
         const targets = [
-            { id: 'marker-middle', hint: 'Sequence Initiated.' }, 
-            { id: 'marker-top', hint: 'Phase 2 Pending.' },       
-            { id: 'marker-bottom', hint: 'Final Phase.' }  
+            { id: 'marker-middle' }, 
+            { id: 'marker-top' },       
+            { id: 'marker-bottom' }  
         ];
 
         let currentStage = 0; 
@@ -640,7 +605,7 @@
             // 75px tolerance
             if (distance < 75) { 
                 if (!isResonating) {
-                    // Enter Sweet Spot
+                    // Enter Sweet Spot (Glows, Grows)
                     container.classList.add('resonating');
                     systemContainer.classList.add('active-mode'); 
                     gearIcon.classList.remove('fa-lock');
@@ -672,17 +637,14 @@
                 if (currentStage >= targets.length) {
                     finalUnlock();
                 } else {
-                    hintBubble.innerHTML = `<span class="text-amber-300">Locked!</span><br>${targets[currentStage].hint}`;
-                    hintBubble.classList.add('show');
-                    setTimeout(() => hintBubble.classList.remove('show'), 3000);
-                    
+                    // Wait for next move
                     isResonating = false; 
                     container.classList.remove('resonating');
                     systemContainer.classList.remove('active-mode');
                 }
 
             } else {
-                // Failure
+                // Failure (Shake Only)
                 failFeedback();
             }
         }
@@ -699,20 +661,15 @@
 
         function failFeedback() {
             container.classList.add('jammed');
-            hintBubble.innerHTML = `<span class="text-red-400">Alignment Error.</span><br>Resetting...`;
-            hintBubble.classList.add('show');
-
             setTimeout(() => {
                 container.classList.remove('jammed');
                 resetLock();
-                hintBubble.classList.remove('show');
             }, 1000);
         }
 
         function resetLock() {
             currentStage = 0;
             lights.forEach(l => l.classList.remove('active'));
-            hintBubble.innerHTML = `System Reset.<br><span class="text-amber-300">Mechanism Active.</span>`;
             checkProximity();
         }
 
@@ -814,15 +771,15 @@
             /* 
              * 🕵️ Hey there, Smart Developer!
              * I see you checking the source code. Yes, you found the logic below!
-             * While you could just grab the code here, you'd miss out on the fun mechanical puzzle we built.
-             * We are a small handcrafted business, so your support means the world to us. 
-             * Enjoy the discount, and thank you for being curious! 🧩
+             * You might have cracked the code, but skipping the mechanical puzzle misses half the fun.
+             * We are a small handcrafted business, so your support means the world to us.
+             * The discount here is just a small token ($1.99 off), but we hope you enjoy the product! 🧩
              */
 
             // Codes are obfuscated with Base64 to prevent casual peeking
-            // PUZZLER99 -> UFVaWkxFUjk5
-            // PUZZLER999 -> UFVaWkxFUjk5OQ==
-            // GEARMASTER -> R0VBUk1BU1RFUg==
+            // PUZZLER99 -> UFVaWkxFUjk5 ($0.99)
+            // PUZZLER999 -> UFVaWkxFUjk5OQ== ($9.99)
+            // GEARMASTER -> R0VBUk1BU1RFUg== ($1.99)
 
             if (inputCode === atob('UFVaWkxFUjk5')) {
                 appliedDiscount = 0.99;
@@ -833,8 +790,8 @@
                 msg.innerText = "Secret Code applied! $9.99 off.";
                 msg.classList.add('text-green-600');
             } else if (inputCode === atob('R0VBUk1BU1RFUg==')) {
-                appliedDiscount = 20.00; 
-                msg.innerText = "Master Code applied! $20.00 off.";
+                appliedDiscount = 1.99; 
+                msg.innerText = "Master Code applied! $1.99 off.";
                 msg.classList.add('text-green-600');
             } else {
                 appliedDiscount = 0;
