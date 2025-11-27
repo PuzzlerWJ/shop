@@ -2,115 +2,127 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <!-- 標準化 Viewport，移除可能導致 IG 崩潰的縮放限制 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PuzzlerWJ | The Broken Mechanism</title>
     
-    <!-- Tailwind CSS (CDN) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Fonts -->
+    <!-- 1. 資源預先連線 (加速載入) -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Poppins:wght@300;400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     
-    <!-- Icons (FontAwesome) -->
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // 設定 Tailwind 主題顏色，確保與 CSS 變數一致
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        amber: { 400: '#fbbf24', 300: '#fcd34d' },
+                        indigo: { 900: '#312e81', 950: '#1e1b4b' }
+                    }
+                }
+            }
+        }
+    </script>
 
     <style>
         /* 
          * ==============================================
-         * 🚨 救命用 CSS (Critical Fallback CSS)
-         * 這些規則是為了在 Tailwind 載入失敗或太慢時
-         * 確保網頁依然能正常顯示，不會變成巨大圖片或白底
+         * 🛡️ 關鍵 CSS (Critical CSS) - 優化核心
+         * 即使 Tailwind CDN 失敗，這些樣式也能撐起版面
          * ==============================================
          */
-        
-        /* 1. 全局設定：防止白底和橫向捲軸 */
+        :root {
+            --color-bg: #FDFBF7;
+            --color-primary: #fbbf24; /* Amber 400 */
+            --color-dark: #312e81;    /* Indigo 900 */
+            --color-darker: #1e1b4b;  /* Indigo 950 */
+            --color-text: #1f2937;
+        }
+
         html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            overflow-x: hidden;
-            background-color: #FDFBF7; /* 確保背景色 */
-            color: #1f2937;
+            margin: 0; padding: 0; width: 100%; overflow-x: hidden;
+            background-color: var(--color-bg);
+            color: var(--color-text);
             font-family: 'Poppins', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* 2. 圖片限制：這是解決「版面跑掉/照片很大」的關鍵 */
-        img, video, canvas, svg {
-            display: block;
-            max-width: 100% !important; /* 強制圖片不超過螢幕 */
-            height: auto !important;
+        /* 預載入遮罩 (Preloader) */
+        #preloader {
+            position: fixed; inset: 0; background: var(--color-darker); z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+            transition: opacity 0.5s ease-out;
+        }
+        .loader-gear {
+            font-size: 3rem; color: var(--color-primary);
+            animation: spin 2s infinite linear;
         }
 
-        /* 3. 容器限制：模擬 Tailwind 的 container */
-        .max-w-6xl, .max-w-7xl, .container-fallback {
-            width: 100%;
-            max-width: 1150px;
-            margin-left: auto;
-            margin-right: auto;
-            padding-left: 1.5rem;
-            padding-right: 1.5rem;
-            box-sizing: border-box;
-        }
-
-        /* 4. 排版修復：確保在 Flexbox 載入前有基本的堆疊 */
-        section, header, footer {
-            position: relative;
-            box-sizing: border-box;
-            width: 100%;
-        }
-
-        /* 5. 導覽列固定 */
+        /* 導覽列備援樣式 */
         nav {
-            background-color: #fbbf24; /* Amber-400 */
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            width: 100%;
-            box-sizing: border-box;
+            background-color: var(--color-primary);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1rem 1.5rem; position: sticky; top: 0; z-index: 50;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
-        /* 6. 字體設定 */
-        h1, h2, h3, .fun-font { font-family: 'Abril Fatface', cursive; }
+        /* 圖片與容器限制 */
+        img, video, svg { display: block; max-width: 100%; height: auto; }
+        .max-w-6xl { max-width: 1150px; margin: 0 auto; width: 100%; }
         
-        /* ==============================================
-         * 原有的自訂樣式
+        /* 網格備援 (Flex/Grid Fallback) */
+        .grid-cols-1 { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 2rem; }
+        @media (min-width: 768px) {
+            .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .md\:flex-row { flex-direction: row; }
+            .md\:w-1\/2 { width: 50%; }
+        }
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+
+        /* 字體與顏色備援 */
+        h1, h2, h3, .fun-font { font-family: 'Abril Fatface', cursive; }
+        .text-indigo-900 { color: var(--color-dark); }
+        .text-indigo-950 { color: var(--color-darker); }
+        .bg-indigo-900 { background-color: var(--color-dark); }
+        .bg-amber-400 { background-color: var(--color-primary); }
+
+        /* 
+         * ==============================================
+         * 遊戲與動畫樣式
          * ==============================================
          */
-
         .pattern-dots {
             background-image: radial-gradient(#4F46E5 2px, transparent 2px);
             background-size: 20px 20px;
         }
 
-        /* Hacker Mode Styles */
+        /* Hacker Mode */
         body.hacker-mode {
             background-color: #050505 !important;
             font-family: 'Share Tech Mono', monospace !important;
         }
         body.hacker-mode nav { background-color: #000 !important; border-bottom: 2px solid #00ff41; }
-        body.hacker-mode header { background-color: #111 !important; }
-        body.hacker-mode h1 span { color: #00ff41 !important; text-shadow: 0 0 10px #00ff41; }
+        body.hacker-mode * { border-color: #00ff41 !important; }
         body.hacker-mode .text-indigo-900, body.hacker-mode .text-indigo-950 { color: #00ff41 !important; }
-        body.hacker-mode .bg-white { background-color: #000 !important; color: #00ff41 !important; border: 1px solid #00ff41; }
+        body.hacker-mode .bg-white { background-color: #000 !important; color: #00ff41 !important; }
         body.hacker-mode .gear-fragment, body.hacker-mode #gear-lock-system { display: none !important; }
 
-        /* Hacker Mode Cart Fixes */
-        body.hacker-mode #cartContent { background-color: #000 !important; border-left: 2px solid #00ff41; }
-        body.hacker-mode #cartContent * { color: #00ff41 !important; border-color: #00ff41 !important; }
-        body.hacker-mode #cartContent .bg-amber-400 { background-color: #002200 !important; }
-
-        /* Gear Fragments Animation */
+        /* Gear Animations */
         .gear-fragment {
-            position: absolute;
-            color: #fbbf24;
-            opacity: 0.8;
-            cursor: pointer;
-            z-index: 60;
-            font-size: 1.5rem;
+            position: absolute; color: var(--color-primary);
+            cursor: pointer; z-index: 40; font-size: 1.5rem;
             filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
             animation: float-spin 4s infinite linear;
             padding: 10px; margin: -10px;
@@ -121,52 +133,56 @@
             50% { transform: translateY(-5px) rotate(180deg); }
             100% { transform: translateY(0) rotate(360deg); }
         }
+        @keyframes spin { from {transform: rotate(0deg);} to {transform: rotate(360deg);} }
 
-        /* Gear System */
+        /* Gear Lock System */
         #gear-lock-system {
             opacity: 0; pointer-events: none;
-            transform: scale(0.5) translateY(20px);
-            transition: all 0.5s;
+            transform: scale(0.5) translateY(20px); transition: all 0.5s;
         }
         #gear-lock-system.repaired { opacity: 0.6; pointer-events: auto; transform: scale(0.75) translateY(0); }
         #gear-lock-system.active-mode { transform: scale(1.1); opacity: 1; }
         
-        .gear-container {
-            position: relative; width: 70px; height: 70px;
-            display: flex; align-items: center; justify-content: center;
-        }
+        .gear-container { position: relative; width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; }
         .main-gear { font-size: 3rem; color: #6b7280; transition: all 0.3s; z-index: 10; }
-        .gear-container.resonating .main-gear { color: #fbbf24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.6); }
+        .gear-container.resonating .main-gear { color: var(--color-primary); text-shadow: 0 0 10px rgba(251, 191, 36, 0.6); }
         .gear-container.unlocked .main-gear { color: #10b981; animation: spin-unlock 1s ease-out forwards; }
         @keyframes spin-unlock { to { transform: rotate(720deg) scale(0); opacity: 0; } }
-
-        .gear-core { position: absolute; z-index: 20; color: #f3f4f6; font-size: 1rem; pointer-events: none; }
         
         .status-lights { position: absolute; bottom: -5px; display: flex; gap: 4px; z-index: 30; }
         .light { width: 6px; height: 6px; border-radius: 50%; background-color: #d1d5db; border: 1px solid #9ca3af; transition: all 0.3s; }
         .light.active { background-color: #10b981; box-shadow: 0 0 4px #10b981; }
+        .gear-core { position: absolute; z-index: 20; color: #f3f4f6; font-size: 1rem; pointer-events: none; }
 
+        /* UI Elements */
         .scroll-marker { position: absolute; width: 1px; height: 150px; left: 0; pointer-events: none; opacity: 0; }
-
-        /* Toast */
+        
         #toast {
             position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
             background-color: rgba(17, 24, 39, 0.95); color: #fff;
             padding: 12px 24px; border-radius: 50px; font-weight: 600; font-size: 0.9rem;
             z-index: 100; transition: transform 0.3s, opacity 0.3s;
-            border: 1px solid #f59e0b; opacity: 0;
+            border: 1px solid var(--color-primary); opacity: 0;
             width: max-content; max-width: 80vw;
-            display: flex; align-items: center; gap: 8px;
         }
         #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-        /* Cart Modal Fixed for Mobile */
+        /* Cart Animation */
         #cartModal { transition: opacity 0.3s; }
-        #cartContent { transition: transform 0.3s; }
+        #cartContent { transition: transform 0.3s; transform: translateX(100%); }
         .cart-open { transform: translateX(0) !important; }
+        
+        /* Cursor Blinking */
+        .blinking-cursor::after { content: '|'; animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
     </style>
 </head>
 <body class="bg-[#FDFBF7] text-gray-800 flex flex-col min-h-screen relative w-full overflow-x-hidden">
+
+    <!-- 🌀 Preloader -->
+    <div id="preloader">
+        <i class="fas fa-cog loader-gear"></i>
+    </div>
 
     <!-- Sticky Navbar -->
     <nav class="sticky top-0 z-50 w-full py-4 px-6 md:px-12 flex justify-between items-center bg-amber-400 shadow-md">
@@ -186,7 +202,7 @@
 
     <!-- Header Section -->
     <header class="relative w-full bg-amber-400 overflow-hidden pt-10 pb-20 md:pt-20 md:pb-32" id="home">
-        <!-- 背景裝飾 -->
+        <!-- Decor -->
         <div class="absolute -top-20 -right-20 w-64 h-64 bg-amber-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
         <div class="absolute bottom-10 left-10 w-32 h-32 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
 
@@ -208,13 +224,12 @@
             
             <div class="md:w-1/2 relative w-full">
                 <div id="marker-top" class="scroll-marker" style="top: 55%;"></div>
-                <!-- 圖片容器與限制 -->
                 <div class="relative w-full aspect-square md:aspect-auto">
                     <div class="absolute inset-0 bg-indigo-900 rounded-2xl transform rotate-3 translate-x-2 translate-y-2"></div>
-                    <img src="images/WJ.png" alt="Puzzle Box Hero" class="relative rounded-2xl shadow-xl w-full h-full object-cover transform -rotate-2 hover:rotate-0 transition duration-500 border-4 border-white">
-                    <i class="fas fa-cog gear-fragment" style="top: -15px; right: -10px;" 
-                       onclick="collectFragment(this, 'Small Gear')" 
-                       ontouchstart="collectFragment(this, 'Small Gear'); event.preventDefault();"></i>
+                    <!-- 使用 lazy loading 優化 -->
+                    <img src="images/WJ.png" alt="Puzzle Box Hero" loading="eager" class="relative rounded-2xl shadow-xl w-full h-full object-cover transform -rotate-2 hover:rotate-0 transition duration-500 border-4 border-white">
+                    <button class="fas fa-cog gear-fragment absolute bg-transparent border-0" style="top: -15px; right: -10px;" 
+                       onclick="collectFragment(this, 'Small Gear')" aria-label="Collect Gear"></button>
                 </div>
             </div>
         </div>
@@ -222,17 +237,16 @@
 
     <!-- Story Section -->
     <section class="bg-indigo-950 text-white py-24 px-6 pattern-dots relative overflow-hidden">
-        <i class="fas fa-cog gear-fragment" style="bottom: 20px; left: 20px; color: #818cf8;" 
-           onclick="collectFragment(this, 'Drive Shaft')" 
-           ontouchstart="collectFragment(this, 'Drive Shaft'); event.preventDefault();"></i>
+        <button class="fas fa-cog gear-fragment absolute bg-transparent border-0" style="bottom: 20px; left: 20px; color: #818cf8;" 
+           onclick="collectFragment(this, 'Drive Shaft')" aria-label="Collect Drive Shaft"></button>
 
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16 relative z-10">
             <div class="md:w-1/2">
                 <h2 class="text-4xl fun-font mb-6 text-amber-400">The Quiet Moment</h2>
-                <p class="text-indigo-100 text-lg leading-relaxed mb-6 relative">
+                <div class="text-indigo-100 text-lg leading-relaxed mb-6 relative">
                     <div id="marker-middle" class="scroll-marker" style="top: 0;"></div>
-                    When you solve a puzzle box, it's just you and the box, sharing a quiet moment. As you uncover each clue, you feel a little victory that makes you forget everything else.
-                </p>
+                    <p>When you solve a puzzle box, it's just you and the box, sharing a quiet moment. As you uncover each clue, you feel a little victory that makes you forget everything else.</p>
+                </div>
             </div>
             <div class="md:w-1/2 w-full">
                 <div class="bg-indigo-900 p-10 rounded-2xl border border-indigo-800 shadow-2xl">
@@ -258,7 +272,7 @@
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-amber-300 transition duration-300 group flex flex-col w-full">
                 <div class="relative h-[24rem] overflow-hidden bg-gray-50 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-amber-400 text-indigo-900 text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Entry Level</div>
-                    <img src="images/ladybug.jpg" alt="Ladybug" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
+                    <img src="images/ladybug.jpg" loading="lazy" alt="Ladybug" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
                 </div>
                 <div class="p-8 flex-1 flex flex-col">
                     <div class="mb-4">
@@ -278,7 +292,7 @@
                 <div id="marker-bottom" class="scroll-marker" style="top: 50%;"></div>
                 <div class="relative h-[24rem] overflow-hidden bg-gray-50 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Advanced</div>
-                    <img src="images/skyscraper.jpg" alt="Skyscraper" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
+                    <img src="images/skyscraper.jpg" loading="lazy" alt="Skyscraper" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
                 </div>
                 <div class="p-8 flex-1 flex flex-col">
                     <div class="mb-4">
@@ -343,9 +357,8 @@
 
     <!-- Footer -->
     <footer class="bg-indigo-950 text-white py-12 mt-auto relative overflow-hidden">
-        <i class="fas fa-cog gear-fragment" style="bottom: 15px; right: 25px;" 
-           onclick="collectFragment(this, 'Locking Pin')" 
-           ontouchstart="collectFragment(this, 'Locking Pin'); event.preventDefault();"></i>
+        <button class="fas fa-cog gear-fragment absolute bg-transparent border-0" style="bottom: 15px; right: 25px;" 
+           onclick="collectFragment(this, 'Locking Pin')" aria-label="Collect Locking Pin"></button>
         <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
             <div class="text-center md:text-left">
                 <div class="fun-font text-3xl mb-4 text-amber-400">PuzzlerWJ</div>
@@ -416,9 +429,9 @@
         </div>
     </div>
 
-    <!-- 🛒 Shopping Cart Modal (Fixed inset-y-0 for Safari) -->
+    <!-- 🛒 Shopping Cart Modal -->
     <div id="cartModal" class="fixed inset-0 bg-indigo-900/50 backdrop-blur-sm z-[60] hidden opacity-0">
-        <div id="cartContent" class="fixed inset-y-0 right-0 w-full md:w-[400px] bg-white shadow-2xl transform translate-x-full flex flex-col overflow-hidden h-screen max-h-[100dvh]">
+        <div id="cartContent" class="fixed inset-y-0 right-0 w-full md:w-[400px] bg-white shadow-2xl flex flex-col overflow-hidden h-screen max-h-[100dvh]">
             <div class="bg-amber-400 p-5 flex justify-between items-center shadow-sm flex-shrink-0">
                 <h2 class="text-indigo-900 text-xl font-bold fun-font"><i class="fas fa-shopping-bag mr-2"></i>Your Cart</h2>
                 <button onclick="toggleCart()" class="text-indigo-900 hover:text-white transition"><i class="fas fa-times text-2xl"></i></button>
@@ -429,16 +442,13 @@
             </div>
             
             <div class="border-t border-gray-100 p-6 bg-gray-50 flex-shrink-0 pb-[env(safe-area-inset-bottom)]">
-                <!-- Promo Code Section -->
+                <!-- Promo Code -->
                 <div class="mb-4">
                     <div class="flex gap-2">
                         <input type="text" id="promoInput" placeholder="Promo Code" class="flex-1 px-3 py-2 border rounded text-sm focus:outline-none focus:border-amber-400 uppercase">
                         <button onclick="applyPromo()" class="bg-gray-800 text-white px-3 py-2 rounded text-sm font-bold hover:bg-gray-700">Apply</button>
                     </div>
-                    <!-- Rule Note -->
-                    <p class="text-[10px] text-gray-500 mt-1 ml-1">
-                        *Codes only apply to shipping fees. Not applicable if order is over $100 (Free Shipping).
-                    </p>
+                    <p class="text-[10px] text-gray-500 mt-1 ml-1">*Codes apply to shipping only. Free Shipping over $100.</p>
                     <div id="promoMessage" class="text-xs mt-1 hidden font-bold"></div>
                 </div>
 
@@ -473,41 +483,53 @@
     <script src="https://www.paypal.com/sdk/js?client-id=AR1JFEvjsUMt_DyqzDOZhhqtgmTC8BOsTYHVxZLFRMkULFDHl3xtpEEKsYFFsmYFhIPQXC9DaEZjg2Id&currency=USD&locale=en_US"></script>
 
     <script>
-        // --- 🎵 Audio FX Engine (Lazy Load) ---
-        // 修正：不要在全域宣告 AudioContext，這會導致 IG 瀏覽器崩潰
+        // --- 0. Preloader Logic (Anti-FOUC) ---
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            // 延遲一點點確保樣式完全套用
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 500);
+            }, 300);
+        });
+
+        // --- 1. Audio FX Engine (Safe Init) ---
         let audioCtx = null;
 
-        function getAudioContext() {
+        function initAudio() {
             if (!audioCtx) {
                 const AudioContext = window.AudioContext || window.webkitAudioContext;
                 if (AudioContext) {
                     audioCtx = new AudioContext();
+                    // iOS 需要在點擊事件中 resume
+                    if (audioCtx.state === 'suspended') {
+                        audioCtx.resume();
+                    }
                 }
             }
-            if (audioCtx && audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
-            return audioCtx;
         }
+        
+        // Add listeners to initialize audio on first user interaction
+        ['click', 'keydown', 'touchstart'].forEach(evt => 
+            window.addEventListener(evt, initAudio, { once: true })
+        );
 
         function playTone(freq, type, duration, vol=0.1) {
-            const ctx = getAudioContext();
-            if (!ctx) return; // 瀏覽器不支援或初始化失敗，直接忽略
-
+            if (!audioCtx || audioCtx.state !== 'running') return;
             try {
-                const osc = ctx.createOscillator();
-                const gainNode = ctx.createGain();
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
                 osc.type = type; 
                 osc.frequency.value = freq;
                 osc.connect(gainNode);
-                gainNode.connect(ctx.destination);
-                gainNode.gain.setValueAtTime(vol, ctx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+                gainNode.connect(audioCtx.destination);
+                gainNode.gain.setValueAtTime(vol, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
                 osc.start();
-                osc.stop(ctx.currentTime + duration);
-            } catch (e) {
-                console.log("Audio play failed:", e);
-            }
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) { console.log(e); }
         }
 
         const sfx = {
@@ -583,7 +605,7 @@
 
             if (distance < 75) { 
                 if (!isResonating) {
-                    sfx.resonance();
+                    sfx.resonance(); // Now protected by safety check
                     container.classList.add('resonating');
                     systemContainer.classList.add('active-mode'); 
                     gearIcon.classList.remove('fa-lock');
@@ -644,10 +666,8 @@
             container.classList.remove('resonating');
             container.classList.add('unlocked');
             gearIcon.className = 'fas fa-lock-open gear-core';
-            // Show reward only if NOT in hacker mode (as hacker mode hides this game)
             if(!document.body.classList.contains('hacker-mode')){
                 setTimeout(() => {
-                    // Pass Base64 code to showReward for display obfuscation
                     showReward("Mechanism Unlocked!", "You have aligned the gears of fate.", "R0VBUk1BU1RFUg=="); 
                 }, 800);
             }
@@ -660,7 +680,7 @@
             document.getElementById('rewardModal').classList.remove('hidden');
         }
 
-        // --- 🕵️ Konami Code & 7-Tap ---
+        // --- 🕵️ Konami Code & Hacker Mode ---
         const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
         let konamiIndex = 0;
         let currentUser = null; 
@@ -684,9 +704,8 @@
 
         let tapCount = 0;
         let tapTimer;
-        const footerHint = document.getElementById('versionHint');
         
-        footerHint.addEventListener('click', (e) => {
+        document.getElementById('versionHint').addEventListener('click', (e) => {
             e.preventDefault(); 
             tapCount++;
             clearTimeout(tapTimer);
@@ -694,19 +713,18 @@
 
             if (tapCount === 1) showToast("Checking System Version...");
             else if (tapCount === 3) showToast("Accessing Developer Tools...");
-            else if (tapCount === 5) showToast("Warning: System Override Imminent...");
             else if (tapCount === 7) {
                 showNameInputModal();
                 tapCount = 0;
             }
         });
 
-        // 3. Hidden Joy Click Trigger
+        // Joy Trigger
         const joyTrigger = document.getElementById('hiddenJoyTrigger');
         joyTrigger.addEventListener('click', () => {
             if (document.body.classList.contains('hacker-mode')) {
                 sfx.collect();
-                showReward("SYSTEM BYPASSED", `USER: ${currentUser || 'ADMIN'} // ROOT ACCESS`, "aGFja2VyOTk5"); // hacker999
+                showReward("SYSTEM BYPASSED", `USER: ${currentUser || 'ADMIN'} // ROOT ACCESS`, "aGFja2VyOTk5"); 
             } else {
                 sfx.denied();
                 joyTrigger.classList.add('shake-denied');
@@ -714,7 +732,7 @@
             }
         });
 
-        // 4. JOY Typing Logic
+        // JOY Typing Logic
         let keyBuffer = "";
         const secretCode = "JOY";
         document.addEventListener('keydown', (e) => {
@@ -724,7 +742,7 @@
                 if (keyBuffer.includes(secretCode)) {
                     if (document.body.classList.contains('hacker-mode')) {
                         sfx.collect();
-                        showReward("SYSTEM BYPASSED", `USER: ${currentUser || 'ADMIN'} // ROOT ACCESS`, "aGFja2VyOTk5"); // hacker999
+                        showReward("SYSTEM BYPASSED", `USER: ${currentUser || 'ADMIN'} // ROOT ACCESS`, "aGFja2VyOTk5");
                         keyBuffer = "";
                     }
                 }
@@ -733,7 +751,7 @@
 
         function showNameInputModal() {
             document.getElementById('nameModal').classList.remove('hidden');
-            document.getElementById('hackerNameInput').focus();
+            setTimeout(() => document.getElementById('hackerNameInput').focus(), 100);
         }
 
         function confirmHackerMode() {
@@ -751,8 +769,7 @@
             showToast(`Welcome, ${name}. System Override Active.`);
         }
 
-        // --- 🛒 Shopping Cart Logic (With Quantity & Free Shipping Rules) ---
-
+        // --- 🛒 Shopping Cart Logic ---
         let cart = [];
         let appliedDiscount = 0; 
         const BASE_SHIPPING_COST = 9.99;
@@ -814,18 +831,14 @@
             }
         }
 
-        // Promo Code: Plain text check + Shipping rule only
         function applyPromo() {
             const input = document.getElementById('promoInput');
             const msg = document.getElementById('promoMessage');
             const inputCode = input.value.trim().toUpperCase();
             
-            // Check subtotal for Free Shipping rule
             let currentSubtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            
             msg.classList.remove('hidden', 'text-green-600', 'text-red-500', 'text-amber-500');
 
-            // Rule: If already free shipping (>100), block code
             if (currentSubtotal >= 100) {
                 appliedDiscount = 0;
                 msg.innerText = "Shipping is already free! Code not needed.";
@@ -838,18 +851,15 @@
                 appliedDiscount = BASE_SHIPPING_COST; 
                 msg.innerText = "Free Shipping Code applied!"; 
                 msg.classList.add('text-green-600');
-            
             } else if (inputCode === 'GEARMASTER') { 
                 appliedDiscount = 1.99; 
                 msg.innerText = "Shipping discount ($1.99) applied."; 
                 msg.classList.add('text-green-600');
-                
             } else {
                 appliedDiscount = 0; 
                 msg.innerText = "Invalid code."; 
                 msg.classList.add('text-red-500');
             }
-            
             updateCartUI(); 
         }
 
@@ -870,14 +880,11 @@
                 subtotalEl.innerText = '$0.00'; shippingEl.innerText = '$0.00'; totalEl.innerText = '$0.00';
                 discountRow.classList.add('hidden'); 
                 appliedDiscount = 0;
-                document.getElementById('promoMessage').classList.add('hidden');
-                document.getElementById('promoInput').value = '';
                 return;
             }
 
             let subtotal = 0;
             
-            // Render Items with Quantity Buttons
             cart.forEach((item, index) => {
                 const itemTotal = item.price * item.quantity;
                 subtotal += itemTotal;
@@ -903,10 +910,8 @@
                 container.appendChild(itemEl);
             });
 
-            // Calc Shipping
             let shipping = subtotal >= 100 ? 0 : BASE_SHIPPING_COST;
 
-            // Conflict Check: If shipping becomes 0, remove discount
             if (shipping === 0 && appliedDiscount > 0) {
                 appliedDiscount = 0;
                 const msg = document.getElementById('promoMessage');
@@ -918,14 +923,8 @@
             let total = subtotal + shipping - appliedDiscount;
             if (total < 0) total = 0;
 
-            // Update DOM
             subtotalEl.innerText = '$' + subtotal.toFixed(2);
-            
-            if (shipping === 0) {
-                shippingEl.innerHTML = '<span class="text-green-600 font-bold">Free</span>';
-            } else {
-                shippingEl.innerText = '$' + shipping.toFixed(2);
-            }
+            shippingEl.innerHTML = shipping === 0 ? '<span class="text-green-600 font-bold">Free</span>' : '$' + shipping.toFixed(2);
 
             if (appliedDiscount > 0) { 
                 discountRow.classList.remove('hidden'); 
@@ -936,36 +935,29 @@
             
             totalEl.innerText = '$' + total.toFixed(2);
 
-            // PayPal
-            try {
-                if (window.paypal) {
-                    paypal.Buttons({
-                        style: { shape: 'pill', color: 'gold', layout: 'vertical', label: 'checkout' },
-                        createOrder: function(data, actions) {
-                            return actions.order.create({
-                                purchase_units: [{
-                                    description: "PuzzlerWJ Order",
-                                    amount: { 
-                                        currency_code: "USD", 
-                                        value: total.toFixed(2), 
-                                        breakdown: { 
-                                            item_total: { currency_code: "USD", value: subtotal.toFixed(2) }, 
-                                            shipping: { currency_code: "USD", value: shipping.toFixed(2) }, 
-                                            discount: { currency_code: "USD", value: appliedDiscount.toFixed(2) } 
-                                        } 
-                                    }
-                                }]
-                            });
-                        },
-                        onApprove: function(data, actions) {
-                            return actions.order.capture().then(function(details) {
-                                cart = []; saveCart(); updateCartBadge(); toggleCart(); window.location.href = "thankyou.html";
-                            });
-                        }
-                    }).render('#paypal-button-container');
-                }
-            } catch (err) {
-                console.log("PayPal render failed", err);
+            // PayPal SDK
+            if (window.paypal) {
+                paypal.Buttons({
+                    style: { shape: 'pill', color: 'gold', layout: 'vertical', label: 'checkout' },
+                    createOrder: function(data, actions) {
+                        return actions.order.create({
+                            purchase_units: [{
+                                description: "PuzzlerWJ Order",
+                                amount: { 
+                                    currency_code: "USD", 
+                                    value: total.toFixed(2)
+                                    // 注意：正式上線請將價格計算移至後端
+                                }
+                            }]
+                        });
+                    },
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(details) {
+                            cart = []; saveCart(); updateCartBadge(); toggleCart(); 
+                            alert('Thank you for your purchase!');
+                        });
+                    }
+                }).render('#paypal-button-container');
             }
         }
     </script>
