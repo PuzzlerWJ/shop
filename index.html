@@ -28,7 +28,7 @@
         /* --- 🕵️ Hacker Mode Styles --- */
         body.hacker-mode {
             background-color: #050505 !important;
-            /* Update: 移除 filter 以修復 fixed 定位失效的問題 */
+            /* Fix: 移除 filter 以修復 fixed 定位失效的問題 */
             /* filter: contrast(1.2) saturate(1.2); */ 
             font-family: 'Share Tech Mono', monospace !important;
         }
@@ -156,7 +156,9 @@
             40%, 60% { transform: translate3d(4px, 0, 0); }
         }
 
-        /* Update: 針對手機版 (無 Hover) 增加 Hidden Joy 的提示效果 */
+        /* Update: Hidden Joy Styles (Normal/Mobile & Hacker/Global) */
+        
+        /* 1. 一般模式 - 手機版專屬提示 (琥珀色呼吸燈) */
         @media (hover: none) {
             #hiddenJoyTrigger {
                 border-bottom: 2px dashed rgba(255, 255, 255, 0.4);
@@ -171,15 +173,55 @@
                     border-bottom-color: rgba(251, 191, 36, 0.8);
                 }
             }
-            /* Hacker Mode Mobile Pulse */
-            body.hacker-mode #hiddenJoyTrigger {
-                animation: hacker-pulse 2s infinite steps(2, start) !important;
-                border-bottom: 2px dashed #00ff41;
-            }
-            @keyframes hacker-pulse {
-                0%, 100% { background-color: transparent; color: #00ff41; }
-                50% { background-color: #00ff41; color: #000; }
-            }
+        }
+
+        /* 2. 駭客模式 - 全裝置通用風格 (終端機指令) */
+        body.hacker-mode #hiddenJoyTrigger {
+            /* 基礎樣式：綠色終端機文字 */
+            color: #00ff41 !important;
+            background-color: transparent !important;
+            text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+            border-bottom: none !important; 
+            text-decoration: none !important;
+            
+            /* 讓它看起來像個獨立區塊 */
+            display: inline-block;
+            padding: 2px 6px;
+            position: relative;
+            font-family: 'Share Tech Mono', monospace !important;
+            transition: background-color 0.2s;
+        }
+
+        /* 互動：電腦版滑鼠移過去時，增加一點背景光，暗示可點擊 */
+        body.hacker-mode #hiddenJoyTrigger:hover {
+            background-color: rgba(0, 255, 65, 0.15) !important;
+            cursor: pointer;
+        }
+
+        /* 前綴：指令符號 ">" */
+        body.hacker-mode #hiddenJoyTrigger::before {
+            content: '> ';
+            color: #00ff41;
+            font-weight: bold;
+            opacity: 0.8;
+        }
+
+        /* 後綴：閃爍游標 "_" */
+        body.hacker-mode #hiddenJoyTrigger::after {
+            content: '_'; 
+            display: inline-block;
+            margin-left: 2px;
+            color: #00ff41;
+            background-color: #00ff41; 
+            width: 10px;
+            height: 1.1em;
+            vertical-align: text-bottom;
+            animation: terminal-blink 1s step-end infinite;
+        }
+
+        @keyframes terminal-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
         /* --- 🧩 Gear Fragments --- */
@@ -903,13 +945,45 @@
             showToast(`Welcome, ${name}. System Override Active.`);
         }
 
-        // --- 🛒 SHA-256 Validation ---
-        async function digestMessage(message) {
-            const msgUint8 = new TextEncoder().encode(message);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-            return hashHex;
+        // --- 🛒 Promo Code Logic (混淆加密版) ---
+        
+        function generateHash(str) {
+            let hash = 0;
+            if (str.length === 0) return hash;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // Convert to 32bit integer
+            }
+            return hash.toString();
+        }
+
+        function applyPromo() {
+            const input = document.getElementById('promoInput');
+            const msg = document.getElementById('promoMessage');
+            
+            const inputCode = input.value.trim().toUpperCase();
+            const inputHash = generateHash(inputCode);
+            
+            msg.classList.remove('hidden', 'text-green-600', 'text-red-500');
+
+            if (inputHash === '1934720649') { 
+                appliedDiscount = 9.99; 
+                msg.innerText = "Hacker Code applied! $9.99 off."; 
+                msg.classList.add('text-green-600');
+            
+            } else if (inputHash === '-2043666324') { 
+                appliedDiscount = 1.99; 
+                msg.innerText = "Master Code applied! $1.99 off."; 
+                msg.classList.add('text-green-600');
+                
+            } else {
+                appliedDiscount = 0; 
+                msg.innerText = "Invalid code."; 
+                msg.classList.add('text-red-500');
+            }
+            
+            updateCartUI(); 
         }
 
         let cart = [];
@@ -939,28 +1013,6 @@
                 content.classList.remove('cart-open');
                 setTimeout(() => { modal.classList.add('hidden'); }, 300);
             }
-        }
-
-        // Update: 修復折扣碼邏輯，填入正確的 SHA-256 Hash
-        async function applyPromo() {
-            const input = document.getElementById('promoInput');
-            const msg = document.getElementById('promoMessage');
-            const inputCode = input.value.trim().toUpperCase();
-            msg.classList.remove('hidden', 'text-green-600', 'text-red-500');
-
-            const hash = await digestMessage(inputCode);
-
-            // Valid Hash for "HACKER999"
-            if (hash === '2443049156f0923d3878b975e114a229a4358a9d0f4d382d5df9a4632832599c') {
-                appliedDiscount = 9.99; msg.innerText = "Hacker Code applied! $9.99 off."; msg.classList.add('text-green-600');
-            
-            // Valid Hash for "GEARMASTER"
-            } else if (hash === 'f7a9e24777ec23212c54d7a350bc5bea5477fdbb28184d6775e1b1e05cdd6534') {
-                appliedDiscount = 1.99; msg.innerText = "Master Code applied! $1.99 off."; msg.classList.add('text-green-600');
-            } else {
-                appliedDiscount = 0; msg.innerText = "Invalid code."; msg.classList.add('text-red-500');
-            }
-            updateCartUI(); 
         }
 
         function updateCartUI() {
