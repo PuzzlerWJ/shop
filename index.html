@@ -2,7 +2,6 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <!-- Update: 加入 viewport-fit=cover 以支援現代手機的全螢幕顯示 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>PuzzlerWJ | The Broken Mechanism</title>
     
@@ -28,8 +27,6 @@
         /* --- 🕵️ Hacker Mode Styles --- */
         body.hacker-mode {
             background-color: #050505 !important;
-            /* Fix: 移除 filter 以修復 fixed 定位失效的問題 */
-            /* filter: contrast(1.2) saturate(1.2); */ 
             font-family: 'Share Tech Mono', monospace !important;
         }
         body.hacker-mode h1, body.hacker-mode h2, body.hacker-mode h3, body.hacker-mode .fun-font {
@@ -96,7 +93,7 @@
             color: #00ff41;
         }
         body.hacker-mode #cartContent .bg-amber-400 {
-            background-color: #003300 !important; /* Dark Green Header */
+            background-color: #003300 !important;
             color: #00ff41 !important;
             border-bottom: 1px solid #00ff41;
         }
@@ -140,11 +137,18 @@
         }
         @keyframes blink { 50% { opacity: 0; } }
 
-        /* --- 🕹️ Hidden Joy Trigger & Shake Animation --- */
+        /* --- 🕹️ Hidden Joy Trigger (Modified for Request #1) --- */
+        /* 一般模式（含手機）：無動畫、無虛線，僅保留手型游標暗示 */
         #hiddenJoyTrigger {
             cursor: pointer;
             display: inline-block;
+            transition: color 0.3s;
         }
+        /* 滑鼠移上去稍微變色，作為唯一的視覺回饋 */
+        #hiddenJoyTrigger:hover {
+            color: #fbbf24; 
+        }
+
         .shake-denied {
             animation: shake-hard 0.4s cubic-bezier(.36,.07,.19,.97) both;
             color: #ef4444 !important;
@@ -156,57 +160,24 @@
             40%, 60% { transform: translate3d(4px, 0, 0); }
         }
 
-        /* Update: Hidden Joy Styles (Normal/Mobile & Hacker/Global) */
-        
-        /* 1. 一般模式 - 手機版專屬提示 (琥珀色呼吸燈) */
-        @media (hover: none) {
-            #hiddenJoyTrigger {
-                border-bottom: 2px dashed rgba(255, 255, 255, 0.4);
-                padding-bottom: 3px;
-                animation: secret-pulse 3s infinite ease-in-out;
-            }
-            @keyframes secret-pulse {
-                0%, 100% { color: white; text-shadow: none; }
-                50% { 
-                    color: #fbbf24;
-                    text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
-                    border-bottom-color: rgba(251, 191, 36, 0.8);
-                }
-            }
-        }
-
-        /* 2. 駭客模式 - 全裝置通用風格 (終端機指令) */
+        /* Hacker Mode Only: Terminal Style */
         body.hacker-mode #hiddenJoyTrigger {
-            /* 基礎樣式：綠色終端機文字 */
             color: #00ff41 !important;
             background-color: transparent !important;
             text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
-            border-bottom: none !important; 
-            text-decoration: none !important;
-            
-            /* 讓它看起來像個獨立區塊 */
-            display: inline-block;
             padding: 2px 6px;
             position: relative;
             font-family: 'Share Tech Mono', monospace !important;
-            transition: background-color 0.2s;
         }
-
-        /* 互動：電腦版滑鼠移過去時，增加一點背景光，暗示可點擊 */
         body.hacker-mode #hiddenJoyTrigger:hover {
             background-color: rgba(0, 255, 65, 0.15) !important;
-            cursor: pointer;
         }
-
-        /* 前綴：指令符號 ">" */
         body.hacker-mode #hiddenJoyTrigger::before {
             content: '> ';
             color: #00ff41;
             font-weight: bold;
             opacity: 0.8;
         }
-
-        /* 後綴：閃爍游標 "_" */
         body.hacker-mode #hiddenJoyTrigger::after {
             content: '_'; 
             display: inline-block;
@@ -218,7 +189,6 @@
             vertical-align: text-bottom;
             animation: terminal-blink 1s step-end infinite;
         }
-
         @keyframes terminal-blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
@@ -363,6 +333,7 @@
             opacity: 0; 
         }
 
+        /* 🔔 Toast Fix for Mobile "Message" Issue (Request #3) */
         #toast {
             position: fixed;
             bottom: 20px;
@@ -375,16 +346,19 @@
             font-size: 0.875rem;
             font-weight: 600;
             z-index: 100;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
             border: 1px solid #f59e0b;
             display: flex;
             align-items: center;
             gap: 10px;
             pointer-events: none;
+            opacity: 0; /* 預設完全透明，避免看到內容 */
         }
-        #toast.show { transform: translateX(-50%) translateY(0); }
+        #toast.show { 
+            transform: translateX(-50%) translateY(0); 
+            opacity: 1; /* 顯示時才變得不透明 */
+        }
 
-        /* Update: 針對手機版 Safari 網址列遮擋問題的修復 */
         @media (max-width: 768px) {
             #toast {
                 bottom: 90px !important;
@@ -392,7 +366,6 @@
             }
         }
         
-        /* Hacker Toast */
         body.hacker-mode #toast {
             background-color: #000;
             border: 1px solid #00ff41;
@@ -625,8 +598,9 @@
         </div>
     </div>
 
-    <!-- 🔔 Toast -->
-    <div id="toast"><i class="fas fa-check-circle text-amber-400"></i> <span id="toastMsg">Message</span></div>
+    <!-- 🔔 Toast (Updated for Mobile Issue) -->
+    <!-- 預設移除內部文字，並透過 opacity-0 隱藏 -->
+    <div id="toast" class="opacity-0"><i class="fas fa-check-circle text-amber-400"></i> <span id="toastMsg"></span></div>
 
     <!-- 📟 Name Input Modal -->
     <div id="nameModal" class="hidden fixed inset-0 bg-black z-[80] flex items-center justify-center font-mono">
@@ -945,34 +919,27 @@
             showToast(`Welcome, ${name}. System Override Active.`);
         }
 
-        // --- 🛒 Promo Code Logic (混淆加密版) ---
+        // --- 🛒 Promo Code Logic (Request #2: 明碼 + 註解) ---
         
-        function generateHash(str) {
-            let hash = 0;
-            if (str.length === 0) return hash;
-            for (let i = 0; i < str.length; i++) {
-                const char = str.charCodeAt(i);
-                hash = ((hash << 5) - hash) + char;
-                hash = hash & hash; // Convert to 32bit integer
-            }
-            return hash.toString();
-        }
-
         function applyPromo() {
             const input = document.getElementById('promoInput');
             const msg = document.getElementById('promoMessage');
             
             const inputCode = input.value.trim().toUpperCase();
-            const inputHash = generateHash(inputCode);
             
             msg.classList.remove('hidden', 'text-green-600', 'text-red-500');
 
-            if (inputHash === '1934720649') { 
+            // Hello Source Code Reader! 
+            // Thank you for digging deep and finding these secrets.
+            // Please support PuzzlerWJ so I can keep making cool stuff! :)
+            // Codes updated to be easily readable:
+            
+            if (inputCode === 'HACKER999') { 
                 appliedDiscount = 9.99; 
                 msg.innerText = "Hacker Code applied! $9.99 off."; 
                 msg.classList.add('text-green-600');
             
-            } else if (inputHash === '-2043666324') { 
+            } else if (inputCode === 'GEARMASTER') { 
                 appliedDiscount = 1.99; 
                 msg.innerText = "Master Code applied! $1.99 off."; 
                 msg.classList.add('text-green-600');
