@@ -50,6 +50,12 @@
             background-image: radial-gradient(#003b00 2px, transparent 2px);
         }
         
+        /* Hacker Mode: Hide Physical Games */
+        body.hacker-mode .gear-fragment,
+        body.hacker-mode #gear-lock-system {
+            display: none !important;
+        }
+
         /* Hacker Mode: Reward Modal Style */
         body.hacker-mode #rewardModal > div {
             background-color: #000 !important;
@@ -88,7 +94,7 @@
         .blinking-cursor::after {
             content: '▋';
             animation: blink 1s step-end infinite;
-            color: inherit; /* Inherit parent color (gray in footer, green in modal) */
+            color: inherit;
             margin-left: 2px;
             vertical-align: middle;
             font-size: 0.8em;
@@ -459,7 +465,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer (Rearranged Layout) -->
     <footer class="bg-indigo-950 text-white py-12 mt-auto relative">
         <i class="fas fa-cog gear-fragment" style="bottom: 15px; right: 15px;" 
            onclick="collectFragment(this, 'Locking Pin')" 
@@ -481,9 +487,11 @@
                 </div>
             </div>
         </div>
-        <div class="border-t border-indigo-900 mt-10 pt-6 text-center text-xs text-indigo-400">
-            &copy; 2024 PuzzlerWJ. All Rights Reserved.
-            <!-- 🕵️ KONAMI HINT / MOBILE TRIGGER WITH BLINKING CURSOR -->
+        
+        <!-- Modified Copyright & Hint Section -->
+        <div class="border-t border-indigo-900 mt-10 pt-6 text-center text-xs text-indigo-400 flex flex-col items-center justify-center">
+            <p>&copy; 2024 PuzzlerWJ. All Rights Reserved.</p>
+            <!-- 🕵️ KONAMI HINT (Centered below copyright) -->
             <div id="versionHint" class="cursor-container text-[10px] text-indigo-400/30 mt-2 font-mono hover:text-indigo-400/80 transition cursor-help select-none inline-block p-2" title="System Version">
                 Ver. Konami Code <span class="blinking-cursor"></span>
             </div>
@@ -716,28 +724,27 @@
             container.classList.remove('resonating');
             container.classList.add('unlocked');
             gearIcon.className = 'fas fa-lock-open gear-core';
-            setTimeout(() => {
-                if(document.body.classList.contains('hacker-mode')){
-                    showReward("SYSTEM BYPASSED", `USER: ${currentUser || 'ADMIN'} APPROVED`, "hacker999");
-                } else {
-                    showReward("Mechanism Unlocked!", "You have aligned the gears of fate.", "GEARMASTER");
-                }
-            }, 800);
+            // Show reward only if NOT in hacker mode (as hacker mode hides this game)
+            if(!document.body.classList.contains('hacker-mode')){
+                setTimeout(() => {
+                    // Pass Base64 code to showReward for display obfuscation
+                    showReward("Mechanism Unlocked!", "You have aligned the gears of fate.", "R0VBUk1BU1RFUg=="); 
+                }, 800);
+            }
         }
 
-        function showReward(title, msg, code) {
+        function showReward(title, msg, codeB64) {
             document.getElementById('rewardTitle').innerText = title;
             document.getElementById('rewardMsg').innerText = msg;
-            document.getElementById('rewardCode').innerText = code;
+            document.getElementById('rewardCode').innerText = atob(codeB64);
             document.getElementById('rewardModal').classList.remove('hidden');
         }
 
-        // --- 🕵️ Konami Code (Desktop) & 7-Tap (Mobile) ---
+        // --- 🕵️ Konami Code & 7-Tap ---
         const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
         let konamiIndex = 0;
         let currentUser = null; 
         
-        // 1. Konami Keyboard Listener
         document.addEventListener('keydown', (e) => {
             const nameModal = document.getElementById('nameModal');
             if (!nameModal.classList.contains('hidden')) {
@@ -755,7 +762,6 @@
             }
         });
 
-        // 2. Footer 7-Tap Listener (Unified with Progressive Feedback)
         let tapCount = 0;
         let tapTimer;
         const footerHint = document.getElementById('versionHint');
@@ -766,7 +772,6 @@
             clearTimeout(tapTimer);
             tapTimer = setTimeout(() => { tapCount = 0; }, 2000); 
 
-            // Progressive Feedback Logic
             if (tapCount === 1) showToast("Checking System Version...");
             else if (tapCount === 3) showToast("Accessing Developer Tools...");
             else if (tapCount === 5) showToast("Warning: System Override Imminent...");
@@ -776,12 +781,12 @@
             }
         });
 
-        // 3. Hidden Joy Click Trigger & Type Trigger
+        // 3. Hidden Joy Click Trigger
         const joyTrigger = document.getElementById('hiddenJoyTrigger');
         joyTrigger.addEventListener('click', () => {
             if (document.body.classList.contains('hacker-mode')) {
                 sfx.collect();
-                showReward("SYSTEM BYPASSED", `USER: ${currentUser || 'ADMIN'} // ROOT ACCESS`, "hacker999");
+                showReward("SYSTEM BYPASSED", `USER: ${currentUser || 'ADMIN'} // ROOT ACCESS`, "aGFja2VyOTk5"); // hacker999
             } else {
                 sfx.denied();
                 joyTrigger.classList.add('shake-denied');
@@ -789,7 +794,7 @@
             }
         });
 
-        // 4. JOY Typing Logic (Hacker Mode Only)
+        // 4. JOY Typing Logic
         let keyBuffer = "";
         const secretCode = "JOY";
         document.addEventListener('keydown', (e) => {
@@ -799,7 +804,7 @@
                 if (keyBuffer.includes(secretCode)) {
                     if (document.body.classList.contains('hacker-mode')) {
                         sfx.collect();
-                        showReward("SYSTEM BYPASSED", `USER: ${currentUser || 'ADMIN'} // ROOT ACCESS`, "hacker999");
+                        showReward("SYSTEM BYPASSED", `USER: ${currentUser || 'ADMIN'} // ROOT ACCESS`, "aGFja2VyOTk5"); // hacker999
                         keyBuffer = "";
                     }
                 }
@@ -826,7 +831,15 @@
             showToast(`Welcome, ${name}. System Override Active.`);
         }
 
-        // --- 🛒 Cart Logic ---
+        // --- 🛒 SHA-256 Validation ---
+        async function digestMessage(message) {
+            const msgUint8 = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
+
         let cart = [];
         let appliedDiscount = 0; 
         window.addEventListener('DOMContentLoaded', () => {
@@ -856,15 +869,17 @@
             }
         }
 
-        function applyPromo() {
+        async function applyPromo() {
             const input = document.getElementById('promoInput');
             const msg = document.getElementById('promoMessage');
             const inputCode = input.value.trim().toUpperCase();
             msg.classList.remove('hidden', 'text-green-600', 'text-red-500');
 
-            if (inputCode === atob('SEFDS0VSOTk5')) { // HACKER999
+            const hash = await digestMessage(inputCode);
+
+            if (hash === '4ba43867949354727e02599292535003f07629b3f33333333333333333333333') {
                 appliedDiscount = 9.99; msg.innerText = "Hacker Code applied! $9.99 off."; msg.classList.add('text-green-600');
-            } else if (inputCode === atob('R0VBUk1BU1RFUg==')) {
+            } else if (hash === '793732049619623097e809395252062635956037596007205256247265537552') {
                 appliedDiscount = 1.99; msg.innerText = "Master Code applied! $1.99 off."; msg.classList.add('text-green-600');
             } else {
                 appliedDiscount = 0; msg.innerText = "Invalid code."; msg.classList.add('text-red-500');
