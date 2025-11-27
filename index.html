@@ -138,7 +138,7 @@
         }
         @keyframes blink { 50% { opacity: 0; } }
 
-        /* --- 🕹️ Hidden Joy Trigger (Request 1: No animation/underline) --- */
+        /* --- 🕹️ Hidden Joy Trigger --- */
         #hiddenJoyTrigger {
             cursor: pointer;
             display: inline-block;
@@ -333,7 +333,7 @@
             opacity: 0; 
         }
 
-        /* 🔔 Toast Fix (Request 3: Hide completely when not used) */
+        /* 🔔 Toast Fix */
         #toast {
             position: fixed;
             bottom: 20px;
@@ -552,9 +552,10 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-indigo-950 text-white py-12 mt-auto relative">
-        <i class="fas fa-cog gear-fragment" style="bottom: 15px; right: 15px;" 
+    <!-- Footer (Fix: Added overflow-hidden to prevent scrollbar flicker) -->
+    <footer class="bg-indigo-950 text-white py-12 mt-auto relative overflow-hidden">
+        <!-- Fix: Moved gear slightly left (right: 25px) to further prevent overflow -->
+        <i class="fas fa-cog gear-fragment" style="bottom: 15px; right: 25px;" 
            onclick="collectFragment(this, 'Locking Pin')" 
            ontouchstart="collectFragment(this, 'Locking Pin'); event.preventDefault();"></i>
         <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
