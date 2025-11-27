@@ -380,7 +380,7 @@
 
                 if (platform === 'copy') {
                     navigator.clipboard.writeText(fullMessage).then(() => {
-                        // 修改這裡：在彈窗中顯示剛剛複製的具體內容
+                        // 在彈窗中顯示剛剛複製的具體內容
                         alert(`已複製以下內容到剪貼簿 (Copied):\n\n"${fullMessage}"`);
                     });
                 }
@@ -489,27 +489,6 @@
         };
 
         Game.init();
-        
-        // --- 🛠️ Debug Function ---
-        function debugWin() {
-            console.log("Cheating...");
-            // 1. 強制對齊所有齒輪
-            Game.pos = [0, 0, 0];
-            Game.render();
-            
-            // 2. 更新狀態讓核心激活 (亮起)
-            Game.check();
-            
-            // 3. 延遲一點點後自動觸發勝利 (模擬點擊核心)
-            setTimeout(() => {
-                Game.triggerWin();
-            }, 100);
-        }
     </script>
-
-    <!-- 🛠️ Debug Button (測試用，正式上線可移除) -->
-    <button onclick="debugWin()" class="fixed bottom-4 left-4 z-[200] bg-red-600 text-white text-xs px-3 py-2 rounded font-sans opacity-50 hover:opacity-100 hover:scale-105 transition">
-        [DEBUG] 一鍵過關
-    </button>
 </body>
 </html>
