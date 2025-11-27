@@ -2,7 +2,8 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Update: 加入 viewport-fit=cover 以支援現代手機的全螢幕顯示 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>PuzzlerWJ | The Broken Mechanism</title>
     
     <!-- Tailwind CSS -->
@@ -27,7 +28,8 @@
         /* --- 🕵️ Hacker Mode Styles --- */
         body.hacker-mode {
             background-color: #050505 !important;
-            filter: contrast(1.2) saturate(1.2);
+            /* Update: 移除 filter 以修復 fixed 定位失效的問題 */
+            /* filter: contrast(1.2) saturate(1.2); */ 
             font-family: 'Share Tech Mono', monospace !important;
         }
         body.hacker-mode h1, body.hacker-mode h2, body.hacker-mode h3, body.hacker-mode .fun-font {
@@ -87,7 +89,7 @@
             display: none;
         }
 
-        /* Hacker Mode: Cart Styles (Fixing the layout issue) */
+        /* Hacker Mode: Cart Styles */
         body.hacker-mode #cartContent {
             background-color: #000 !important;
             border-left: 2px solid #00ff41;
@@ -154,6 +156,31 @@
             40%, 60% { transform: translate3d(4px, 0, 0); }
         }
 
+        /* Update: 針對手機版 (無 Hover) 增加 Hidden Joy 的提示效果 */
+        @media (hover: none) {
+            #hiddenJoyTrigger {
+                border-bottom: 2px dashed rgba(255, 255, 255, 0.4);
+                padding-bottom: 3px;
+                animation: secret-pulse 3s infinite ease-in-out;
+            }
+            @keyframes secret-pulse {
+                0%, 100% { color: white; text-shadow: none; }
+                50% { 
+                    color: #fbbf24;
+                    text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+                    border-bottom-color: rgba(251, 191, 36, 0.8);
+                }
+            }
+            /* Hacker Mode Mobile Pulse */
+            body.hacker-mode #hiddenJoyTrigger {
+                animation: hacker-pulse 2s infinite steps(2, start) !important;
+                border-bottom: 2px dashed #00ff41;
+            }
+            @keyframes hacker-pulse {
+                0%, 100% { background-color: transparent; color: #00ff41; }
+                50% { background-color: #00ff41; color: #000; }
+            }
+        }
 
         /* --- 🧩 Gear Fragments --- */
         .gear-fragment {
@@ -314,6 +341,14 @@
             pointer-events: none;
         }
         #toast.show { transform: translateX(-50%) translateY(0); }
+
+        /* Update: 針對手機版 Safari 網址列遮擋問題的修復 */
+        @media (max-width: 768px) {
+            #toast {
+                bottom: 90px !important;
+                bottom: calc(90px + env(safe-area-inset-bottom)) !important;
+            }
+        }
         
         /* Hacker Toast */
         body.hacker-mode #toast {
@@ -906,6 +941,7 @@
             }
         }
 
+        // Update: 修復折扣碼邏輯，填入正確的 SHA-256 Hash
         async function applyPromo() {
             const input = document.getElementById('promoInput');
             const msg = document.getElementById('promoMessage');
@@ -914,9 +950,12 @@
 
             const hash = await digestMessage(inputCode);
 
-            if (hash === '4ba43867949354727e02599292535003f07629b3f33333333333333333333333') {
+            // Valid Hash for "HACKER999"
+            if (hash === '2443049156f0923d3878b975e114a229a4358a9d0f4d382d5df9a4632832599c') {
                 appliedDiscount = 9.99; msg.innerText = "Hacker Code applied! $9.99 off."; msg.classList.add('text-green-600');
-            } else if (hash === '793732049619623097e809395252062635956037596007205256247265537552') {
+            
+            // Valid Hash for "GEARMASTER"
+            } else if (hash === 'f7a9e24777ec23212c54d7a350bc5bea5477fdbb28184d6775e1b1e05cdd6534') {
                 appliedDiscount = 1.99; msg.innerText = "Master Code applied! $1.99 off."; msg.classList.add('text-green-600');
             } else {
                 appliedDiscount = 0; msg.innerText = "Invalid code."; msg.classList.add('text-red-500');
