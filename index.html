@@ -77,22 +77,39 @@
         body.hacker-mode .text-indigo-900 {
             color: #a3e635 !important;
         }
-        /* Hide standard emoji in hacker mode */
         body.hacker-mode .emoji-icon {
             display: none;
         }
 
-        /* --- 📟 Terminal Input Modal --- */
-        #nameModal {
+        /* --- 📟 Terminal / Blinking Cursor --- */
+        #nameModal, .cursor-container {
             font-family: 'Share Tech Mono', monospace;
         }
         .blinking-cursor::after {
             content: '▋';
             animation: blink 1s step-end infinite;
-            color: #00ff41;
+            color: inherit; /* Inherit parent color (gray in footer, green in modal) */
             margin-left: 2px;
+            vertical-align: middle;
+            font-size: 0.8em;
         }
         @keyframes blink { 50% { opacity: 0; } }
+
+        /* --- 🕹️ Hidden Joy Trigger & Shake Animation --- */
+        #hiddenJoyTrigger {
+            cursor: pointer;
+            display: inline-block;
+        }
+        .shake-denied {
+            animation: shake-hard 0.4s cubic-bezier(.36,.07,.19,.97) both;
+            color: #ef4444 !important;
+        }
+        @keyframes shake-hard {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
 
 
         /* --- 🧩 Gear Fragments --- */
@@ -143,7 +160,6 @@
             transform: scale(1.1);
             opacity: 1;
         }
-        /* Hacker Mode Gear */
         body.hacker-mode .main-gear {
             color: #111 !important;
             border: 1px dashed #00ff41;
@@ -199,7 +215,6 @@
             background-color: #10b981;
             box-shadow: 0 0 4px #10b981;
         }
-        /* Hacker Mode Lights */
         body.hacker-mode .light.active {
             background-color: #00ff41;
             box-shadow: 0 0 8px #00ff41;
@@ -303,7 +318,7 @@
                     Handcrafted in Taiwan
                 </div>
                 <h1 class="text-5xl md:text-7xl text-indigo-950 leading-tight mb-6 drop-shadow-sm">
-                    Unlock the <br> <span class="text-white">Hidden Joy.</span>
+                    Unlock the <br> <span class="text-white" id="hiddenJoyTrigger">Hidden Joy.</span>
                 </h1>
                 <p class="text-indigo-900 text-lg md:text-xl font-medium mb-8 max-w-md mx-auto md:mx-0">
                     "Puzzle is like a life, brimming with beauty."
@@ -468,9 +483,10 @@
         </div>
         <div class="border-t border-indigo-900 mt-10 pt-6 text-center text-xs text-indigo-400">
             &copy; 2024 PuzzlerWJ. All Rights Reserved.
-            <!-- 🕵️ KONAMI HINT START -->
-            <div class="text-[10px] text-indigo-400/30 mt-2 font-mono hover:text-indigo-400/80 transition cursor-help" title="Try the classic code">Ver. Konami Code</div>
-            <!-- 🕵️ KONAMI HINT END -->
+            <!-- 🕵️ KONAMI HINT / MOBILE TRIGGER WITH BLINKING CURSOR -->
+            <div id="versionHint" class="cursor-container text-[10px] text-indigo-400/30 mt-2 font-mono hover:text-indigo-400/80 transition cursor-help select-none inline-block p-2" title="System Version">
+                Ver. Konami Code <span class="blinking-cursor"></span>
+            </div>
         </div>
     </footer>
 
@@ -551,9 +567,8 @@
     <script src="https://www.paypal.com/sdk/js?client-id=AR1JFEvjsUMt_DyqzDOZhhqtgmTC8BOsTYHVxZLFRMkULFDHl3xtpEEKsYFFsmYFhIPQXC9DaEZjg2Id&currency=USD&locale=en_US"></script>
 
     <script>
-        // --- 🎵 Audio FX Engine (Web Audio API) ---
+        // --- 🎵 Audio FX Engine ---
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        
         function playTone(freq, type, duration, vol=0.1) {
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator();
@@ -567,22 +582,13 @@
             osc.start();
             osc.stop(audioCtx.currentTime + duration);
         }
-
         const sfx = {
             collect: () => playTone(880, 'sine', 0.1),
             resonance: () => playTone(150, 'square', 0.1, 0.05),
-            unlock: () => { 
-                playTone(440, 'triangle', 0.3); 
-                setTimeout(() => playTone(554, 'triangle', 0.3), 100);
-                setTimeout(() => playTone(659, 'triangle', 0.5), 200);
-            },
-            hacker: () => { 
-                playTone(100, 'sawtooth', 0.5);
-                setTimeout(() => playTone(200, 'sawtooth', 0.5), 100);
-                setTimeout(() => playTone(400, 'sawtooth', 0.5), 200);
-            }
+            unlock: () => { playTone(440, 'triangle', 0.3); setTimeout(() => playTone(554, 'triangle', 0.3), 100); setTimeout(() => playTone(659, 'triangle', 0.5), 200); },
+            hacker: () => { playTone(100, 'sawtooth', 0.5); setTimeout(() => playTone(200, 'sawtooth', 0.5), 100); setTimeout(() => playTone(400, 'sawtooth', 0.5), 200); },
+            denied: () => { playTone(150, 'sawtooth', 0.2); setTimeout(() => playTone(100, 'sawtooth', 0.2), 100); } 
         };
-
 
         // --- 🧩 Part 1: Fragment Collection ---
         let fragmentsFound = 0;
@@ -591,11 +597,9 @@
 
         function collectFragment(element, partName) {
             if (element.classList.contains('fragment-found')) return;
-            
             sfx.collect(); 
             element.classList.add('fragment-found');
             fragmentsFound++;
-
             if (fragmentsFound < totalFragments) {
                 showToast(`Found: ${partName} (${fragmentsFound}/${totalFragments})`);
             } else {
@@ -619,17 +623,12 @@
             showToast("Mechanism Repaired. System Online.");
         }
 
-        // --- ⚙️ Part 2: Trinity Lock (Hard Mode) ---
+        // --- ⚙️ Part 2: Trinity Lock ---
         const gear = document.getElementById('mainGear');
         const systemContainer = document.getElementById('gear-lock-system');
         const container = document.querySelector('.gear-container');
         const gearIcon = document.getElementById('gearIcon');
-        const lights = [
-            document.getElementById('light-1'), 
-            document.getElementById('light-2'), 
-            document.getElementById('light-3')
-        ];
-        
+        const lights = [ document.getElementById('light-1'), document.getElementById('light-2'), document.getElementById('light-3') ];
         const targets = [{ id: 'marker-middle' }, { id: 'marker-top' }, { id: 'marker-bottom' }];
         let currentStage = 0; 
         let isResonating = false; 
@@ -733,22 +732,18 @@
             document.getElementById('rewardModal').classList.remove('hidden');
         }
 
-        // --- 🕵️ Konami Code, Name Input, & JOY ---
+        // --- 🕵️ Konami Code (Desktop) & 7-Tap (Mobile) ---
         const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
         let konamiIndex = 0;
-        let keyBuffer = "";
-        const secretCode = "JOY";
-        let currentUser = null; // Store personalized name
-
+        let currentUser = null; 
+        
+        // 1. Konami Keyboard Listener
         document.addEventListener('keydown', (e) => {
-            // Name Modal Logic
             const nameModal = document.getElementById('nameModal');
             if (!nameModal.classList.contains('hidden')) {
                 if (e.key === 'Enter') confirmHackerMode();
                 return;
             }
-
-            // Konami Check
             if (e.key === konamiCode[konamiIndex]) {
                 konamiIndex++;
                 if (konamiIndex === konamiCode.length) {
@@ -758,14 +753,50 @@
             } else {
                 konamiIndex = 0;
             }
+        });
 
-            // JOY Check (Only in Hacker Mode)
+        // 2. Footer 7-Tap Listener (Unified with Progressive Feedback)
+        let tapCount = 0;
+        let tapTimer;
+        const footerHint = document.getElementById('versionHint');
+        
+        footerHint.addEventListener('click', (e) => {
+            e.preventDefault(); 
+            tapCount++;
+            clearTimeout(tapTimer);
+            tapTimer = setTimeout(() => { tapCount = 0; }, 2000); 
+
+            // Progressive Feedback Logic
+            if (tapCount === 1) showToast("Checking System Version...");
+            else if (tapCount === 3) showToast("Accessing Developer Tools...");
+            else if (tapCount === 5) showToast("Warning: System Override Imminent...");
+            else if (tapCount === 7) {
+                showNameInputModal();
+                tapCount = 0;
+            }
+        });
+
+        // 3. Hidden Joy Click Trigger & Type Trigger
+        const joyTrigger = document.getElementById('hiddenJoyTrigger');
+        joyTrigger.addEventListener('click', () => {
+            if (document.body.classList.contains('hacker-mode')) {
+                sfx.collect();
+                showReward("SYSTEM BYPASSED", `USER: ${currentUser || 'ADMIN'} // ROOT ACCESS`, "hacker999");
+            } else {
+                sfx.denied();
+                joyTrigger.classList.add('shake-denied');
+                setTimeout(() => joyTrigger.classList.remove('shake-denied'), 400);
+            }
+        });
+
+        // 4. JOY Typing Logic (Hacker Mode Only)
+        let keyBuffer = "";
+        const secretCode = "JOY";
+        document.addEventListener('keydown', (e) => {
             if (e.key.length === 1 && /[a-zA-Z]/.test(e.key)) {
                 keyBuffer += e.key.toUpperCase();
                 if (keyBuffer.length > 10) keyBuffer = keyBuffer.slice(-5);
-                
                 if (keyBuffer.includes(secretCode)) {
-                    // Only trigger if Hacker Mode is active
                     if (document.body.classList.contains('hacker-mode')) {
                         sfx.collect();
                         showReward("SYSTEM BYPASSED", `USER: ${currentUser || 'ADMIN'} // ROOT ACCESS`, "hacker999");
@@ -783,7 +814,6 @@
         function confirmHackerMode() {
             const inputName = document.getElementById('hackerNameInput').value.trim();
             currentUser = inputName ? inputName.toUpperCase() : "UNKNOWN";
-            
             document.getElementById('nameModal').classList.add('hidden');
             activateHackerMode(currentUser);
         }
@@ -791,11 +821,8 @@
         function activateHackerMode(name) {
             sfx.hacker();
             document.body.classList.add('hacker-mode');
-            
-            // Personalize Logo
             const logo = document.getElementById('brandLogo');
             logo.innerText = `${name} // SYSTEM`;
-            
             showToast(`Welcome, ${name}. System Override Active.`);
         }
 
@@ -835,22 +862,7 @@
             const inputCode = input.value.trim().toUpperCase();
             msg.classList.remove('hidden', 'text-green-600', 'text-red-500');
 
-            /* 
-             * 🕵️ Hey there, Smart Developer!
-             * I see you checking the source code. Yes, you found the logic below!
-             * You might have cracked the code, but skipping the mechanical puzzle misses half the fun.
-             * We are a small handcrafted business, so your support means the world to us.
-             * The discount here is just a small token ($1.99 off), but we hope you enjoy the product! 🧩
-             */
-
-            // Codes are obfuscated with Base64 to prevent casual peeking
-            // PUZZLER99 -> UFVaWkxFUjk5 ($0.99)
-            // HACKER999 -> SEFDS0VSOTk5 ($9.99)
-            // GEARMASTER -> R0VBUk1BU1RFUg== ($1.99)
-
-            if (inputCode === atob('UFVaWkxFUjk5')) {
-                appliedDiscount = 0.99; msg.innerText = "Code applied! $0.99 off."; msg.classList.add('text-green-600');
-            } else if (inputCode === atob('SEFDS0VSOTk5')) { // HACKER999
+            if (inputCode === atob('SEFDS0VSOTk5')) { // HACKER999
                 appliedDiscount = 9.99; msg.innerText = "Hacker Code applied! $9.99 off."; msg.classList.add('text-green-600');
             } else if (inputCode === atob('R0VBUk1BU1RFUg==')) {
                 appliedDiscount = 1.99; msg.innerText = "Master Code applied! $1.99 off."; msg.classList.add('text-green-600');
