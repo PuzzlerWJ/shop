@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <!-- 支援現代手機全螢幕顯示 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>PuzzlerWJ | The Broken Mechanism</title>
     
     <!-- Tailwind CSS -->
@@ -18,6 +18,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        /* --- 🔧 CRITICAL MOBILE FIXES --- */
+        html, body {
+            overflow-x: hidden; /* 禁止左右滑動 */
+            width: 100%;
+            position: relative;
+            -webkit-overflow-scrolling: touch; /* iOS 滾動優化 */
+        }
+        
         h1, h2, h3, .fun-font { font-family: 'Abril Fatface', cursive; }
         body { font-family: 'Poppins', sans-serif; transition: background-color 0.5s, filter 0.5s; }
         .pattern-dots {
@@ -352,11 +360,13 @@
             align-items: center;
             gap: 10px;
             pointer-events: none;
-            opacity: 0; /* Default invisible */
+            opacity: 0; 
+            width: max-content; /* Fix width issues */
+            max-width: 90vw; /* Prevent overflow */
         }
         #toast.show { 
             transform: translateX(-50%) translateY(0); 
-            opacity: 1; /* Fade in */
+            opacity: 1; 
         }
 
         @media (max-width: 768px) {
@@ -381,11 +391,11 @@
         .faq-active i { transform: rotate(180deg); }
     </style>
 </head>
-<body class="bg-[#FDFBF7] text-gray-800 flex flex-col min-h-screen relative">
+<body class="bg-[#FDFBF7] text-gray-800 flex flex-col min-h-screen relative w-full overflow-x-hidden">
 
     <!-- Sticky Navbar -->
     <nav class="sticky top-0 z-50 w-full py-4 px-6 md:px-12 flex justify-between items-center bg-amber-400 shadow-md transition-all duration-300">
-        <div class="text-3xl text-indigo-900 fun-font tracking-wider cursor-pointer" onclick="window.scrollTo(0,0)" id="brandLogo">PuzzlerWJ</div>
+        <div class="text-3xl text-indigo-900 fun-font tracking-wider cursor-pointer select-none" onclick="window.scrollTo(0,0)" id="brandLogo">PuzzlerWJ</div>
         
         <div class="flex items-center space-x-6">
             <a href="#contact" class="hidden md:inline-block text-indigo-900 font-bold border-b-2 border-indigo-900 hover:text-white hover:border-white transition">
@@ -431,13 +441,13 @@
         </div>
     </header>
 
-    <!-- Story Section -->
-    <section class="bg-indigo-950 text-white py-24 px-6 pattern-dots relative">
+    <!-- Story Section (Added overflow-hidden) -->
+    <section class="bg-indigo-950 text-white py-24 px-6 pattern-dots relative overflow-hidden">
         <i class="fas fa-cog gear-fragment" style="bottom: 20px; left: 20px; color: #818cf8;" 
            onclick="collectFragment(this, 'Drive Shaft')" 
            ontouchstart="collectFragment(this, 'Drive Shaft'); event.preventDefault();"></i>
 
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16 relative z-10">
             <div class="md:w-1/2">
                 <h2 class="text-4xl fun-font mb-6 text-amber-400">The Quiet Moment</h2>
                 <p class="text-indigo-100 text-lg leading-relaxed mb-6 relative">
@@ -552,13 +562,12 @@
         </div>
     </section>
 
-    <!-- Footer (Fix: Added overflow-hidden to prevent scrollbar flicker) -->
+    <!-- Footer -->
     <footer class="bg-indigo-950 text-white py-12 mt-auto relative overflow-hidden">
-        <!-- Fix: Moved gear slightly left (right: 25px) to further prevent overflow -->
         <i class="fas fa-cog gear-fragment" style="bottom: 15px; right: 25px;" 
            onclick="collectFragment(this, 'Locking Pin')" 
            ontouchstart="collectFragment(this, 'Locking Pin'); event.preventDefault();"></i>
-        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
             <div class="text-center md:text-left">
                 <div class="fun-font text-3xl mb-4 text-amber-400">PuzzlerWJ</div>
                 <p class="text-indigo-200 text-sm mb-4">Handcrafted puzzles designed to bring joy and challenge to your life.</p>
@@ -571,14 +580,13 @@
                 <div class="flex flex-col space-y-3 text-indigo-200 text-sm items-center md:items-end">
                     <a href="#home" class="hover:text-white transition">Home</a>
                     <a href="#products" class="hover:text-white transition">Shop</a>
-                    <!-- New Link Here -->
                     <a href="game.html" class="hover:text-white transition" title="More Games Coming Soon">Web Puzzle Game</a>
                     <a href="https://puzzlerwj.github.io/puzzlerwj-solutions/Solutions" class="text-amber-400 font-extrabold text-lg hover:text-white transition animate-pulse tracking-wide border-b-2 border-amber-400 pb-1"><i class="fas fa-key mr-1"></i> Solutions</a>
                 </div>
             </div>
         </div>
         
-        <div class="border-t border-indigo-900 mt-10 pt-6 text-center text-xs text-indigo-400 flex flex-col items-center justify-center">
+        <div class="border-t border-indigo-900 mt-10 pt-6 text-center text-xs text-indigo-400 flex flex-col items-center justify-center relative z-10">
             <p>&copy; 2024 PuzzlerWJ. All Rights Reserved.</p>
             <div id="versionHint" class="cursor-container text-[10px] text-indigo-400/30 mt-2 font-mono hover:text-indigo-400/80 transition cursor-help select-none inline-block p-2" title="System Version">
                 Ver. Konami Code <span class="blinking-cursor"></span>
@@ -599,7 +607,7 @@
         </div>
     </div>
 
-    <!-- 🔔 Toast (Opacity 0 to prevent ghost box) -->
+    <!-- 🔔 Toast -->
     <div id="toast" class="opacity-0"><i class="fas fa-check-circle text-amber-400"></i> <span id="toastMsg"></span></div>
 
     <!-- 📟 Name Input Modal -->
@@ -615,9 +623,9 @@
         </div>
     </div>
 
-    <!-- 🎉 Reward Modal (Fixed & No Bounce) -->
-    <div id="rewardModal" class="fixed top-0 left-0 w-full h-full bg-black/80 z-[100] hidden flex justify-center items-center">
-        <div class="bg-white p-8 rounded-2xl max-w-sm text-center relative border-4 border-amber-400 shadow-2xl transition-all duration-300 transform scale-100">
+    <!-- 🎉 Reward Modal -->
+    <div id="rewardModal" class="fixed top-0 left-0 w-full h-full bg-black/80 z-[100] hidden flex justify-center items-center px-4">
+        <div class="bg-white p-8 rounded-2xl max-w-sm w-full text-center relative border-4 border-amber-400 shadow-2xl transition-all duration-300 transform scale-100">
             <button onclick="document.getElementById('rewardModal').classList.add('hidden')" class="absolute top-2 right-4 text-2xl text-gray-400 hover:text-gray-800">&times;</button>
             <div class="text-5xl mb-4 emoji-icon">⚙️🎉</div>
             <h3 class="text-2xl font-bold text-indigo-900 mb-2" id="rewardTitle">You Found It!</h3>
@@ -629,19 +637,19 @@
         </div>
     </div>
 
-    <!-- 🛒 Shopping Cart Modal (Fix: h-[100dvh], min-h-0 for inner scroll, Hacker styling) -->
+    <!-- 🛒 Shopping Cart Modal (Fixed inset-y-0 for Safari) -->
     <div id="cartModal" class="fixed inset-0 bg-indigo-900/50 backdrop-blur-sm z-[60] hidden opacity-0">
-        <div id="cartContent" class="fixed top-0 right-0 w-full md:w-[400px] h-[100dvh] bg-white shadow-2xl transform translate-x-full flex flex-col overflow-hidden">
+        <div id="cartContent" class="fixed inset-y-0 right-0 w-full md:w-[400px] bg-white shadow-2xl transform translate-x-full flex flex-col overflow-hidden h-[100dvh]">
             <div class="bg-amber-400 p-5 flex justify-between items-center shadow-sm flex-shrink-0">
                 <h2 class="text-indigo-900 text-xl font-bold fun-font"><i class="fas fa-shopping-bag mr-2"></i>Your Cart</h2>
                 <button onclick="toggleCart()" class="text-indigo-900 hover:text-white transition"><i class="fas fa-times text-2xl"></i></button>
             </div>
             
-            <div id="cartItemsContainer" class="flex-1 overflow-y-auto min-h-0 p-5 space-y-4">
+            <div id="cartItemsContainer" class="flex-1 overflow-y-auto min-h-0 p-5 space-y-4 overscroll-contain">
                 <div class="text-center text-gray-400 mt-10">Your cart is empty.</div>
             </div>
             
-            <div class="border-t border-gray-100 p-6 bg-gray-50 flex-shrink-0">
+            <div class="border-t border-gray-100 p-6 bg-gray-50 flex-shrink-0 pb-[env(safe-area-inset-bottom)]">
                 <!-- Promo Code Section -->
                 <div class="mb-4">
                     <div class="flex gap-2">
