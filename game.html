@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>PuzzlerWJ | The Trinity Sequence</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- 🌑 Noir Atmosphere --- */
+        body {
+            background-color: #050505;
+            color: #cbd5e1;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+            touch-action: none;
+            user-select: none;
+        }
+
+        /* Noise Texture Overlay for "Film Grain" look */
+        .noise-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Vignette Light Spot */
+        .spotlight {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 50%, transparent 10%, #000000 90%);
+            z-index: 4;
+        }
+
+        /* --- ⚙️ The Mechanism (Neumorphism Style) --- */
+        #lock-container {
+            position: relative;
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            /* Deep matte black surface */
+            background: linear-gradient(145deg, #0a0a0a, #111111);
+            /* Soft deep shadows */
+            box-shadow:  20px 20px 60px #020202, -20px -20px 60px #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: box-shadow 0.5s;
+        }
+
+        @media (min-width: 768px) {
+            #lock-container { width: 500px; height: 500px; }
+        }
+
+        /* Common Ring Style */
+        .ring {
+            position: absolute;
+            border-radius: 50%;
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            /* Subtle borders */
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Ring 1 (Outer) - The largest track */
+        .ring-outer {
+            width: 90%;
+            height: 90%;
+            box-shadow: inset 5px 5px 10px #000, inset -5px -5px 10px #222;
+            z-index: 10;
+        }
+
+        /* Ring 2 (Middle) */
+        .ring-middle {
+            width: 65%;
+            height: 65%;
+            box-shadow: 5px 5px 15px #000, -5px -5px 15px #1a1a1a;
+            background: #0d0d0d;
+            z-index: 20;
+        }
+
+        /* Ring 3 (Inner) */
+        .ring-inner {
+            width: 40%;
+            height: 40%;
+            box-shadow: inset 3px 3px 6px #000, inset -3px -3px 6px #222;
+            background: #080808;
+            z-index: 30;
+        }
+
+        /* The "Glyphs" (Markings) */
+        .glyph {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 4px; height: 4px;
+            background-color: #334155;
+            border-radius: 50%;
+            transform-origin: center center;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        
+        /* The "Activator" (The notch to align) */
+        .activator {
+            background-color: #fbbf24; /* Amber base */
+            width: 6px; height: 6px;
+            box-shadow: 0 0 10px rgba(251, 191, 36, 0.2);
+        }
+        
+        /* Alignment Indicator (The Goal Line) */
+        .goal-line {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 50%;
+            background: linear-gradient(to bottom, rgba(251, 191, 36, 0.5) 0%, transparent 100%);
+            z-index: 50;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        /* Center Core */
+        .core {
+            position: absolute;
+            width: 20%;
+            height: 20%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #333, #000);
+            z-index: 40;
+            box-shadow: 0 0 15px #000;
+            border: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .core i {
+            font-size: 1.5rem;
+            color: #333;
+            transition: color 0.5s, text-shadow 0.5s;
+        }
+        .core.active {
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.3);
+            border-color: #fbbf24;
+        }
+        .core.active i {
+            color: #fbbf24;
+            text-shadow: 0 0 15px #fbbf24;
+        }
+
+        /* --- ✨ Visual Feedback --- */
+        .aligned .activator {
+            background-color: #fff;
+            box-shadow: 0 0 15px #fbbf24, 0 0 30px #fbbf24;
+            transform: scale(1.5);
+        }
+
+        /* Hover Zones for Interaction */
+        .zone {
+            position: absolute;
+            top: 0; bottom: 0;
+            width: 50%;
+            cursor: pointer;
+            z-index: 60;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .zone-left { left: 0; background: radial-gradient(circle at 0% 50%, rgba(255,255,255,0.05), transparent 60%); }
+        .zone-right { right: 0; background: radial-gradient(circle at 100% 50%, rgba(255,255,255,0.05), transparent 60%); }
+        
+        @media(hover: hover) {
+            .zone:hover { opacity: 1; }
+        }
+
+        /* --- 🏆 Reward Modal --- */
+        #rewardModal {
+            backdrop-filter: blur(20px);
+            background-color: rgba(0,0,0,0.6);
+        }
+        .glow-text {
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center h-screen relative">
+
+    <div class="noise-overlay"></div>
+    <div class="spotlight"></div>
+
+    <!-- Minimal Header -->
+    <div class="absolute top-10 z-20 text-center">
+        <h1 class="font-['Cinzel'] text-3xl text-amber-500/80 tracking-[0.3em]">TRINITY</h1>
+        <div class="h-[1px] w-12 bg-amber-500/30 mx-auto mt-2 mb-2"></div>
+        <p class="text-[10px] text-slate-500 tracking-[0.2em] font-bold uppercase">Align The Core</p>
+    </div>
+
+    <!-- Exit -->
+    <a href="index.html" class="absolute top-10 left-8 z-50 text-slate-600 hover:text-amber-500 transition duration-300">
+        <i class="fas fa-times text-xl"></i>
+    </a>
+
+    <!-- Game Area -->
+    <div id="lock-container" class="z-10">
+        <div class="goal-line"></div>
+
+        <!-- Ring 1: Outer -->
+        <div class="ring ring-outer" id="r0">
+            <div class="zone zone-left" onclick="Game.move(0, -1)"></div>
+            <div class="zone zone-right" onclick="Game.move(0, 1)"></div>
+            <!-- Marks generated by JS -->
+        </div>
+
+        <!-- Ring 2: Middle -->
+        <div class="ring ring-middle" id="r1">
+            <div class="zone zone-left" onclick="Game.move(1, -1)"></div>
+            <div class="zone zone-right" onclick="Game.move(1, 1)"></div>
+        </div>
+
+        <!-- Ring 3: Inner -->
+        <div class="ring ring-inner" id="r2">
+            <div class="zone zone-left" onclick="Game.move(2, -1)"></div>
+            <div class="zone zone-right" onclick="Game.move(2, 1)"></div>
+        </div>
+
+        <!-- Core -->
+        <div class="core" id="core" onclick="Game.triggerWin()">
+            <i class="fas fa-fingerprint"></i>
+        </div>
+    </div>
+
+    <!-- Status Text -->
+    <div class="absolute bottom-12 z-20 text-slate-600 font-mono text-xs tracking-widest" id="status">
+        waiting for input...
+    </div>
+
+    <!-- Success Modal -->
+    <div id="rewardModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center opacity-0 transition-opacity duration-700">
+        <div class="relative bg-neutral-900 border border-neutral-800 p-12 rounded-sm shadow-2xl text-center max-w-sm">
+            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center shadow-[0_0_20px_#fbbf24]">
+                <i class="fas fa-lock-open text-black"></i>
+            </div>
+            
+            <h2 class="font-['Cinzel'] text-2xl text-white mt-4 mb-2">UNLOCKED</h2>
+            <p class="text-slate-400 text-sm mb-8 leading-relaxed">The mechanism has accepted your sequence.</p>
+            
+            <div class="bg-black/40 p-4 border-l-2 border-amber-500 mb-8 text-left">
+                <span class="block text-[10px] text-amber-500/70 uppercase tracking-widest mb-1">Authorization Code</span>
+                <span class="block text-xl font-mono text-white tracking-wider select-all">GEARMASTER</span>
+            </div>
+
+            <button onclick="location.reload()" class="text-xs text-slate-500 hover:text-white transition uppercase tracking-widest border-b border-transparent hover:border-white pb-1">Reset System</button>
+        </div>
+    </div>
+
+    <script>
+        // --- 🔉 Atmospheric Sound Engine ---
+        const AudioSys = {
+            ctx: null,
+            init: function() {
+                window.AudioContext = window.AudioContext || window.webkitAudioContext;
+                this.ctx = new AudioContext();
+            },
+            click: function(pitch) {
+                if (!this.ctx) this.init();
+                if (this.ctx.state === 'suspended') this.ctx.resume();
+                
+                const t = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                
+                // Deep, short click (Sine wave with quick decay)
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(150 * pitch, t);
+                osc.frequency.exponentialRampToValueAtTime(0.01, t + 0.1);
+                
+                gain.gain.setValueAtTime(0.3, t);
+                gain.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+                
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(t + 0.1);
+            },
+            hum: function() {
+                if (!this.ctx) return;
+                const t = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                // Low frequency alignment hum
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(50, t);
+                gain.gain.setValueAtTime(0.05, t);
+                gain.gain.linearRampToValueAtTime(0, t + 0.5);
+                
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(t + 0.5);
+            },
+            success: function() {
+                if (!this.ctx) this.init();
+                const t = this.ctx.currentTime;
+                // Ethereal chord
+                [220, 277.18, 329.63, 440].forEach((f, i) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.value = f;
+                    gain.gain.setValueAtTime(0, t);
+                    gain.gain.linearRampToValueAtTime(0.1, t + 0.5 + i*0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.001, t + 4);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start();
+                    osc.stop(t + 4);
+                });
+            }
+        };
+
+        // --- 🧠 Puzzle Logic ---
+        const Game = {
+            // State: Degrees / 30 = Index (0-11)
+            state: [0, 0, 0], 
+            // The "Activator" index for each ring (randomized start)
+            targets: [0, 0, 0],
+            isSolved: false,
+
+            init: function() {
+                // Generate UI Marks
+                this.createMarks('r0', 130);
+                this.createMarks('r1', 95);
+                this.createMarks('r2', 60);
+
+                // Randomize Start (Ensure non-zero)
+                this.state = [
+                    Math.floor(Math.random() * 10) + 1,
+                    Math.floor(Math.random() * 10) + 1,
+                    Math.floor(Math.random() * 10) + 1
+                ];
+
+                this.updateView();
+            },
+
+            createMarks: function(id, radius) {
+                const el = document.getElementById(id);
+                for(let i=0; i<12; i++) {
+                    const mark = document.createElement('div');
+                    // Index 0 is the "Activator" (The Gold Dot)
+                    if (i === 0) mark.className = 'glyph activator';
+                    else mark.className = 'glyph';
+                    
+                    // Position along circle
+                    const angle = i * 30; // 360 / 12
+                    // We simply rotate the mark container or use transform
+                    // Here we use transform on the element itself relative to center
+                    // But we need to translate OUT from center.
+                    mark.style.transform = `translate(-50%, -50%) rotate(${angle}deg) translateY(-${radius}px)`;
+                    
+                    el.appendChild(mark);
+                }
+            },
+
+            move: function(ringIndex, dir) {
+                if (this.isSolved) return;
+                
+                AudioSys.click(1 + ringIndex * 0.2);
+                document.getElementById('status').innerText = "CALIBRATING...";
+                document.getElementById('status').style.opacity = "1";
+
+                // --- ⚠️ THE TRICKY LOGIC (Interference) ---
+                // Ring 0 moves: Self + Ring 1 (Opposite)
+                // Ring 1 moves: Self + Ring 2 (Same)
+                // Ring 2 moves: Self + Ring 0 (Same)
+                
+                this.state[ringIndex] += dir;
+
+                if (ringIndex === 0) {
+                    this.state[1] -= dir; // Interference
+                } else if (ringIndex === 1) {
+                    this.state[2] += dir; // Interference
+                } else if (ringIndex === 2) {
+                    this.state[0] += dir; // Interference
+                }
+
+                this.updateView();
+                this.check();
+            },
+
+            updateView: function() {
+                // Rotate the DOM elements
+                // Note: The visual rotation must match the logical index
+                // Index 0 is at Top. If state is +1, we rotated Right.
+                // So the visual rotation is simple degrees.
+                document.getElementById('r0').style.transform = `rotate(${this.state[0] * 30}deg)`;
+                document.getElementById('r1').style.transform = `rotate(${this.state[1] * 30}deg)`;
+                document.getElementById('r2').style.transform = `rotate(${this.state[2] * 30}deg)`;
+            },
+
+            check: function() {
+                // Normalize to 0-11
+                const n0 = ((this.state[0] % 12) + 12) % 12;
+                const n1 = ((this.state[1] % 12) + 12) % 12;
+                const n2 = ((this.state[2] % 12) + 12) % 12;
+
+                // Win if all "Activators" (index 0 of each ring) are at Top (0 rotation relative to container)
+                // Actually, if we rotated the CONTAINER `deg`, the mark inside (at 0 deg) moves to `deg`.
+                // We want the mark to be at Top (0 deg visual).
+                // So rotation must be 0, or 360, or -360 (multiples of 12).
+                
+                if (n0 === 0 && n1 === 0 && n2 === 0) {
+                    document.getElementById('core').classList.add('active');
+                    document.getElementById('status').innerText = "ALIGNMENT CONFIRMED.";
+                    document.getElementById('status').classList.add('text-amber-500');
+                    document.querySelectorAll('.ring').forEach(r => r.classList.add('aligned'));
+                    AudioSys.hum();
+                } else {
+                    document.getElementById('core').classList.remove('active');
+                    document.querySelectorAll('.ring').forEach(r => r.classList.remove('aligned'));
+                    document.getElementById('status').classList.remove('text-amber-500');
+                }
+            },
+
+            triggerWin: function() {
+                if (document.getElementById('core').classList.contains('active')) {
+                    this.isSolved = true;
+                    AudioSys.success();
+                    const modal = document.getElementById('rewardModal');
+                    modal.classList.remove('hidden');
+                    // Slight delay for fade in
+                    setTimeout(() => modal.classList.remove('opacity-0'), 50);
+                } else {
+                    // Shake effect for locked
+                    const c = document.getElementById('core');
+                    c.style.transform = "translateX(5px)";
+                    setTimeout(() => c.style.transform = "translateX(-5px)", 50);
+                    setTimeout(() => c.style.transform = "translateX(0)", 100);
+                }
+            }
+        };
+
+        Game.init();
+    </script>
+</body>
+</html>
