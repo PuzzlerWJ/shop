@@ -87,6 +87,43 @@
             display: none;
         }
 
+        /* Hacker Mode: Cart Styles (Fixing the layout issue) */
+        body.hacker-mode #cartContent {
+            background-color: #000 !important;
+            border-left: 2px solid #00ff41;
+            color: #00ff41;
+        }
+        body.hacker-mode #cartContent .bg-amber-400 {
+            background-color: #003300 !important; /* Dark Green Header */
+            color: #00ff41 !important;
+            border-bottom: 1px solid #00ff41;
+        }
+        body.hacker-mode #cartContent .text-indigo-900 {
+            color: #00ff41 !important;
+        }
+        body.hacker-mode #cartContent .border-t, 
+        body.hacker-mode #cartContent .border-b {
+            border-color: #00ff41 !important;
+        }
+        body.hacker-mode #cartContent .bg-gray-50 {
+            background-color: #050505 !important;
+        }
+        body.hacker-mode #cartContent input {
+            background-color: #000 !important;
+            border: 1px solid #00ff41 !important;
+            color: #00ff41 !important;
+        }
+        body.hacker-mode #cartContent button {
+            border: 1px solid #00ff41;
+        }
+        body.hacker-mode #cartContent .text-gray-600,
+        body.hacker-mode #cartContent .text-gray-400 {
+            color: #00aa2c !important;
+        }
+        body.hacker-mode #cartContent .text-gray-800 {
+            color: #00ff41 !important;
+        }
+
         /* --- 📟 Terminal / Blinking Cursor --- */
         #nameModal, .cursor-container {
             font-family: 'Share Tech Mono', monospace;
@@ -465,7 +502,7 @@
         </div>
     </section>
 
-    <!-- Footer (Rearranged Layout) -->
+    <!-- Footer -->
     <footer class="bg-indigo-950 text-white py-12 mt-auto relative">
         <i class="fas fa-cog gear-fragment" style="bottom: 15px; right: 15px;" 
            onclick="collectFragment(this, 'Locking Pin')" 
@@ -483,15 +520,15 @@
                 <div class="flex flex-col space-y-3 text-indigo-200 text-sm items-center md:items-end">
                     <a href="#home" class="hover:text-white transition">Home</a>
                     <a href="#products" class="hover:text-white transition">Shop</a>
+                    <!-- New Link Here -->
+                    <a href="game.html" class="hover:text-white transition" title="Coming Soon">Web Puzzle Game</a>
                     <a href="https://puzzlerwj.github.io/puzzlerwj-solutions/Solutions" class="text-amber-400 font-extrabold text-lg hover:text-white transition animate-pulse tracking-wide border-b-2 border-amber-400 pb-1"><i class="fas fa-key mr-1"></i> Solutions</a>
                 </div>
             </div>
         </div>
         
-        <!-- Modified Copyright & Hint Section -->
         <div class="border-t border-indigo-900 mt-10 pt-6 text-center text-xs text-indigo-400 flex flex-col items-center justify-center">
             <p>&copy; 2024 PuzzlerWJ. All Rights Reserved.</p>
-            <!-- 🕵️ KONAMI HINT (Centered below copyright) -->
             <div id="versionHint" class="cursor-container text-[10px] text-indigo-400/30 mt-2 font-mono hover:text-indigo-400/80 transition cursor-help select-none inline-block p-2" title="System Version">
                 Ver. Konami Code <span class="blinking-cursor"></span>
             </div>
@@ -514,7 +551,7 @@
     <!-- 🔔 Toast -->
     <div id="toast"><i class="fas fa-check-circle text-amber-400"></i> <span id="toastMsg">Message</span></div>
 
-    <!-- 📟 Name Input Modal (Hidden by default) -->
+    <!-- 📟 Name Input Modal -->
     <div id="nameModal" class="hidden fixed inset-0 bg-black z-[80] flex items-center justify-center font-mono">
         <div class="max-w-md w-full p-8">
             <p class="text-green-500 mb-2">> SYSTEM OVERRIDE INITIATED...</p>
@@ -527,9 +564,9 @@
         </div>
     </div>
 
-    <!-- 🎉 Reward Modal -->
-    <div id="rewardModal" class="fixed inset-0 bg-black/80 z-[70] hidden flex justify-center items-center">
-        <div class="bg-white p-8 rounded-2xl max-w-sm text-center relative border-4 border-amber-400 shadow-2xl animate-bounce">
+    <!-- 🎉 Reward Modal (Fixed & No Bounce) -->
+    <div id="rewardModal" class="fixed top-0 left-0 w-full h-full bg-black/80 z-[100] hidden flex justify-center items-center">
+        <div class="bg-white p-8 rounded-2xl max-w-sm text-center relative border-4 border-amber-400 shadow-2xl transition-all duration-300 transform scale-100">
             <button onclick="document.getElementById('rewardModal').classList.add('hidden')" class="absolute top-2 right-4 text-2xl text-gray-400 hover:text-gray-800">&times;</button>
             <div class="text-5xl mb-4 emoji-icon">⚙️🎉</div>
             <h3 class="text-2xl font-bold text-indigo-900 mb-2" id="rewardTitle">You Found It!</h3>
@@ -541,17 +578,17 @@
         </div>
     </div>
 
-    <!-- 🛒 Shopping Cart Modal -->
+    <!-- 🛒 Shopping Cart Modal (Fix: h-[100dvh], min-h-0 for inner scroll, Hacker styling) -->
     <div id="cartModal" class="fixed inset-0 bg-indigo-900/50 backdrop-blur-sm z-[60] hidden opacity-0">
-        <div id="cartContent" class="absolute top-0 right-0 w-full md:w-[400px] h-full bg-white shadow-2xl transform translate-x-full flex flex-col">
-            <div class="bg-amber-400 p-5 flex justify-between items-center shadow-sm">
+        <div id="cartContent" class="fixed top-0 right-0 w-full md:w-[400px] h-[100dvh] bg-white shadow-2xl transform translate-x-full flex flex-col overflow-hidden">
+            <div class="bg-amber-400 p-5 flex justify-between items-center shadow-sm flex-shrink-0">
                 <h2 class="text-indigo-900 text-xl font-bold fun-font"><i class="fas fa-shopping-bag mr-2"></i>Your Cart</h2>
                 <button onclick="toggleCart()" class="text-indigo-900 hover:text-white transition"><i class="fas fa-times text-2xl"></i></button>
             </div>
-            <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-5 space-y-4">
+            <div id="cartItemsContainer" class="flex-1 overflow-y-auto min-h-0 p-5 space-y-4">
                 <div class="text-center text-gray-400 mt-10">Your cart is empty.</div>
             </div>
-            <div class="border-t border-gray-100 p-6 bg-gray-50">
+            <div class="border-t border-gray-100 p-6 bg-gray-50 flex-shrink-0">
                 <div class="flex gap-2 mb-4">
                     <input type="text" id="promoInput" placeholder="Promo Code" class="flex-1 px-3 py-2 border rounded text-sm focus:outline-none focus:border-amber-400 uppercase">
                     <button onclick="applyPromo()" class="bg-gray-800 text-white px-3 py-2 rounded text-sm font-bold hover:bg-gray-700">Apply</button>
