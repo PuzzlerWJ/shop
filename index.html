@@ -2,6 +2,7 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
+    <!-- 支援現代手機全螢幕顯示 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>PuzzlerWJ | The Broken Mechanism</title>
     
@@ -137,14 +138,13 @@
         }
         @keyframes blink { 50% { opacity: 0; } }
 
-        /* --- 🕹️ Hidden Joy Trigger (Modified for Request #1) --- */
-        /* 一般模式（含手機）：無動畫、無虛線，僅保留手型游標暗示 */
+        /* --- 🕹️ Hidden Joy Trigger (Request 1: No animation/underline) --- */
         #hiddenJoyTrigger {
             cursor: pointer;
             display: inline-block;
             transition: color 0.3s;
         }
-        /* 滑鼠移上去稍微變色，作為唯一的視覺回饋 */
+        /* Mouse hover feedback */
         #hiddenJoyTrigger:hover {
             color: #fbbf24; 
         }
@@ -160,7 +160,7 @@
             40%, 60% { transform: translate3d(4px, 0, 0); }
         }
 
-        /* Hacker Mode Only: Terminal Style */
+        /* Hacker Mode Trigger Style */
         body.hacker-mode #hiddenJoyTrigger {
             color: #00ff41 !important;
             background-color: transparent !important;
@@ -333,7 +333,7 @@
             opacity: 0; 
         }
 
-        /* 🔔 Toast Fix for Mobile "Message" Issue (Request #3) */
+        /* 🔔 Toast Fix (Request 3: Hide completely when not used) */
         #toast {
             position: fixed;
             bottom: 20px;
@@ -352,11 +352,11 @@
             align-items: center;
             gap: 10px;
             pointer-events: none;
-            opacity: 0; /* 預設完全透明，避免看到內容 */
+            opacity: 0; /* Default invisible */
         }
         #toast.show { 
             transform: translateX(-50%) translateY(0); 
-            opacity: 1; /* 顯示時才變得不透明 */
+            opacity: 1; /* Fade in */
         }
 
         @media (max-width: 768px) {
@@ -598,8 +598,7 @@
         </div>
     </div>
 
-    <!-- 🔔 Toast (Updated for Mobile Issue) -->
-    <!-- 預設移除內部文字，並透過 opacity-0 隱藏 -->
+    <!-- 🔔 Toast (Opacity 0 to prevent ghost box) -->
     <div id="toast" class="opacity-0"><i class="fas fa-check-circle text-amber-400"></i> <span id="toastMsg"></span></div>
 
     <!-- 📟 Name Input Modal -->
@@ -636,19 +635,42 @@
                 <h2 class="text-indigo-900 text-xl font-bold fun-font"><i class="fas fa-shopping-bag mr-2"></i>Your Cart</h2>
                 <button onclick="toggleCart()" class="text-indigo-900 hover:text-white transition"><i class="fas fa-times text-2xl"></i></button>
             </div>
+            
             <div id="cartItemsContainer" class="flex-1 overflow-y-auto min-h-0 p-5 space-y-4">
                 <div class="text-center text-gray-400 mt-10">Your cart is empty.</div>
             </div>
+            
             <div class="border-t border-gray-100 p-6 bg-gray-50 flex-shrink-0">
-                <div class="flex gap-2 mb-4">
-                    <input type="text" id="promoInput" placeholder="Promo Code" class="flex-1 px-3 py-2 border rounded text-sm focus:outline-none focus:border-amber-400 uppercase">
-                    <button onclick="applyPromo()" class="bg-gray-800 text-white px-3 py-2 rounded text-sm font-bold hover:bg-gray-700">Apply</button>
+                <!-- Promo Code Section -->
+                <div class="mb-4">
+                    <div class="flex gap-2">
+                        <input type="text" id="promoInput" placeholder="Promo Code" class="flex-1 px-3 py-2 border rounded text-sm focus:outline-none focus:border-amber-400 uppercase">
+                        <button onclick="applyPromo()" class="bg-gray-800 text-white px-3 py-2 rounded text-sm font-bold hover:bg-gray-700">Apply</button>
+                    </div>
+                    <!-- Rule Note -->
+                    <p class="text-[10px] text-gray-500 mt-1 ml-1">
+                        *Codes only apply to shipping fees. Not applicable if order is over $100 (Free Shipping).
+                    </p>
+                    <div id="promoMessage" class="text-xs mt-1 hidden font-bold"></div>
                 </div>
-                <div id="promoMessage" class="text-xs mb-2 hidden"></div>
-                <div class="flex justify-between text-sm mb-2 text-gray-600"><span>Subtotal</span><span id="cartSubtotal">$0.00</span></div>
-                <div class="flex justify-between text-sm mb-2 text-gray-600"><span>Shipping</span><span id="cartShipping">$9.99</span></div>
-                <div id="discountRow" class="flex justify-between text-sm mb-4 text-green-600 font-bold hidden"><span>Discount</span><span id="cartDiscount">-$0.00</span></div>
-                <div class="flex justify-between text-xl font-bold text-indigo-900 mb-6"><span>Total</span><span id="cartTotal">$0.00</span></div>
+
+                <!-- Totals -->
+                <div class="flex justify-between text-sm mb-2 text-gray-600">
+                    <span>Subtotal</span>
+                    <span id="cartSubtotal">$0.00</span>
+                </div>
+                <div class="flex justify-between text-sm mb-2 text-gray-600">
+                    <span>Shipping <span class="text-[10px] text-amber-600 font-bold bg-amber-100 px-1 rounded ml-1">Free over $100</span></span>
+                    <span id="cartShipping">$9.99</span>
+                </div>
+                <div id="discountRow" class="flex justify-between text-sm mb-4 text-green-600 font-bold hidden">
+                    <span>Shipping Discount</span>
+                    <span id="cartDiscount">-$0.00</span>
+                </div>
+                <div class="flex justify-between text-xl font-bold text-indigo-900 mb-6">
+                    <span>Total</span>
+                    <span id="cartTotal">$0.00</span>
+                </div>
                 <div id="paypal-button-container" class="w-full"></div>
             </div>
         </div>
@@ -919,55 +941,55 @@
             showToast(`Welcome, ${name}. System Override Active.`);
         }
 
-        // --- 🛒 Promo Code Logic (Request #2: 明碼 + 註解) ---
-        
-        function applyPromo() {
-            const input = document.getElementById('promoInput');
-            const msg = document.getElementById('promoMessage');
-            
-            const inputCode = input.value.trim().toUpperCase();
-            
-            msg.classList.remove('hidden', 'text-green-600', 'text-red-500');
-
-            // Hello Source Code Reader! 
-            // Thank you for digging deep and finding these secrets.
-            // Please support PuzzlerWJ so I can keep making cool stuff! :)
-            // Codes updated to be easily readable:
-            
-            if (inputCode === 'HACKER999') { 
-                appliedDiscount = 9.99; 
-                msg.innerText = "Hacker Code applied! $9.99 off."; 
-                msg.classList.add('text-green-600');
-            
-            } else if (inputCode === 'GEARMASTER') { 
-                appliedDiscount = 1.99; 
-                msg.innerText = "Master Code applied! $1.99 off."; 
-                msg.classList.add('text-green-600');
-                
-            } else {
-                appliedDiscount = 0; 
-                msg.innerText = "Invalid code."; 
-                msg.classList.add('text-red-500');
-            }
-            
-            updateCartUI(); 
-        }
+        // --- 🛒 Shopping Cart Logic (With Quantity & Free Shipping Rules) ---
 
         let cart = [];
         let appliedDiscount = 0; 
+        const BASE_SHIPPING_COST = 9.99;
+
         window.addEventListener('DOMContentLoaded', () => {
             const savedCart = localStorage.getItem('puzzlerCart');
             if (savedCart) { cart = JSON.parse(savedCart); updateCartBadge(); }
         });
 
-        function addToCart(id, name, price, img) { cart.push({ id, name, price, img }); saveCart(); updateCartBadge(); toggleCart(true); }
-        function removeFromCart(index) { cart.splice(index, 1); saveCart(); updateCartUI(); updateCartBadge(); }
+        function addToCart(id, name, price, img) { 
+            const existingItem = cart.find(item => item.id === id);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ id, name, price, img, quantity: 1 }); 
+            }
+            saveCart(); 
+            updateCartBadge(); 
+            toggleCart(true); 
+        }
+
+        function changeQuantity(index, delta) {
+            cart[index].quantity += delta;
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            saveCart();
+            updateCartUI(); 
+            updateCartBadge();
+        }
+
+        function removeFromCart(index) { 
+            cart.splice(index, 1); 
+            saveCart(); 
+            updateCartUI(); 
+            updateCartBadge(); 
+        }
+
         function saveCart() { localStorage.setItem('puzzlerCart', JSON.stringify(cart)); }
+        
         function updateCartBadge() {
             const badge = document.getElementById('cartCount');
-            badge.innerText = cart.length;
-            if(cart.length > 0) badge.classList.remove('opacity-0'); else badge.classList.add('opacity-0');
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            badge.innerText = totalCount;
+            if(totalCount > 0) badge.classList.remove('opacity-0'); else badge.classList.add('opacity-0');
         }
+
         function toggleCart(forceOpen = false) {
             const modal = document.getElementById('cartModal');
             const content = document.getElementById('cartContent');
@@ -982,6 +1004,47 @@
             }
         }
 
+        // Promo Code: Plain text check + Shipping rule only
+        function applyPromo() {
+            const input = document.getElementById('promoInput');
+            const msg = document.getElementById('promoMessage');
+            const inputCode = input.value.trim().toUpperCase();
+            
+            // Check subtotal for Free Shipping rule
+            let currentSubtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            msg.classList.remove('hidden', 'text-green-600', 'text-red-500', 'text-amber-500');
+
+            // Rule: If already free shipping (>100), block code
+            if (currentSubtotal >= 100) {
+                appliedDiscount = 0;
+                msg.innerText = "Shipping is already free! Code not needed.";
+                msg.classList.add('text-amber-500');
+                updateCartUI();
+                return;
+            }
+
+            // Hello Source Code Reader! 
+            // Please support PuzzlerWJ so I can keep making cool stuff! :)
+            if (inputCode === 'HACKER999') { 
+                appliedDiscount = BASE_SHIPPING_COST; 
+                msg.innerText = "Free Shipping Code applied!"; 
+                msg.classList.add('text-green-600');
+            
+            } else if (inputCode === 'GEARMASTER') { 
+                appliedDiscount = 1.99; 
+                msg.innerText = "Shipping discount ($1.99) applied."; 
+                msg.classList.add('text-green-600');
+                
+            } else {
+                appliedDiscount = 0; 
+                msg.innerText = "Invalid code."; 
+                msg.classList.add('text-red-500');
+            }
+            
+            updateCartUI(); 
+        }
+
         function updateCartUI() {
             const container = document.getElementById('cartItemsContainer');
             const subtotalEl = document.getElementById('cartSubtotal');
@@ -990,38 +1053,97 @@
             const discountRow = document.getElementById('discountRow');
             const discountEl = document.getElementById('cartDiscount');
             const paypalContainer = document.getElementById('paypal-button-container');
-            container.innerHTML = ''; paypalContainer.innerHTML = ''; 
+            
+            container.innerHTML = ''; 
+            paypalContainer.innerHTML = ''; 
 
             if (cart.length === 0) {
                 container.innerHTML = '<div class="text-center text-gray-400 mt-10">Your cart is empty.</div>';
                 subtotalEl.innerText = '$0.00'; shippingEl.innerText = '$0.00'; totalEl.innerText = '$0.00';
-                discountRow.classList.add('hidden'); return;
+                discountRow.classList.add('hidden'); 
+                appliedDiscount = 0;
+                document.getElementById('promoMessage').classList.add('hidden');
+                document.getElementById('promoInput').value = '';
+                return;
             }
 
             let subtotal = 0;
+            
+            // Render Items with Quantity Buttons
             cart.forEach((item, index) => {
-                subtotal += item.price;
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
                 const itemEl = document.createElement('div');
                 itemEl.className = 'flex items-center justify-between border-b border-gray-100 pb-3';
-                itemEl.innerHTML = `<div class="flex items-center gap-3"><img src="${item.img}" class="w-12 h-12 object-contain bg-gray-50 rounded p-1"><div><div class="font-bold text-gray-800 text-sm">${item.name}</div><div class="text-amber-500 text-sm">$${item.price}</div></div></div><button onclick="removeFromCart(${index})" class="text-gray-300 hover:text-red-500 transition"><i class="fas fa-trash"></i></button>`;
+                itemEl.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <img src="${item.img}" class="w-12 h-12 object-contain bg-gray-50 rounded p-1">
+                        <div>
+                            <div class="font-bold text-gray-800 text-sm">${item.name}</div>
+                            <div class="text-amber-500 text-sm">$${item.price}</div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-end gap-1">
+                        <div class="flex items-center border border-gray-300 rounded overflow-hidden">
+                            <button onclick="changeQuantity(${index}, -1)" class="px-2 py-0.5 bg-gray-100 hover:bg-gray-200 text-gray-600 transition">-</button>
+                            <span class="px-2 text-sm font-mono w-8 text-center">${item.quantity}</span>
+                            <button onclick="changeQuantity(${index}, 1)" class="px-2 py-0.5 bg-gray-100 hover:bg-gray-200 text-gray-600 transition">+</button>
+                        </div>
+                        <button onclick="removeFromCart(${index})" class="text-xs text-gray-300 hover:text-red-500 transition underline">Remove</button>
+                    </div>`;
                 container.appendChild(itemEl);
             });
 
-            let shipping = subtotal >= 100 ? 0 : 9.99;
+            // Calc Shipping
+            let shipping = subtotal >= 100 ? 0 : BASE_SHIPPING_COST;
+
+            // Conflict Check: If shipping becomes 0, remove discount
+            if (shipping === 0 && appliedDiscount > 0) {
+                appliedDiscount = 0;
+                const msg = document.getElementById('promoMessage');
+                msg.innerText = "Shipping is now free! Discount removed.";
+                msg.className = "text-xs mt-1 font-bold text-amber-500";
+                msg.classList.remove('hidden');
+            }
+
             let total = subtotal + shipping - appliedDiscount;
             if (total < 0) total = 0;
+
+            // Update DOM
             subtotalEl.innerText = '$' + subtotal.toFixed(2);
-            shippingEl.innerText = shipping === 0 ? 'Free' : '$' + shipping.toFixed(2);
-            if (appliedDiscount > 0) { discountRow.classList.remove('hidden'); discountEl.innerText = '-$' + appliedDiscount.toFixed(2); } else { discountRow.classList.add('hidden'); }
+            
+            if (shipping === 0) {
+                shippingEl.innerHTML = '<span class="text-green-600 font-bold">Free</span>';
+            } else {
+                shippingEl.innerText = '$' + shipping.toFixed(2);
+            }
+
+            if (appliedDiscount > 0) { 
+                discountRow.classList.remove('hidden'); 
+                discountEl.innerText = '-$' + appliedDiscount.toFixed(2); 
+            } else { 
+                discountRow.classList.add('hidden'); 
+            }
+            
             totalEl.innerText = '$' + total.toFixed(2);
 
+            // PayPal
             paypal.Buttons({
                 style: { shape: 'pill', color: 'gold', layout: 'vertical', label: 'checkout' },
                 createOrder: function(data, actions) {
                     return actions.order.create({
                         purchase_units: [{
                             description: "PuzzlerWJ Order",
-                            amount: { currency_code: "USD", value: total.toFixed(2), breakdown: { item_total: { currency_code: "USD", value: subtotal.toFixed(2) }, shipping: { currency_code: "USD", value: shipping.toFixed(2) }, discount: { currency_code: "USD", value: appliedDiscount.toFixed(2) } } }
+                            amount: { 
+                                currency_code: "USD", 
+                                value: total.toFixed(2), 
+                                breakdown: { 
+                                    item_total: { currency_code: "USD", value: subtotal.toFixed(2) }, 
+                                    shipping: { currency_code: "USD", value: shipping.toFixed(2) }, 
+                                    discount: { currency_code: "USD", value: appliedDiscount.toFixed(2) } 
+                                } 
+                            }
                         }]
                     });
                 },
