@@ -2,8 +2,8 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <!-- 支援現代手機全螢幕顯示 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <!-- 標準化 Viewport，移除可能導致 IG 崩潰的縮放限制 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PuzzlerWJ | The Broken Mechanism</title>
     
     <!-- Tailwind CSS (CDN) -->
@@ -18,401 +18,158 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- 🚨 關鍵修正：防止 Tailwind 失效時的跑版 (Fallback CSS) --- */
+        /* 
+         * ==============================================
+         * 🚨 救命用 CSS (Critical Fallback CSS)
+         * 這些規則是為了在 Tailwind 載入失敗或太慢時
+         * 確保網頁依然能正常顯示，不會變成巨大圖片或白底
+         * ==============================================
+         */
+        
+        /* 1. 全局設定：防止白底和橫向捲軸 */
         html, body {
-            overflow-x: hidden; /* 禁止左右滑動 */
-            width: 100%;
             margin: 0;
             padding: 0;
-            -webkit-overflow-scrolling: touch;
-            background-color: #FDFBF7; /* 強制設定背景色 */
+            width: 100%;
+            overflow-x: hidden;
+            background-color: #FDFBF7; /* 確保背景色 */
+            color: #1f2937;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* 強制限制所有圖片，防止 Tailwind 沒載入時圖片巨大化 */
+        /* 2. 圖片限制：這是解決「版面跑掉/照片很大」的關鍵 */
         img, video, canvas, svg {
             display: block;
-            max-width: 100%; /* 關鍵：圖片永遠不超過螢幕寬度 */
-            height: auto;
+            max-width: 100% !important; /* 強制圖片不超過螢幕 */
+            height: auto !important;
         }
 
-        /* 基本字體設定 */
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            color: #1f2937; /* 預設深灰色文字 */
-            transition: background-color 0.5s, filter 0.5s; 
+        /* 3. 容器限制：模擬 Tailwind 的 container */
+        .max-w-6xl, .max-w-7xl, .container-fallback {
+            width: 100%;
+            max-width: 1150px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            box-sizing: border-box;
         }
 
-        /* --------------------------------------------------- */
+        /* 4. 排版修復：確保在 Flexbox 載入前有基本的堆疊 */
+        section, header, footer {
+            position: relative;
+            box-sizing: border-box;
+            width: 100%;
+        }
 
+        /* 5. 導覽列固定 */
+        nav {
+            background-color: #fbbf24; /* Amber-400 */
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* 6. 字體設定 */
         h1, h2, h3, .fun-font { font-family: 'Abril Fatface', cursive; }
         
+        /* ==============================================
+         * 原有的自訂樣式
+         * ==============================================
+         */
+
         .pattern-dots {
             background-image: radial-gradient(#4F46E5 2px, transparent 2px);
             background-size: 20px 20px;
         }
 
-        /* --- 🕵️ Hacker Mode Styles --- */
+        /* Hacker Mode Styles */
         body.hacker-mode {
             background-color: #050505 !important;
             font-family: 'Share Tech Mono', monospace !important;
         }
-        body.hacker-mode h1, body.hacker-mode h2, body.hacker-mode h3, body.hacker-mode .fun-font {
-            font-family: 'Share Tech Mono', monospace !important;
-            letter-spacing: -1px;
-        }
-        body.hacker-mode nav {
-            background-color: #000 !important;
-            border-bottom: 2px solid #00ff41;
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
-        }
-        body.hacker-mode header {
-            background-color: #111 !important;
-        }
-        body.hacker-mode h1 span {
-            color: #00ff41 !important; /* Matrix Green */
-            text-shadow: 0 0 10px #00ff41;
-        }
-        body.hacker-mode .pattern-dots {
-            background-image: radial-gradient(#003b00 2px, transparent 2px);
-        }
-        
-        /* Hacker Mode: Hide Physical Games */
-        body.hacker-mode .gear-fragment,
-        body.hacker-mode #gear-lock-system {
-            display: none !important;
-        }
+        body.hacker-mode nav { background-color: #000 !important; border-bottom: 2px solid #00ff41; }
+        body.hacker-mode header { background-color: #111 !important; }
+        body.hacker-mode h1 span { color: #00ff41 !important; text-shadow: 0 0 10px #00ff41; }
+        body.hacker-mode .text-indigo-900, body.hacker-mode .text-indigo-950 { color: #00ff41 !important; }
+        body.hacker-mode .bg-white { background-color: #000 !important; color: #00ff41 !important; border: 1px solid #00ff41; }
+        body.hacker-mode .gear-fragment, body.hacker-mode #gear-lock-system { display: none !important; }
 
-        /* Hacker Mode: Reward Modal Style */
-        body.hacker-mode #rewardModal > div {
-            background-color: #000 !important;
-            border: 2px solid #00ff41 !important;
-            color: #00ff41 !important;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
-            font-family: 'Share Tech Mono', monospace !important;
-        }
-        body.hacker-mode #rewardTitle {
-            color: #00ff41 !important;
-            text-shadow: 0 0 10px #00ff41;
-            font-size: 2.5rem;
-        }
-        body.hacker-mode #rewardMsg {
-            color: #00ff41 !important;
-        }
-        body.hacker-mode #rewardCode {
-            color: #000 !important;
-            background-color: #00ff41 !important;
-            border: none !important;
-            padding: 5px 15px;
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
-        body.hacker-mode .text-indigo-900 {
-            color: #a3e635 !important;
-        }
-        body.hacker-mode .emoji-icon {
-            display: none;
-        }
+        /* Hacker Mode Cart Fixes */
+        body.hacker-mode #cartContent { background-color: #000 !important; border-left: 2px solid #00ff41; }
+        body.hacker-mode #cartContent * { color: #00ff41 !important; border-color: #00ff41 !important; }
+        body.hacker-mode #cartContent .bg-amber-400 { background-color: #002200 !important; }
 
-        /* Hacker Mode: Cart Styles */
-        body.hacker-mode #cartContent {
-            background-color: #000 !important;
-            border-left: 2px solid #00ff41;
-            color: #00ff41;
-        }
-        body.hacker-mode #cartContent .bg-amber-400 {
-            background-color: #003300 !important;
-            color: #00ff41 !important;
-            border-bottom: 1px solid #00ff41;
-        }
-        body.hacker-mode #cartContent .text-indigo-900 {
-            color: #00ff41 !important;
-        }
-        body.hacker-mode #cartContent .border-t, 
-        body.hacker-mode #cartContent .border-b {
-            border-color: #00ff41 !important;
-        }
-        body.hacker-mode #cartContent .bg-gray-50 {
-            background-color: #050505 !important;
-        }
-        body.hacker-mode #cartContent input {
-            background-color: #000 !important;
-            border: 1px solid #00ff41 !important;
-            color: #00ff41 !important;
-        }
-        body.hacker-mode #cartContent button {
-            border: 1px solid #00ff41;
-        }
-        body.hacker-mode #cartContent .text-gray-600,
-        body.hacker-mode #cartContent .text-gray-400 {
-            color: #00aa2c !important;
-        }
-        body.hacker-mode #cartContent .text-gray-800 {
-            color: #00ff41 !important;
-        }
-
-        /* --- 📟 Terminal / Blinking Cursor --- */
-        #nameModal, .cursor-container {
-            font-family: 'Share Tech Mono', monospace;
-        }
-        .blinking-cursor::after {
-            content: '▋';
-            animation: blink 1s step-end infinite;
-            color: inherit;
-            margin-left: 2px;
-            vertical-align: middle;
-            font-size: 0.8em;
-        }
-        @keyframes blink { 50% { opacity: 0; } }
-
-        /* --- 🕹️ Hidden Joy Trigger --- */
-        #hiddenJoyTrigger {
-            cursor: pointer;
-            display: inline-block;
-            transition: color 0.3s;
-        }
-        /* Mouse hover feedback */
-        #hiddenJoyTrigger:hover {
-            color: #fbbf24; 
-        }
-
-        .shake-denied {
-            animation: shake-hard 0.4s cubic-bezier(.36,.07,.19,.97) both;
-            color: #ef4444 !important;
-        }
-        @keyframes shake-hard {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
-        }
-
-        /* Hacker Mode Trigger Style */
-        body.hacker-mode #hiddenJoyTrigger {
-            color: #00ff41 !important;
-            background-color: transparent !important;
-            text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
-            padding: 2px 6px;
-            position: relative;
-            font-family: 'Share Tech Mono', monospace !important;
-        }
-        body.hacker-mode #hiddenJoyTrigger:hover {
-            background-color: rgba(0, 255, 65, 0.15) !important;
-        }
-        body.hacker-mode #hiddenJoyTrigger::before {
-            content: '> ';
-            color: #00ff41;
-            font-weight: bold;
-            opacity: 0.8;
-        }
-        body.hacker-mode #hiddenJoyTrigger::after {
-            content: '_'; 
-            display: inline-block;
-            margin-left: 2px;
-            color: #00ff41;
-            background-color: #00ff41; 
-            width: 10px;
-            height: 1.1em;
-            vertical-align: text-bottom;
-            animation: terminal-blink 1s step-end infinite;
-        }
-        @keyframes terminal-blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        /* --- 🧩 Gear Fragments --- */
+        /* Gear Fragments Animation */
         .gear-fragment {
             position: absolute;
             color: #fbbf24;
             opacity: 0.8;
             cursor: pointer;
-            transition: all 0.3s;
             z-index: 60;
             font-size: 1.5rem;
             filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
             animation: float-spin 4s infinite linear;
-            padding: 10px; 
-            margin: -10px;
+            padding: 10px; margin: -10px;
         }
-        @media (hover: hover) {
-            .gear-fragment:hover { 
-                opacity: 1; 
-                color: #f59e0b; 
-                transform: scale(1.2); 
-            }
-        }
-        .fragment-found { 
-            transform: scale(0) rotate(180deg) !important; 
-            opacity: 0 !important; 
-            pointer-events: none;
-        }
+        .fragment-found { transform: scale(0) rotate(180deg) !important; opacity: 0 !important; pointer-events: none; }
         @keyframes float-spin {
             0% { transform: translateY(0) rotate(0deg); }
             50% { transform: translateY(-5px) rotate(180deg); }
             100% { transform: translateY(0) rotate(360deg); }
         }
 
-        /* --- ⚙️ Main Gear Lock System --- */
+        /* Gear System */
         #gear-lock-system {
-            opacity: 0;
-            pointer-events: none;
+            opacity: 0; pointer-events: none;
             transform: scale(0.5) translateY(20px);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.5s;
         }
-        #gear-lock-system.repaired {
-            opacity: 0.6;
-            pointer-events: auto;
-            transform: scale(0.75) translateY(0);
-        }
-        #gear-lock-system.active-mode {
-            transform: scale(1.1);
-            opacity: 1;
-        }
-        body.hacker-mode .main-gear {
-            color: #111 !important;
-            border: 1px dashed #00ff41;
-            border-radius: 50%;
-        }
-        body.hacker-mode .gear-container.resonating .main-gear {
-            color: #00ff41 !important;
-            box-shadow: 0 0 15px #00ff41;
-        }
-
-        .gear-container {
-            position: relative;
-            width: 70px; 
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            user-select: none; 
-            -webkit-tap-highlight-color: transparent;
-        }
-        .main-gear {
-            font-size: 3rem;
-            color: #6b7280;
-            transition: color 0.3s, text-shadow 0.3s, transform 0.1s linear;
-            z-index: 10;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-        }
-        .gear-core {
-            position: absolute;
-            z-index: 20;
-            color: #f3f4f6;
-            font-size: 1rem;
-            pointer-events: none;
-            transition: all 0.3s;
-        }
-        .status-lights {
-            position: absolute;
-            bottom: -5px;
-            display: flex;
-            gap: 4px;
-            z-index: 30;
-        }
-        .light {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background-color: #d1d5db;
-            border: 1px solid #9ca3af;
-            transition: background-color 0.3s, box-shadow 0.3s;
-        }
-        .light.active {
-            background-color: #10b981;
-            box-shadow: 0 0 4px #10b981;
-        }
-        body.hacker-mode .light.active {
-            background-color: #00ff41;
-            box-shadow: 0 0 8px #00ff41;
-        }
-
-        .gear-container.resonating .main-gear {
-            color: #fbbf24;
-            text-shadow: 0 0 10px rgba(251, 191, 36, 0.6);
-        }
-        .gear-container.jammed { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
-        .gear-container.jammed .main-gear { color: #ef4444 !important; }
-        .gear-container.unlocked .main-gear {
-            color: #10b981;
-            animation: spin-unlock 1s ease-out forwards;
-        }
-
-        @keyframes shake {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
-        }
-        @keyframes spin-unlock {
-            0% { transform: rotate(0deg) scale(1); }
-            100% { transform: rotate(720deg) scale(0); opacity: 0; }
-        }
-
-        .scroll-marker {
-            position: absolute;
-            width: 1px;
-            height: 150px; 
-            left: 0;
-            pointer-events: none;
-            opacity: 0; 
-        }
-
-        /* 🔔 Toast Fix */
-        #toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background-color: rgba(17, 24, 39, 0.9);
-            color: #fff;
-            padding: 12px 24px;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            z-index: 100;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
-            border: 1px solid #f59e0b;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            pointer-events: none;
-            opacity: 0; 
-            width: max-content; 
-            max-width: 90vw; 
-        }
-        #toast.show { 
-            transform: translateX(-50%) translateY(0); 
-            opacity: 1; 
-        }
-
-        @media (max-width: 768px) {
-            #toast {
-                bottom: 90px !important;
-                bottom: calc(90px + env(safe-area-inset-bottom)) !important;
-            }
-        }
+        #gear-lock-system.repaired { opacity: 0.6; pointer-events: auto; transform: scale(0.75) translateY(0); }
+        #gear-lock-system.active-mode { transform: scale(1.1); opacity: 1; }
         
-        body.hacker-mode #toast {
-            background-color: #000;
-            border: 1px solid #00ff41;
-            color: #00ff41;
-            font-family: 'Share Tech Mono', monospace;
+        .gear-container {
+            position: relative; width: 70px; height: 70px;
+            display: flex; align-items: center; justify-content: center;
         }
+        .main-gear { font-size: 3rem; color: #6b7280; transition: all 0.3s; z-index: 10; }
+        .gear-container.resonating .main-gear { color: #fbbf24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.6); }
+        .gear-container.unlocked .main-gear { color: #10b981; animation: spin-unlock 1s ease-out forwards; }
+        @keyframes spin-unlock { to { transform: rotate(720deg) scale(0); opacity: 0; } }
 
-        #cartModal { transition: opacity 0.3s ease-in-out; }
-        #cartContent { transition: transform 0.3s ease-in-out; }
+        .gear-core { position: absolute; z-index: 20; color: #f3f4f6; font-size: 1rem; pointer-events: none; }
+        
+        .status-lights { position: absolute; bottom: -5px; display: flex; gap: 4px; z-index: 30; }
+        .light { width: 6px; height: 6px; border-radius: 50%; background-color: #d1d5db; border: 1px solid #9ca3af; transition: all 0.3s; }
+        .light.active { background-color: #10b981; box-shadow: 0 0 4px #10b981; }
+
+        .scroll-marker { position: absolute; width: 1px; height: 150px; left: 0; pointer-events: none; opacity: 0; }
+
+        /* Toast */
+        #toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background-color: rgba(17, 24, 39, 0.95); color: #fff;
+            padding: 12px 24px; border-radius: 50px; font-weight: 600; font-size: 0.9rem;
+            z-index: 100; transition: transform 0.3s, opacity 0.3s;
+            border: 1px solid #f59e0b; opacity: 0;
+            width: max-content; max-width: 80vw;
+            display: flex; align-items: center; gap: 8px;
+        }
+        #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        /* Cart Modal Fixed for Mobile */
+        #cartModal { transition: opacity 0.3s; }
+        #cartContent { transition: transform 0.3s; }
         .cart-open { transform: translateX(0) !important; }
-        .faq-content { transition: max-height 0.3s ease-out; max-height: 0; overflow: hidden; }
-        .faq-active .faq-content { max-height: 200px; }
-        .faq-active i { transform: rotate(180deg); }
     </style>
 </head>
-<body class="text-gray-800 flex flex-col min-h-screen relative w-full overflow-x-hidden" style="background-color: #FDFBF7;">
+<body class="bg-[#FDFBF7] text-gray-800 flex flex-col min-h-screen relative w-full overflow-x-hidden">
 
     <!-- Sticky Navbar -->
-    <nav class="sticky top-0 z-50 w-full py-4 px-6 md:px-12 flex justify-between items-center bg-amber-400 shadow-md transition-all duration-300">
+    <nav class="sticky top-0 z-50 w-full py-4 px-6 md:px-12 flex justify-between items-center bg-amber-400 shadow-md">
         <div class="text-3xl text-indigo-900 fun-font tracking-wider cursor-pointer select-none" onclick="window.scrollTo(0,0)" id="brandLogo">PuzzlerWJ</div>
         
         <div class="flex items-center space-x-6">
@@ -420,16 +177,16 @@
                 Contact
             </a>
             
-            <button onclick="toggleCart()" class="relative text-indigo-900 hover:text-white transition group">
+            <button onclick="toggleCart()" class="relative text-indigo-900 hover:text-white transition group p-2">
                 <i class="fas fa-shopping-cart text-2xl"></i>
-                <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full opacity-0 transition-opacity duration-300">0</span>
+                <span id="cartCount" class="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full opacity-0 transition-opacity duration-300">0</span>
             </button>
         </div>
     </nav>
 
     <!-- Header Section -->
     <header class="relative w-full bg-amber-400 overflow-hidden pt-10 pb-20 md:pt-20 md:pb-32" id="home">
-        <div id="marker-top" class="scroll-marker" style="top: 55%;"></div>
+        <!-- 背景裝飾 -->
         <div class="absolute -top-20 -right-20 w-64 h-64 bg-amber-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
         <div class="absolute bottom-10 left-10 w-32 h-32 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
 
@@ -439,7 +196,7 @@
                     Handcrafted in Taiwan
                 </div>
                 <h1 class="text-5xl md:text-7xl text-indigo-950 leading-tight mb-6 drop-shadow-sm">
-                    Unlock the <br> <span class="text-white" id="hiddenJoyTrigger">Hidden Joy.</span>
+                    Unlock the <br> <span class="text-white cursor-pointer" id="hiddenJoyTrigger">Hidden Joy.</span>
                 </h1>
                 <p class="text-indigo-900 text-lg md:text-xl font-medium mb-8 max-w-md mx-auto md:mx-0">
                     "Puzzle is like a life, brimming with beauty."
@@ -449,12 +206,16 @@
                 </a>
             </div>
             
-            <div class="md:w-1/2 relative">
-                <div class="absolute inset-0 bg-indigo-900 rounded-2xl transform rotate-3 translate-x-2 translate-y-2"></div>
-                <img src="images/WJ.png" alt="Puzzle Box Hero" class="relative rounded-2xl shadow-xl w-full object-cover transform -rotate-2 hover:rotate-0 transition duration-500 border-4 border-white">
-                <i class="fas fa-cog gear-fragment" style="top: -15px; right: -10px;" 
-                   onclick="collectFragment(this, 'Small Gear')" 
-                   ontouchstart="collectFragment(this, 'Small Gear'); event.preventDefault();"></i>
+            <div class="md:w-1/2 relative w-full">
+                <div id="marker-top" class="scroll-marker" style="top: 55%;"></div>
+                <!-- 圖片容器與限制 -->
+                <div class="relative w-full aspect-square md:aspect-auto">
+                    <div class="absolute inset-0 bg-indigo-900 rounded-2xl transform rotate-3 translate-x-2 translate-y-2"></div>
+                    <img src="images/WJ.png" alt="Puzzle Box Hero" class="relative rounded-2xl shadow-xl w-full h-full object-cover transform -rotate-2 hover:rotate-0 transition duration-500 border-4 border-white">
+                    <i class="fas fa-cog gear-fragment" style="top: -15px; right: -10px;" 
+                       onclick="collectFragment(this, 'Small Gear')" 
+                       ontouchstart="collectFragment(this, 'Small Gear'); event.preventDefault();"></i>
+                </div>
             </div>
         </div>
     </header>
@@ -492,9 +253,9 @@
             <h2 class="text-5xl text-indigo-950 fun-font mb-4">Shop Collection</h2>
             <p class="text-gray-500">Challenge your mind with our handcrafted designs.</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
             <!-- Product 1 -->
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-amber-300 transition duration-300 group flex flex-col">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-amber-300 transition duration-300 group flex flex-col w-full">
                 <div class="relative h-[24rem] overflow-hidden bg-gray-50 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-amber-400 text-indigo-900 text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Entry Level</div>
                     <img src="images/ladybug.jpg" alt="Ladybug" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
@@ -513,7 +274,7 @@
                 </div>
             </div>
             <!-- Product 2 (Target 3) -->
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-indigo-300 transition duration-300 group flex flex-col relative">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-indigo-300 transition duration-300 group flex flex-col relative w-full">
                 <div id="marker-bottom" class="scroll-marker" style="top: 50%;"></div>
                 <div class="relative h-[24rem] overflow-hidden bg-gray-50 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Advanced</div>
@@ -533,7 +294,7 @@
                 </div>
             </div>
             <!-- Product 3 -->
-            <div class="bg-gray-50 rounded-2xl shadow-lg overflow-hidden border border-gray-200 opacity-90 relative flex flex-col">
+            <div class="bg-gray-50 rounded-2xl shadow-lg overflow-hidden border border-gray-200 opacity-90 relative flex flex-col w-full">
                 <div class="relative h-[24rem] overflow-hidden bg-gray-200 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Coming Soon</div>
                     <div class="text-gray-400 text-6xl"><i class="fas fa-question-circle"></i></div>
@@ -555,7 +316,7 @@
     <!-- Support Section -->
     <section id="contact" class="bg-indigo-50 py-20 px-6">
         <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
-            <div>
+            <div class="w-full">
                 <div class="text-center md:text-left mb-8">
                     <h2 class="text-3xl fun-font text-indigo-900 mb-4">Where is my Box?</h2>
                     <p class="text-gray-600">Enter your tracking number below to check the status.</p>
@@ -566,7 +327,7 @@
                     <div class="as-track-button" data-size="large" data-domain="track.aftership.com"></div>
                 </div>
             </div>
-            <div>
+            <div class="w-full">
                 <div class="text-center md:text-left mb-8">
                     <h2 class="text-3xl fun-font text-indigo-900 mb-4">Get in Touch</h2>
                     <p class="text-gray-600">Questions? Custom orders? Just say hi.</p>
@@ -657,7 +418,7 @@
 
     <!-- 🛒 Shopping Cart Modal (Fixed inset-y-0 for Safari) -->
     <div id="cartModal" class="fixed inset-0 bg-indigo-900/50 backdrop-blur-sm z-[60] hidden opacity-0">
-        <div id="cartContent" class="fixed inset-y-0 right-0 w-full md:w-[400px] bg-white shadow-2xl transform translate-x-full flex flex-col overflow-hidden h-[100dvh]">
+        <div id="cartContent" class="fixed inset-y-0 right-0 w-full md:w-[400px] bg-white shadow-2xl transform translate-x-full flex flex-col overflow-hidden h-screen max-h-[100dvh]">
             <div class="bg-amber-400 p-5 flex justify-between items-center shadow-sm flex-shrink-0">
                 <h2 class="text-indigo-900 text-xl font-bold fun-font"><i class="fas fa-shopping-bag mr-2"></i>Your Cart</h2>
                 <button onclick="toggleCart()" class="text-indigo-900 hover:text-white transition"><i class="fas fa-times text-2xl"></i></button>
@@ -712,21 +473,43 @@
     <script src="https://www.paypal.com/sdk/js?client-id=AR1JFEvjsUMt_DyqzDOZhhqtgmTC8BOsTYHVxZLFRMkULFDHl3xtpEEKsYFFsmYFhIPQXC9DaEZjg2Id&currency=USD&locale=en_US"></script>
 
     <script>
-        // --- 🎵 Audio FX Engine ---
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        function playTone(freq, type, duration, vol=0.1) {
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            osc.type = type; 
-            osc.frequency.value = freq;
-            osc.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            gainNode.gain.setValueAtTime(vol, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-            osc.start();
-            osc.stop(audioCtx.currentTime + duration);
+        // --- 🎵 Audio FX Engine (Lazy Load) ---
+        // 修正：不要在全域宣告 AudioContext，這會導致 IG 瀏覽器崩潰
+        let audioCtx = null;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) {
+                    audioCtx = new AudioContext();
+                }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
         }
+
+        function playTone(freq, type, duration, vol=0.1) {
+            const ctx = getAudioContext();
+            if (!ctx) return; // 瀏覽器不支援或初始化失敗，直接忽略
+
+            try {
+                const osc = ctx.createOscillator();
+                const gainNode = ctx.createGain();
+                osc.type = type; 
+                osc.frequency.value = freq;
+                osc.connect(gainNode);
+                gainNode.connect(ctx.destination);
+                gainNode.gain.setValueAtTime(vol, ctx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+                osc.start();
+                osc.stop(ctx.currentTime + duration);
+            } catch (e) {
+                console.log("Audio play failed:", e);
+            }
+        }
+
         const sfx = {
             collect: () => playTone(880, 'sine', 0.1),
             resonance: () => playTone(150, 'square', 0.1, 0.05),
@@ -786,7 +569,7 @@
 
             if (!isMechanismRepaired || isUnlocked) return;
             const rotation = window.scrollY / 5; 
-            gear.style.transform = `rotate(${rotation}deg)`;
+            if(gear) gear.style.transform = `rotate(${rotation}deg)`;
             checkProximity();
         });
 
@@ -1051,8 +834,6 @@
                 return;
             }
 
-            // Hello Source Code Reader! 
-            // Please support PuzzlerWJ so I can keep making cool stuff! :)
             if (inputCode === 'HACKER999') { 
                 appliedDiscount = BASE_SHIPPING_COST; 
                 msg.innerText = "Free Shipping Code applied!"; 
@@ -1156,30 +937,36 @@
             totalEl.innerText = '$' + total.toFixed(2);
 
             // PayPal
-            paypal.Buttons({
-                style: { shape: 'pill', color: 'gold', layout: 'vertical', label: 'checkout' },
-                createOrder: function(data, actions) {
-                    return actions.order.create({
-                        purchase_units: [{
-                            description: "PuzzlerWJ Order",
-                            amount: { 
-                                currency_code: "USD", 
-                                value: total.toFixed(2), 
-                                breakdown: { 
-                                    item_total: { currency_code: "USD", value: subtotal.toFixed(2) }, 
-                                    shipping: { currency_code: "USD", value: shipping.toFixed(2) }, 
-                                    discount: { currency_code: "USD", value: appliedDiscount.toFixed(2) } 
-                                } 
-                            }
-                        }]
-                    });
-                },
-                onApprove: function(data, actions) {
-                    return actions.order.capture().then(function(details) {
-                        cart = []; saveCart(); updateCartBadge(); toggleCart(); window.location.href = "thankyou.html";
-                    });
+            try {
+                if (window.paypal) {
+                    paypal.Buttons({
+                        style: { shape: 'pill', color: 'gold', layout: 'vertical', label: 'checkout' },
+                        createOrder: function(data, actions) {
+                            return actions.order.create({
+                                purchase_units: [{
+                                    description: "PuzzlerWJ Order",
+                                    amount: { 
+                                        currency_code: "USD", 
+                                        value: total.toFixed(2), 
+                                        breakdown: { 
+                                            item_total: { currency_code: "USD", value: subtotal.toFixed(2) }, 
+                                            shipping: { currency_code: "USD", value: shipping.toFixed(2) }, 
+                                            discount: { currency_code: "USD", value: appliedDiscount.toFixed(2) } 
+                                        } 
+                                    }
+                                }]
+                            });
+                        },
+                        onApprove: function(data, actions) {
+                            return actions.order.capture().then(function(details) {
+                                cart = []; saveCart(); updateCartBadge(); toggleCart(); window.location.href = "thankyou.html";
+                            });
+                        }
+                    }).render('#paypal-button-container');
                 }
-            }).render('#paypal-button-container');
+            } catch (err) {
+                console.log("PayPal render failed", err);
+            }
         }
     </script>
 </body>
