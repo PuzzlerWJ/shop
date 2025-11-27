@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PuzzlerWJ | The Mystery Box</title>
+    <title>PuzzlerWJ | The Broken Mechanism</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -24,89 +24,197 @@
             background-size: 20px 20px;
         }
 
-        /* --- 🎮 Game Style: Narrative Cipher (Idea 5) --- */
-        .cipher-word {
-            position: relative;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-block;
-            border-bottom: 2px solid transparent;
-        }
-        .cipher-word:hover {
+        /* --- 🧩 Gear Fragments (Scavenger Hunt Items) --- */
+        .gear-fragment {
+            position: absolute;
             color: #fbbf24; /* Amber-400 */
-            text-shadow: 0 0 5px rgba(251, 191, 36, 0.5);
+            opacity: 0.8;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 60;
+            font-size: 1.5rem;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
+            animation: float-spin 4s infinite linear;
         }
-        .cipher-active {
-            color: #fbbf24 !important;
-            font-weight: bold;
-            border-bottom: 2px solid #fbbf24;
+        .gear-fragment:hover { 
+            opacity: 1; 
+            color: #f59e0b; 
+            transform: scale(1.2); 
         }
-        .shake-element {
+        .fragment-found { 
+            transform: scale(0) rotate(180deg); 
+            opacity: 0; 
+            pointer-events: none;
+        }
+
+        @keyframes float-spin {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+
+        /* --- ⚙️ Main Gear Lock System (Left Bottom) --- */
+        #gear-lock-system {
+            /* 預設隱藏 (機關損壞狀態) */
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.5) translateY(20px);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        /* 機關修復後的狀態 (可見，但縮小) */
+        #gear-lock-system.repaired {
+            opacity: 0.6;
+            pointer-events: auto;
+            transform: scale(0.75) translateY(0);
+        }
+
+        /* 當進入共鳴範圍 (Resonating) 時：變大、變亮 */
+        #gear-lock-system.active-mode {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        .gear-container {
+            position: relative;
+            width: 70px; 
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none; 
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .main-gear {
+            font-size: 3rem;
+            color: #6b7280; /* Gray-500 */
+            transition: color 0.3s, text-shadow 0.3s, transform 0.1s linear;
+            z-index: 10;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .gear-core {
+            position: absolute;
+            z-index: 20;
+            color: #f3f4f6;
+            font-size: 1rem;
+            pointer-events: none;
+            transition: all 0.3s;
+        }
+
+        /* Status Lights */
+        .status-lights {
+            position: absolute;
+            bottom: -5px;
+            display: flex;
+            gap: 3px;
+            z-index: 30;
+        }
+        .light {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #d1d5db; 
+            border: 1px solid #9ca3af;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .light.active {
+            background-color: #10b981; 
+            box-shadow: 0 0 4px #10b981;
+        }
+
+        /* States */
+        .gear-container.resonating .main-gear {
+            color: #fbbf24; 
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.6);
+        }
+        .gear-container.jammed {
             animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
         }
+        .gear-container.jammed .main-gear {
+            color: #ef4444 !important; 
+        }
+        .gear-container.unlocked .main-gear {
+            color: #10b981; 
+            animation: spin-unlock 1s ease-out forwards;
+        }
+
         @keyframes shake {
             10%, 90% { transform: translate3d(-1px, 0, 0); }
             20%, 80% { transform: translate3d(2px, 0, 0); }
             30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
             40%, 60% { transform: translate3d(4px, 0, 0); }
         }
-
-        /* --- 🎮 Game Style: Sliding Mechanism (Idea 3) --- */
-        .wood-texture {
-            background-color: #3e2723;
-            background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 2px, transparent 2px, transparent 8px);
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
-        }
-        
-        /* Custom Range Slider */
-        input[type=range] {
-            -webkit-appearance: none;
-            width: 100%;
-            background: transparent;
-        }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 30px;
-            width: 50px;
-            border-radius: 4px;
-            background: linear-gradient(to bottom, #fbbf24, #d97706);
-            cursor: pointer;
-            margin-top: -12px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-            border: 2px solid #fff;
-        }
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 8px;
-            cursor: pointer;
-            background: #1a1a1a;
-            border-radius: 5px;
-            border: 1px solid #555;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.8);
-        }
-        
-        .indicator-light {
-            transition: all 0.3s ease;
-            box-shadow: 0 0 5px rgba(0,0,0,0.5);
-        }
-        .light-off { background-color: #4b1d1d; border: 1px solid #333; }
-        .light-on { 
-            background-color: #10b981; 
-            box-shadow: 0 0 15px #10b981, inset 0 0 5px #fff;
-            border: 1px solid #fff;
+        @keyframes spin-unlock {
+            0% { transform: rotate(0deg) scale(1); }
+            100% { transform: rotate(720deg) scale(0); opacity: 0; }
         }
 
-        /* General UI Animations */
+        /* Scroll Markers */
+        .scroll-marker {
+            position: absolute;
+            width: 1px;
+            height: 150px; 
+            left: 0;
+            pointer-events: none;
+            opacity: 0; 
+        }
+
+        /* Hint Bubble */
+        .hint-bubble {
+            position: absolute;
+            left: 70px;
+            bottom: 20px;
+            background: rgba(30, 27, 75, 0.95);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            width: 180px;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s;
+            pointer-events: none;
+            z-index: 50;
+            border: 1px solid #fbbf24;
+        }
+        .hint-bubble.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Toast Notification for Fragments */
+        #toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background-color: rgba(17, 24, 39, 0.9);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            z-index: 100;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid #f59e0b;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Other Styles */
         #cartModal { transition: opacity 0.3s ease-in-out; }
         #cartContent { transition: transform 0.3s ease-in-out; }
         .cart-open { transform: translateX(0) !important; }
-        
-        .hidden-key {
-            position: absolute; color: #fbbf24; opacity: 0.6; cursor: pointer; transition: all 0.3s; z-index: 60; font-size: 1.5rem;
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
-        }
-        .hidden-key:hover { opacity: 1; transform: scale(1.2) rotate(15deg); color: #f59e0b; }
-        .key-found { display: none; }
+        .faq-content { transition: max-height 0.3s ease-out; max-height: 0; overflow: hidden; }
+        .faq-active .faq-content { max-height: 200px; }
+        .faq-active i { transform: rotate(180deg); }
     </style>
 </head>
 <body class="bg-[#FDFBF7] text-gray-800 flex flex-col min-h-screen relative">
@@ -116,7 +224,10 @@
         <div class="text-3xl text-indigo-900 fun-font tracking-wider cursor-pointer" onclick="window.scrollTo(0,0)">PuzzlerWJ</div>
         
         <div class="flex items-center space-x-6">
-            <a href="#contact" class="hidden md:inline-block text-indigo-900 font-bold border-b-2 border-indigo-900 hover:text-white hover:border-white transition">Contact</a>
+            <a href="#contact" class="hidden md:inline-block text-indigo-900 font-bold border-b-2 border-indigo-900 hover:text-white hover:border-white transition">
+                Contact
+            </a>
+            
             <button onclick="toggleCart()" class="relative text-indigo-900 hover:text-white transition group">
                 <i class="fas fa-shopping-cart text-2xl"></i>
                 <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full opacity-0 transition-opacity duration-300">0</span>
@@ -126,65 +237,62 @@
 
     <!-- Header Section -->
     <header class="relative w-full bg-amber-400 overflow-hidden pt-10 pb-20 md:pt-20 md:pb-32" id="home">
+        
+        <!-- 📍 Marker 1: Top (Hidden Joy) -->
+        <div id="marker-top" class="scroll-marker" style="top: 55%;"></div>
+
         <div class="absolute -top-20 -right-20 w-64 h-64 bg-amber-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
         <div class="absolute bottom-10 left-10 w-32 h-32 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
 
         <div class="relative z-10 max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
             <div class="md:w-1/2 text-center md:text-left">
-                <div class="inline-block bg-indigo-900 text-amber-400 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-4 shadow-md">Handcrafted in Taiwan</div>
-                <h1 class="text-5xl md:text-7xl text-indigo-950 leading-tight mb-6 drop-shadow-sm">Unlock the <br> <span class="text-white">Hidden Joy.</span></h1>
-                <p class="text-indigo-900 text-lg md:text-xl font-medium mb-8 max-w-md mx-auto md:mx-0">"Puzzle is like a life, brimming with beauty."</p>
-                <a href="#products" class="inline-block bg-indigo-900 text-white px-8 py-4 rounded-lg font-bold hover:bg-indigo-800 hover:shadow-lg hover:-translate-y-1 transition duration-300">Start Exploring ↓</a>
+                <div class="inline-block bg-indigo-900 text-amber-400 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-4 shadow-md">
+                    Handcrafted in Taiwan
+                </div>
+                <h1 class="text-5xl md:text-7xl text-indigo-950 leading-tight mb-6 drop-shadow-sm">
+                    Unlock the <br> <span class="text-white">Hidden Joy.</span>
+                </h1>
+                <p class="text-indigo-900 text-lg md:text-xl font-medium mb-8 max-w-md mx-auto md:mx-0">
+                    "Puzzle is like a life, brimming with beauty."
+                </p>
+                <a href="#products" class="inline-block bg-indigo-900 text-white px-8 py-4 rounded-lg font-bold hover:bg-indigo-800 hover:shadow-lg hover:-translate-y-1 transition duration-300">
+                    Start Exploring ↓
+                </a>
             </div>
+            
             <div class="md:w-1/2 relative">
                 <div class="absolute inset-0 bg-indigo-900 rounded-2xl transform rotate-3 translate-x-2 translate-y-2"></div>
-                <img src="https://images.unsplash.com/photo-1587654780291-39c940483719?q=80&w=2070&auto=format&fit=crop" alt="Puzzle Box Hero" class="relative rounded-2xl shadow-xl w-full object-cover transform -rotate-2 hover:rotate-0 transition duration-500 border-4 border-white h-[400px]">
-                <!-- Key 1 -->
-                <i class="fas fa-key hidden-key" style="top: -15px; right: -10px; color: #fbbf24;" onclick="collectKey(this)"></i>
+                <img src="images/WJ.png" alt="Puzzle Box Hero" class="relative rounded-2xl shadow-xl w-full object-cover transform -rotate-2 hover:rotate-0 transition duration-500 border-4 border-white">
+                
+                <!-- 🧩 Fragment 1 (Top Right) -->
+                <i class="fas fa-cog gear-fragment" style="top: -15px; right: -10px;" onclick="collectFragment(this, 'Small Gear')"></i>
             </div>
         </div>
     </header>
 
-    <!-- Story Section (Idea 5: Narrative Cipher) -->
-    <section class="bg-indigo-950 text-white py-24 px-6 pattern-dots relative" id="story-section">
-        <!-- Key 2 -->
-        <i class="fas fa-key hidden-key" style="bottom: 20px; left: 20px; color: #818cf8;" onclick="collectKey(this)"></i>
+    <!-- Story Section -->
+    <section class="bg-indigo-950 text-white py-24 px-6 pattern-dots relative">
+        <!-- 🧩 Fragment 2 (Bottom Left) -->
+        <i class="fas fa-cog gear-fragment" style="bottom: 20px; left: 20px; color: #818cf8;" onclick="collectFragment(this, 'Drive Shaft')"></i>
 
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
             <div class="md:w-1/2">
-                <div class="mb-2 flex items-center gap-2">
-                    <h2 class="text-4xl fun-font text-amber-400">The Quiet Moment</h2>
-                </div>
-                <!-- Riddle Hint -->
-                <div class="text-xs text-indigo-300 mb-6 bg-indigo-900/50 inline-block px-3 py-2 rounded border border-indigo-700">
-                    <i class="fas fa-lightbulb text-amber-400 mr-2"></i>Riddle: Start with <b>Quiet</b>, find the <b>Clue</b>, claim the <b>Victory</b>.
-                </div>
-
-                <!-- Interactive Text -->
-                <p class="text-indigo-100 text-lg leading-relaxed mb-6 select-none" id="cipherText">
-                    When you solve a puzzle box, it's just you and the box, sharing a 
-                    <span class="cipher-word" onclick="checkWord(this, 'quiet')">quiet</span> moment. 
-                    As you uncover each <span class="cipher-word" onclick="checkWord(this, 'clue')">clue</span>, 
-                    you feel a little <span class="cipher-word" onclick="checkWord(this, 'victory')">victory</span> 
-                    that makes you forget everything else.
+                <h2 class="text-4xl fun-font mb-6 text-amber-400">The Quiet Moment</h2>
+                <p class="text-indigo-100 text-lg leading-relaxed mb-6 relative">
+                    <!-- 📍 Marker 2: Middle (Quiet Moment) -->
+                    <div id="marker-middle" class="scroll-marker" style="top: 0;"></div>
+                    
+                    When you solve a puzzle box, it's just you and the box, sharing a quiet moment. As you uncover each clue, you feel a little victory that makes you forget everything else.
                 </p>
             </div>
-            <div class="md:w-1/2 w-full relative">
-                <div class="bg-indigo-900 p-10 rounded-2xl border border-indigo-800 shadow-2xl relative overflow-hidden" id="storyBox">
+            <div class="md:w-1/2 w-full">
+                <div class="bg-indigo-900 p-10 rounded-2xl border border-indigo-800 shadow-2xl">
                     <p class="text-2xl font-semibold mb-6 text-white fun-font">Why PuzzlerWJ?</p>
                     <ul class="space-y-4 text-indigo-200 text-lg">
                         <li class="flex items-center"><span class="w-3 h-3 bg-amber-400 rounded-full mr-4"></span>Original Mechanisms</li>
                         <li class="flex items-center"><span class="w-3 h-3 bg-amber-400 rounded-full mr-4"></span>Narrative Design</li>
                         <li class="flex items-center"><span class="w-3 h-3 bg-amber-400 rounded-full mr-4"></span>Affordable Fun</li>
                     </ul>
-                    
-                    <!-- Feedback Overlay for Cipher -->
-                    <div id="mechanismOverlay" class="absolute inset-0 bg-amber-400/90 flex items-center justify-center transform translate-y-full transition-transform duration-500 z-10">
-                        <div class="text-center text-indigo-900">
-                            <i class="fas fa-cogs text-6xl mb-4 animate-spin-slow"></i>
-                            <h3 class="text-2xl font-bold fun-font">Mechanism Unlocked!</h3>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -202,7 +310,7 @@
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-amber-300 transition duration-300 group flex flex-col">
                 <div class="relative h-[24rem] overflow-hidden bg-gray-50 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-amber-400 text-indigo-900 text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Entry Level</div>
-                    <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=2070&auto=format&fit=crop" alt="Ladybug" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                    <img src="images/ladybug.jpg" alt="Ladybug" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
                 </div>
                 <div class="p-8 flex-1 flex flex-col">
                     <div class="mb-4">
@@ -212,17 +320,22 @@
                         </div>
                         <p class="text-xs text-gray-400 font-medium">Weight: 60g</p>
                     </div>
-                    <button onclick="addToCart('ladybug', 'Ladybug', 39.99)" class="w-full bg-indigo-900 text-white font-bold py-3 rounded-full hover:bg-indigo-800 transition shadow-md flex items-center justify-center gap-2">
+                    <p class="text-gray-500 mb-6 text-sm flex-1">A cute, deceptive box. Seems simple, but hides a clever secret.</p>
+                    <button onclick="addToCart('ladybug', 'Ladybug', 39.99, 'images/ladybug.jpg')" class="w-full bg-indigo-900 text-white font-bold py-3 rounded-full hover:bg-indigo-800 transition shadow-md flex items-center justify-center gap-2">
                         <i class="fas fa-cart-plus"></i> Add to Cart
                     </button>
                 </div>
             </div>
 
-            <!-- Product 2 -->
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-indigo-300 transition duration-300 group flex flex-col">
+            <!-- Product 2 (Target 3) -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-indigo-300 transition duration-300 group flex flex-col relative">
+                
+                <!-- 📍 Marker 3: Bottom (Skyscraper) -->
+                <div id="marker-bottom" class="scroll-marker" style="top: 50%;"></div>
+
                 <div class="relative h-[24rem] overflow-hidden bg-gray-50 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Advanced</div>
-                    <img src="https://images.unsplash.com/photo-1615233500878-36fa89c3db69?q=80&w=2070&auto=format&fit=crop" alt="Skyscraper" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                    <img src="images/skyscraper.jpg" alt="Skyscraper" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
                 </div>
                 <div class="p-8 flex-1 flex flex-col">
                     <div class="mb-4">
@@ -232,7 +345,8 @@
                         </div>
                         <p class="text-xs text-gray-400 font-medium">Weight: 160g</p>
                     </div>
-                    <button onclick="addToCart('skyscraper', 'Skyscraper', 89.99)" class="w-full bg-indigo-900 text-white font-bold py-3 rounded-full hover:bg-indigo-800 transition shadow-md flex items-center justify-center gap-2">
+                    <p class="text-gray-500 mb-6 text-sm flex-1">Standing tall with multiple layers of logic. Can you reach the top?</p>
+                    <button onclick="addToCart('skyscraper', 'Skyscraper', 89.99, 'images/skyscraper.jpg')" class="w-full bg-indigo-900 text-white font-bold py-3 rounded-full hover:bg-indigo-800 transition shadow-md flex items-center justify-center gap-2">
                         <i class="fas fa-cart-plus"></i> Add to Cart
                     </button>
                 </div>
@@ -242,16 +356,22 @@
             <div class="bg-gray-50 rounded-2xl shadow-lg overflow-hidden border border-gray-200 opacity-90 relative flex flex-col">
                 <div class="relative h-[24rem] overflow-hidden bg-gray-200 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Coming Soon</div>
-                    <div class="text-gray-400 text-6xl"><i class="fas fa-question-circle"></i></div>
+                    <div class="text-gray-400 text-6xl">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
                 </div>
                 <div class="p-8 flex-1 flex flex-col">
                     <div class="mb-4">
                         <div class="flex justify-between items-center mb-1">
                             <h3 class="text-xl font-bold text-gray-700">Mystery Box</h3>
-                            <span class="text-lg font-bold text-gray-500">Dec.</span>
+                            <span class="text-lg font-bold text-gray-500">Coming Dec.</span>
                         </div>
+                        <p class="text-xs text-gray-400 font-medium">Weight: ???</p>
                     </div>
-                    <div class="w-full bg-gray-300 text-gray-500 font-bold py-3 rounded-full text-center cursor-not-allowed">Stay Tuned</div>
+                    <p class="text-gray-500 mb-6 text-sm flex-1">A new challenge is being crafted. Prepare your mind for something unique.</p>
+                    <div class="w-full bg-gray-300 text-gray-500 font-bold py-3 rounded-full text-center cursor-not-allowed">
+                        Stay Tuned
+                    </div>
                 </div>
             </div>
         </div>
@@ -261,18 +381,31 @@
     <section id="contact" class="bg-indigo-50 py-20 px-6">
         <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
             <div>
-                <h2 class="text-3xl fun-font text-indigo-900 mb-4">Where is my Box?</h2>
-                <div class="bg-white p-8 rounded-2xl shadow-lg border border-indigo-100">
-                    <input type="text" placeholder="Tracking Number" class="w-full px-4 py-3 rounded-lg bg-gray-50 border mb-4">
-                    <button class="w-full bg-amber-400 text-indigo-900 font-bold py-2 rounded">Track</button>
+                <div class="text-center md:text-left mb-8">
+                    <h2 class="text-3xl fun-font text-indigo-900 mb-4">Where is my Box?</h2>
+                    <p class="text-gray-600">Enter your tracking number below to check the status.</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-lg border border-indigo-100 w-full">
+                    <div id="as-root"></div>
+                    <script>(function(e,t,n){var r,i=e.getElementsByTagName(t)[0];if(e.getElementById(n))return;r=e.createElement(t);r.id=n;r.src="//button.aftership.com/all.js";i.parentNode.insertBefore(r,i)})(document,"script","aftership-jssdk")</script>
+                    <div class="as-track-button" data-size="large" data-domain="track.aftership.com"></div>
                 </div>
             </div>
             <div>
-                <h2 class="text-3xl fun-font text-indigo-900 mb-4">Get in Touch</h2>
-                <form class="space-y-4 bg-white p-8 rounded-2xl shadow-lg border border-indigo-100">
-                    <input type="email" placeholder="Email" class="w-full px-4 py-3 rounded-lg bg-gray-50 border">
-                    <textarea placeholder="Message" rows="3" class="w-full px-4 py-3 rounded-lg bg-gray-50 border"></textarea>
-                    <button class="w-full bg-indigo-900 text-white font-bold py-3 rounded-lg">Send</button>
+                <div class="text-center md:text-left mb-8">
+                    <h2 class="text-3xl fun-font text-indigo-900 mb-4">Get in Touch</h2>
+                    <p class="text-gray-600">Questions? Custom orders? Just say hi.</p>
+                </div>
+                <form action="https://formspree.io/f/xjkddywe" method="POST" class="space-y-6 bg-white p-8 rounded-2xl shadow-lg border border-indigo-100">
+                    <div>
+                        <label class="block text-gray-700 font-bold mb-2 text-sm">Your Email</label>
+                        <input type="email" name="email" required class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-amber-400 focus:outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-bold mb-2 text-sm">Message</label>
+                        <textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-amber-400 focus:outline-none transition"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-indigo-900 text-white font-bold py-3 rounded-lg hover:bg-indigo-800 transition shadow-md">Send Message</button>
                 </form>
             </div>
         </div>
@@ -280,197 +413,319 @@
 
     <!-- Footer -->
     <footer class="bg-indigo-950 text-white py-12 mt-auto relative">
-        <!-- Key 3 -->
-        <i class="fas fa-key hidden-key" style="bottom: 15px; right: 15px;" onclick="collectKey(this)"></i>
-        <div class="max-w-6xl mx-auto px-6 text-center">
-            <div class="fun-font text-3xl mb-4 text-amber-400">PuzzlerWJ</div>
-            <p class="text-indigo-200 text-sm mb-4">&copy; 2024 PuzzlerWJ. All Rights Reserved.</p>
+        <!-- 🧩 Fragment 3 (Footer Right) -->
+        <i class="fas fa-cog gear-fragment" style="bottom: 15px; right: 15px;" onclick="collectFragment(this, 'Locking Pin')"></i>
+
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="text-center md:text-left">
+                <div class="fun-font text-3xl mb-4 text-amber-400">PuzzlerWJ</div>
+                <p class="text-indigo-200 text-sm mb-4">Handcrafted puzzles designed to bring joy and challenge to your life.</p>
+                <div class="flex justify-center md:justify-start space-x-4">
+                    <a href="https://www.instagram.com/puzzlerwj/" target="_blank" class="w-8 h-8 rounded-full bg-indigo-800 flex items-center justify-center hover:bg-amber-400 hover:text-indigo-900 transition">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="text-center md:text-right">
+                <h4 class="font-bold text-lg mb-4 text-amber-400">Quick Links</h4>
+                <div class="flex flex-col space-y-3 text-indigo-200 text-sm items-center md:items-end">
+                    <a href="#home" class="hover:text-white transition">Home</a>
+                    <a href="#products" class="hover:text-white transition">Shop</a>
+                    <a href="https://puzzlerwj.github.io/puzzlerwj-solutions/Solutions" class="text-amber-400 font-extrabold text-lg hover:text-white transition animate-pulse tracking-wide border-b-2 border-amber-400 pb-1">
+                        <i class="fas fa-key mr-1"></i> Solutions
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-indigo-900 mt-10 pt-6 text-center text-xs text-indigo-400">
+            &copy; 2024 PuzzlerWJ. All Rights Reserved.
         </div>
     </footer>
 
-    <!-- 🔥 Modal: The Sliding Mechanism (Idea 3) -->
-    <div id="mechanismModal" class="fixed inset-0 bg-black/90 z-[80] hidden flex justify-center items-center backdrop-blur-sm opacity-0 transition-opacity duration-500">
-        <div class="bg-gray-800 rounded-lg shadow-2xl w-full max-w-lg overflow-hidden border-4 border-gray-700 relative wood-texture transform scale-95 transition-transform duration-300" id="mechContainer">
-            <!-- Header -->
-            <div class="bg-black/50 p-4 flex justify-between items-center border-b border-gray-600">
-                <h3 class="text-amber-400 font-bold tracking-widest uppercase text-sm"><i class="fas fa-cogs mr-2"></i>Security Mechanism</h3>
-                <button onclick="closeMechanism()" class="text-gray-400 hover:text-white"><i class="fas fa-times text-xl"></i></button>
-            </div>
+    <!-- ⚙️ The Gear Lock Widget (Hidden until repaired) -->
+    <div id="gear-lock-system" class="fixed bottom-6 left-6 z-40">
+        
+        <div class="hint-bubble" id="gearHint">
+            Mechanism Active.<br>
+            <span class="text-amber-300">1. Seek the "Quiet Moment".</span>
+        </div>
 
-            <div class="p-8 md:p-12 space-y-8">
-                <!-- Hint -->
-                <p class="text-center text-gray-400 text-xs uppercase tracking-widest mb-6">Align the gears to unlock the vault.</p>
+        <div class="gear-container" onclick="checkLock()">
+            <!-- The Gear -->
+            <i class="fas fa-gear main-gear" id="mainGear"></i>
+            
+            <!-- Center Icon -->
+            <i class="fas fa-lock gear-core" id="gearIcon"></i>
 
-                <!-- Slider 1 -->
-                <div class="flex items-center gap-4">
-                    <div class="w-4 h-4 rounded-full light-off indicator-light" id="light1"></div>
-                    <input type="range" min="0" max="100" value="0" class="slider-input" oninput="checkSlider(1, this.value)">
-                </div>
-                <!-- Slider 2 -->
-                <div class="flex items-center gap-4">
-                    <div class="w-4 h-4 rounded-full light-off indicator-light" id="light2"></div>
-                    <input type="range" min="0" max="100" value="100" class="slider-input" oninput="checkSlider(2, this.value)">
-                </div>
-                <!-- Slider 3 -->
-                <div class="flex items-center gap-4">
-                    <div class="w-4 h-4 rounded-full light-off indicator-light" id="light3"></div>
-                    <input type="range" min="0" max="100" value="50" class="slider-input" oninput="checkSlider(3, this.value)">
-                </div>
-
-                <!-- Status Text -->
-                <div class="text-center h-8">
-                    <span id="mechStatus" class="text-red-500 font-mono font-bold text-sm">LOCKED</span>
-                </div>
+            <!-- Status Lights -->
+            <div class="status-lights">
+                <div class="light" id="light-1"></div>
+                <div class="light" id="light-2"></div>
+                <div class="light" id="light-3"></div>
             </div>
         </div>
     </div>
 
-    <!-- 🔥 Reward Modal -->
-    <div id="rewardModal" class="fixed inset-0 bg-black/80 z-[90] hidden flex justify-center items-center">
+    <!-- 🔔 Toast Notification -->
+    <div id="toast"><i class="fas fa-check-circle text-amber-400"></i> <span id="toastMsg">Message</span></div>
+
+    <!-- 🎉 Reward Modal (中獎彈窗) -->
+    <div id="rewardModal" class="fixed inset-0 bg-black/80 z-[70] hidden flex justify-center items-center">
         <div class="bg-white p-8 rounded-2xl max-w-sm text-center relative border-4 border-amber-400 shadow-2xl animate-bounce">
             <button onclick="document.getElementById('rewardModal').classList.add('hidden')" class="absolute top-2 right-4 text-2xl text-gray-400 hover:text-gray-800">&times;</button>
-            <div class="text-5xl mb-4">🎉</div>
-            <h3 class="text-2xl font-bold text-indigo-900 mb-2" id="rewardTitle">Box Opened!</h3>
-            <p class="text-gray-600 mb-4" id="rewardMsg">You've mastered the mechanism.</p>
+            <div class="text-5xl mb-4">⚙️🎉</div>
+            <h3 class="text-2xl font-bold text-indigo-900 mb-2" id="rewardTitle">You Found It!</h3>
+            <p class="text-gray-600 mb-4" id="rewardMsg">The mechanism is open:</p>
             <div class="bg-gray-100 p-3 rounded-lg border-dashed border-2 border-amber-400 mb-4">
-                <span class="text-2xl font-bold tracking-wider text-indigo-900" id="rewardCode">MASTER20</span>
+                <span class="text-2xl font-bold tracking-wider text-indigo-900" id="rewardCode">CODE</span>
             </div>
-            <p class="text-xs text-gray-400">20% Off Code</p>
+            <p class="text-xs text-gray-400">Enter this code at checkout.</p>
         </div>
     </div>
 
-    <!-- 🛒 Shopping Cart Modal (Simplified) -->
+    <!-- 🛒 Shopping Cart Modal -->
     <div id="cartModal" class="fixed inset-0 bg-indigo-900/50 backdrop-blur-sm z-[60] hidden opacity-0">
         <div id="cartContent" class="absolute top-0 right-0 w-full md:w-[400px] h-full bg-white shadow-2xl transform translate-x-full flex flex-col">
-            <div class="bg-amber-400 p-5 flex justify-between items-center">
-                <h2 class="text-indigo-900 text-xl font-bold fun-font">Your Cart</h2>
-                <button onclick="toggleCart()" class="text-indigo-900"><i class="fas fa-times text-2xl"></i></button>
+            <div class="bg-amber-400 p-5 flex justify-between items-center shadow-sm">
+                <h2 class="text-indigo-900 text-xl font-bold fun-font"><i class="fas fa-shopping-bag mr-2"></i>Your Cart</h2>
+                <button onclick="toggleCart()" class="text-indigo-900 hover:text-white transition">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
             </div>
-            <div id="cartItemsContainer" class="flex-1 p-5"><p class="text-gray-400 text-center mt-10">Cart is empty.</p></div>
+
+            <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-5 space-y-4">
+                <div class="text-center text-gray-400 mt-10">Your cart is empty.</div>
+            </div>
+
+            <div class="border-t border-gray-100 p-6 bg-gray-50">
+                <div class="flex gap-2 mb-4">
+                    <input type="text" id="promoInput" placeholder="Promo Code" class="flex-1 px-3 py-2 border rounded text-sm focus:outline-none focus:border-amber-400 uppercase">
+                    <button onclick="applyPromo()" class="bg-gray-800 text-white px-3 py-2 rounded text-sm font-bold hover:bg-gray-700">Apply</button>
+                </div>
+                <div id="promoMessage" class="text-xs mb-2 hidden"></div>
+
+                <div class="flex justify-between text-sm mb-2 text-gray-600">
+                    <span>Subtotal</span>
+                    <span id="cartSubtotal">$0.00</span>
+                </div>
+                <div class="flex justify-between text-sm mb-2 text-gray-600">
+                    <span>Shipping</span>
+                    <span id="cartShipping">$9.99</span>
+                </div>
+                <div id="discountRow" class="flex justify-between text-sm mb-4 text-green-600 font-bold hidden">
+                    <span>Discount</span>
+                    <span id="cartDiscount">-$0.00</span>
+                </div>
+
+                <div class="flex justify-between text-xl font-bold text-indigo-900 mb-6">
+                    <span>Total</span>
+                    <span id="cartTotal">$0.00</span>
+                </div>
+                
+                <div id="paypal-button-container" class="w-full"></div>
+            </div>
         </div>
     </div>
 
+    <!-- Back to Top Button (Right Bottom) -->
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" id="backToTop" class="fixed bottom-6 right-6 bg-amber-400 text-indigo-900 w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-amber-300 transition duration-300 transform translate-y-20 opacity-0 z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AR1JFEvjsUMt_DyqzDOZhhqtgmTC8BOsTYHVxZLFRMkULFDHl3xtpEEKsYFFsmYFhIPQXC9DaEZjg2Id&currency=USD&locale=en_US"></script>
+
     <script>
-        // --- 🎮 Logic: Narrative Cipher (Idea 5) ---
-        const correctSequence = ['quiet', 'clue', 'victory'];
-        let userSequence = [];
+        // --- 🧩 Part 1: Fragment Collection Logic ---
+        let fragmentsFound = 0;
+        const totalFragments = 3;
+        let isMechanismRepaired = false; // Game State
 
-        function checkWord(element, word) {
-            // Prevent clicking same word twice consecutively or if already active
-            if (element.classList.contains('cipher-active')) return;
+        function collectFragment(element, partName) {
+            if (element.classList.contains('fragment-found')) return;
+            
+            // Visual Effect
+            element.classList.add('fragment-found');
+            fragmentsFound++;
 
-            // Check if this matches the next expected word
-            const expectedWord = correctSequence[userSequence.length];
-
-            if (word === expectedWord) {
-                // Correct word
-                element.classList.add('cipher-active');
-                userSequence.push(word);
-
-                // Play soft click sound (optional simulation)
-                // Check if sequence is complete
-                if (userSequence.length === correctSequence.length) {
-                    setTimeout(unlockNarrative, 500);
-                }
+            // Show Toast
+            if (fragmentsFound < totalFragments) {
+                showToast(`Found: ${partName} (${fragmentsFound}/${totalFragments})`);
             } else {
-                // Wrong word: Shake effect & Reset
-                const section = document.getElementById('story-section');
-                section.classList.add('shake-element');
-                
-                // Reset styling
-                document.querySelectorAll('.cipher-word').forEach(el => el.classList.remove('cipher-active'));
-                userSequence = [];
-
-                setTimeout(() => {
-                    section.classList.remove('shake-element');
-                }, 500);
+                showToast(`Final Part Acquired: ${partName}.`);
+                // Delay repair animation slightly
+                setTimeout(repairMechanism, 1000);
             }
         }
 
-        function unlockNarrative() {
-            // Show overlay on the story box
-            const overlay = document.getElementById('mechanismOverlay');
-            overlay.classList.remove('translate-y-full');
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function repairMechanism() {
+            isMechanismRepaired = true;
+            const system = document.getElementById('gear-lock-system');
+            const hint = document.getElementById('gearHint');
             
-            // Wait a moment then open the sliding mechanism modal
+            // Remove hidden state, add repaired state
+            system.classList.remove('opacity-0', 'pointer-events-none');
+            system.classList.add('repaired');
+
+            // Play a mechanical sound if possible (optional) or just visual
+            showToast("Mechanism Repaired. Initiate Sequence.");
+
+            // Show initial hint
             setTimeout(() => {
-                openMechanism();
-            }, 1500);
+                hint.classList.add('show');
+                setTimeout(() => hint.classList.remove('show'), 6000);
+            }, 1000);
         }
 
-        // --- 🎮 Logic: Sliding Mechanism (Idea 3) ---
-        // Target values for the sliders (0-100)
-        const targets = {
-            1: 85, // Slider 1 target
-            2: 20, // Slider 2 target
-            3: 60  // Slider 3 target
-        };
-        const tolerance = 5; // Allowable margin of error
+        // --- ⚙️ Part 2: The Trinity Lock Logic ---
+        const gear = document.getElementById('mainGear');
+        const systemContainer = document.getElementById('gear-lock-system');
+        const container = document.querySelector('.gear-container');
+        const gearIcon = document.getElementById('gearIcon');
+        const hintBubble = document.getElementById('gearHint');
+        const lights = [
+            document.getElementById('light-1'),
+            document.getElementById('light-2'),
+            document.getElementById('light-3')
+        ];
 
-        function openMechanism() {
-            const modal = document.getElementById('mechanismModal');
-            const container = document.getElementById('mechContainer');
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                container.classList.remove('scale-95');
-                container.classList.add('scale-100');
-            }, 10);
+        // 🎯 TARGETS ORDER: Middle -> Top -> Bottom
+        const targets = [
+            { id: 'marker-middle', hint: '1. Seek the "Quiet Moment".' },   // Middle
+            { id: 'marker-top', hint: '2. Return to the Start.' },          // Top
+            { id: 'marker-bottom', hint: '3. Inspect the "Skyscraper".' }   // Bottom
+        ];
+
+        let currentStage = 0; 
+        let isResonating = false; 
+        let isUnlocked = false;
+
+        // Scroll Event
+        window.addEventListener('scroll', () => {
+            // BackToTop (Standard)
+            const backToTopBtn = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.remove('translate-y-20', 'opacity-0');
+            } else {
+                backToTopBtn.classList.add('translate-y-20', 'opacity-0');
+            }
+
+            // Gear Logic (Only if repaired)
+            if (!isMechanismRepaired || isUnlocked) return;
+
+            // Rotate Gear
+            const rotation = window.scrollY / 5; 
+            gear.style.transform = `rotate(${rotation}deg)`;
+
+            checkProximity();
+        });
+
+        function checkProximity() {
+            if (currentStage >= targets.length) return;
+
+            const targetEl = document.getElementById(targets[currentStage].id);
+            if (!targetEl) return;
+            
+            const rect = targetEl.getBoundingClientRect();
+            const viewportCenter = window.innerHeight / 2;
+            const markerCenter = rect.top + (rect.height / 2);
+            const distance = Math.abs(markerCenter - viewportCenter);
+
+            // 75px tolerance (matches half marker height)
+            if (distance < 75) { 
+                if (!isResonating) {
+                    // Enter Sweet Spot
+                    container.classList.add('resonating');
+                    systemContainer.classList.add('active-mode'); 
+                    gearIcon.classList.remove('fa-lock');
+                    gearIcon.classList.add('fa-crosshairs'); 
+                    if (navigator.vibrate) navigator.vibrate(50);
+                }
+                isResonating = true;
+            } else {
+                if (isResonating) {
+                    // Leave Sweet Spot
+                    container.classList.remove('resonating');
+                    systemContainer.classList.remove('active-mode');
+                    gearIcon.classList.add('fa-lock');
+                    gearIcon.classList.remove('fa-crosshairs');
+                }
+                isResonating = false;
+            }
         }
 
-        function closeMechanism() {
-            const modal = document.getElementById('mechanismModal');
-            modal.classList.add('opacity-0');
+        function checkLock() {
+            if (!isMechanismRepaired || isUnlocked) return;
+
+            if (isResonating) {
+                // Success
+                successFeedback();
+                lights[currentStage].classList.add('active');
+                currentStage++;
+
+                if (currentStage >= targets.length) {
+                    finalUnlock();
+                } else {
+                    hintBubble.innerHTML = `<span class="text-amber-300">Locked!</span><br>${targets[currentStage].hint}`;
+                    hintBubble.classList.add('show');
+                    setTimeout(() => hintBubble.classList.remove('show'), 3000);
+                    
+                    isResonating = false; 
+                    container.classList.remove('resonating');
+                    systemContainer.classList.remove('active-mode');
+                }
+
+            } else {
+                // Failure
+                failFeedback();
+            }
+        }
+
+        function successFeedback() {
+            const icon = gearIcon;
+            icon.classList.remove('fa-crosshairs');
+            icon.classList.add('fa-check');
             setTimeout(() => {
-                modal.classList.add('hidden');
+                icon.classList.remove('fa-check');
+                icon.classList.add('fa-lock');
             }, 500);
         }
 
-        function checkSlider(id, value) {
-            const val = parseInt(value);
-            const target = targets[id];
-            const light = document.getElementById(`light${id}`);
+        function failFeedback() {
+            container.classList.add('jammed');
+            hintBubble.innerHTML = `<span class="text-red-400">Mechanism Jammed!</span><br>Resetting...`;
+            hintBubble.classList.add('show');
+
+            setTimeout(() => {
+                container.classList.remove('jammed');
+                resetLock();
+                hintBubble.classList.remove('show');
+            }, 1000);
+        }
+
+        function resetLock() {
+            currentStage = 0;
+            lights.forEach(l => l.classList.remove('active'));
+            hintBubble.innerHTML = `Mechanism Active.<br><span class="text-amber-300">${targets[0].hint}</span>`;
+            checkProximity();
+        }
+
+        function finalUnlock() {
+            isUnlocked = true;
+            container.classList.remove('resonating');
+            container.classList.add('unlocked');
+            gearIcon.className = 'fas fa-lock-open gear-core';
             
-            // Check if within tolerance
-            if (val >= target - tolerance && val <= target + tolerance) {
-                light.classList.remove('light-off');
-                light.classList.add('light-on');
-                checkAllUnlocked();
-            } else {
-                light.classList.remove('light-on');
-                light.classList.add('light-off');
-                document.getElementById('mechStatus').innerText = "LOCKED";
-                document.getElementById('mechStatus').classList.remove('text-green-500');
-                document.getElementById('mechStatus').classList.add('text-red-500');
-            }
-        }
-
-        function checkAllUnlocked() {
-            const l1 = document.getElementById('light1').classList.contains('light-on');
-            const l2 = document.getElementById('light2').classList.contains('light-on');
-            const l3 = document.getElementById('light3').classList.contains('light-on');
-
-            if (l1 && l2 && l3) {
-                const status = document.getElementById('mechStatus');
-                status.innerText = "UNLOCKED";
-                status.classList.remove('text-red-500');
-                status.classList.add('text-green-500');
-
-                // Delay to show reward
-                setTimeout(() => {
-                    closeMechanism();
-                    showReward("Mechanic Master", "You solved the sliding lock!", "PUZZLEMASTER20");
-                }, 1000);
-            }
-        }
-
-        // --- 🎮 Logic: Scavenger Hunt (Original) ---
-        let keysFound = 0;
-        function collectKey(el) {
-            el.style.display = 'none';
-            keysFound++;
-            if(keysFound === 3) showReward("Key Finder", "All keys found!", "KEY33");
-            else alert(`Key Found! (${keysFound}/3)`);
+            setTimeout(() => {
+                showReward("Mechanism Unlocked!", "You have aligned the gears of fate.", "GEARMASTER");
+            }, 800);
         }
 
         function showReward(title, msg, code) {
@@ -480,38 +735,196 @@
             document.getElementById('rewardModal').classList.remove('hidden');
         }
 
-        // --- 🛒 Logic: Basic Cart ---
+        // --- 🎮 Keyboard Secret (Preserved) ---
+        let keyBuffer = "";
+        const secretCode = "JOY";
+        document.addEventListener('keydown', (e) => {
+            if (e.key.length === 1 && /[a-zA-Z]/.test(e.key)) {
+                keyBuffer += e.key.toUpperCase();
+                if (keyBuffer.length > 10) keyBuffer = keyBuffer.slice(-5);
+                if (keyBuffer.includes(secretCode)) {
+                    showReward("Secret Unlocked!", "You typed the magic word!", "puzzler999");
+                    keyBuffer = "";
+                }
+            }
+        });
+
+        // --- 🛒 Shopping Cart Logic (Preserved) ---
         let cart = [];
-        function addToCart(id, name, price) {
-            cart.push({id, name, price});
-            updateCart();
-            toggleCart();
+        let appliedDiscount = 0; 
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedCart = localStorage.getItem('puzzlerCart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCartBadge();
+            }
+        });
+
+        function addToCart(id, name, price, img) {
+            cart.push({ id, name, price, img });
+            saveCart();
+            updateCartBadge();
+            toggleCart(true); 
         }
-        function toggleCart() {
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            saveCart();
+            updateCartUI();
+            updateCartBadge();
+        }
+
+        function saveCart() {
+            localStorage.setItem('puzzlerCart', JSON.stringify(cart));
+        }
+
+        function updateCartBadge() {
+            const badge = document.getElementById('cartCount');
+            badge.innerText = cart.length;
+            if(cart.length > 0) badge.classList.remove('opacity-0');
+            else badge.classList.add('opacity-0');
+        }
+
+        function toggleCart(forceOpen = false) {
             const modal = document.getElementById('cartModal');
             const content = document.getElementById('cartContent');
-            if(modal.classList.contains('hidden')) {
+            if (forceOpen || modal.classList.contains('hidden')) {
                 modal.classList.remove('hidden');
-                setTimeout(()=> { modal.classList.remove('opacity-0'); content.classList.add('cart-open'); }, 10);
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    content.classList.add('cart-open');
+                }, 10);
+                updateCartUI();
             } else {
                 modal.classList.add('opacity-0');
                 content.classList.remove('cart-open');
-                setTimeout(()=> modal.classList.add('hidden'), 300);
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
             }
         }
-        function updateCart() {
-            document.getElementById('cartCount').innerText = cart.length;
-            document.getElementById('cartCount').classList.remove('opacity-0');
-            const container = document.getElementById('cartItemsContainer');
-            if(cart.length === 0) container.innerHTML = '<p class="text-gray-400 text-center mt-10">Empty</p>';
-            else {
-                container.innerHTML = cart.map(item => `
-                    <div class="flex justify-between border-b py-2">
-                        <span>${item.name}</span>
-                        <span class="text-amber-500">$${item.price}</span>
-                    </div>
-                `).join('');
+
+        function applyPromo() {
+            const input = document.getElementById('promoInput');
+            const msg = document.getElementById('promoMessage');
+            const code = input.value.trim().toUpperCase();
+
+            msg.classList.remove('hidden', 'text-green-600', 'text-red-500');
+
+            if (code === 'PUZZLER99') {
+                appliedDiscount = 0.99;
+                msg.innerText = "Code applied! $0.99 off.";
+                msg.classList.add('text-green-600');
+            } else if (code === 'PUZZLER999') {
+                appliedDiscount = 9.99;
+                msg.innerText = "Secret Code applied! $9.99 off.";
+                msg.classList.add('text-green-600');
+            } else if (code === 'GEARMASTER') {
+                appliedDiscount = 20.00; 
+                msg.innerText = "Master Code applied! $20.00 off.";
+                msg.classList.add('text-green-600');
+            } else {
+                appliedDiscount = 0;
+                msg.innerText = "Invalid code.";
+                msg.classList.add('text-red-500');
             }
+            updateCartUI(); 
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cartItemsContainer');
+            const subtotalEl = document.getElementById('cartSubtotal');
+            const shippingEl = document.getElementById('cartShipping');
+            const totalEl = document.getElementById('cartTotal');
+            const discountRow = document.getElementById('discountRow');
+            const discountEl = document.getElementById('cartDiscount');
+            const paypalContainer = document.getElementById('paypal-button-container');
+
+            container.innerHTML = '';
+            paypalContainer.innerHTML = ''; 
+
+            if (cart.length === 0) {
+                container.innerHTML = '<div class="text-center text-gray-400 mt-10">Your cart is empty.</div>';
+                subtotalEl.innerText = '$0.00';
+                shippingEl.innerText = '$0.00';
+                totalEl.innerText = '$0.00';
+                discountRow.classList.add('hidden');
+                return;
+            }
+
+            let subtotal = 0;
+            cart.forEach((item, index) => {
+                subtotal += item.price;
+                const itemEl = document.createElement('div');
+                itemEl.className = 'flex items-center justify-between border-b border-gray-100 pb-3';
+                itemEl.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <img src="${item.img}" class="w-12 h-12 object-contain bg-gray-50 rounded p-1">
+                        <div>
+                            <div class="font-bold text-gray-800 text-sm">${item.name}</div>
+                            <div class="text-amber-500 text-sm">$${item.price}</div>
+                        </div>
+                    </div>
+                    <button onclick="removeFromCart(${index})" class="text-gray-300 hover:text-red-500 transition">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                `;
+                container.appendChild(itemEl);
+            });
+
+            let shipping = subtotal >= 100 ? 0 : 9.99;
+            let total = subtotal + shipping - appliedDiscount;
+            if (total < 0) total = 0;
+
+            subtotalEl.innerText = '$' + subtotal.toFixed(2);
+            shippingEl.innerText = shipping === 0 ? 'Free' : '$' + shipping.toFixed(2);
+            
+            if (appliedDiscount > 0) {
+                discountRow.classList.remove('hidden');
+                discountEl.innerText = '-$' + appliedDiscount.toFixed(2);
+            } else {
+                discountRow.classList.add('hidden');
+            }
+
+            totalEl.innerText = '$' + total.toFixed(2);
+
+            renderPayPalButton(total, subtotal, shipping, appliedDiscount);
+        }
+
+        function renderPayPalButton(totalAmount, itemTotal, shippingCost, discountAmount) {
+            paypal.Buttons({
+                style: { shape: 'pill', color: 'gold', layout: 'vertical', label: 'checkout' },
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            description: "PuzzlerWJ Order",
+                            amount: {
+                                currency_code: "USD",
+                                value: totalAmount.toFixed(2),
+                                breakdown: {
+                                    item_total: { currency_code: "USD", value: itemTotal.toFixed(2) },
+                                    shipping: { currency_code: "USD", value: shippingCost.toFixed(2) },
+                                    discount: { currency_code: "USD", value: discountAmount.toFixed(2) }
+                                }
+                            }
+                        }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        cart = [];
+                        saveCart();
+                        updateCartBadge();
+                        toggleCart();
+                        window.location.href = "thankyou.html";
+                    });
+                },
+                onError: function (err) {
+                    console.error(err);
+                    alert('Payment Error. Please try again.');
+                }
+            }).render('#paypal-button-container');
         }
     </script>
 </body>
