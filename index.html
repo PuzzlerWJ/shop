@@ -2,263 +2,406 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 支援現代手機全螢幕顯示 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>PuzzlerWJ | The Broken Mechanism</title>
     
-    <!-- 資源預先連線 -->
-    <link rel="preconnect" href="https://cdn.tailwindcss.com">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Poppins:wght@300;400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        amber: { 400: '#fbbf24', 300: '#fcd34d' },
-                        indigo: { 900: '#312e81', 950: '#1e1b4b' }
-                    }
-                }
-            }
-        }
-    </script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Poppins:wght@300;400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <!-- Icons (FontAwesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* 
-         * ==============================================
-         * 🎨 核心樣式 (一般模式)
-         * ==============================================
-         */
-        :root {
-            --color-bg: #FDFBF7;
-            --color-primary: #fbbf24;
-            --color-dark: #312e81;
-            --color-darker: #1e1b4b;
-        }
-
-        html, body {
-            margin: 0; padding: 0; width: 100%; overflow-x: hidden;
-            background-color: var(--color-bg);
-            color: #1f2937;
-            font-family: 'Poppins', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-            transition: background-color 0.5s ease, color 0.5s ease, filter 0.5s ease;
-        }
-
         h1, h2, h3, .fun-font { font-family: 'Abril Fatface', cursive; }
-
-        /* Preloader */
-        #preloader {
-            position: fixed; inset: 0; background: var(--color-darker); z-index: 9999;
-            display: flex; justify-content: center; align-items: center;
-            transition: opacity 0.5s ease-out;
+        body { font-family: 'Poppins', sans-serif; transition: background-color 0.5s, filter 0.5s; }
+        .pattern-dots {
+            background-image: radial-gradient(#4F46E5 2px, transparent 2px);
+            background-size: 20px 20px;
         }
-        .loader-gear { font-size: 3rem; color: var(--color-primary); animation: spin 2s infinite linear; }
 
-        /* 
-         * ==============================================
-         * 📟 Hacker Mode (黑綠配色徹底改造)
-         * ==============================================
-         */
-
-        /* 1. 全局強制覆蓋 */
+        /* --- 🕵️ Hacker Mode Styles --- */
         body.hacker-mode {
-            background-color: #000000 !important;
-            color: #00ff41 !important; /* 經典螢光綠 */
+            background-color: #050505 !important;
             font-family: 'Share Tech Mono', monospace !important;
-            background-image: linear-gradient(rgba(0, 20, 0, 0.9), rgba(0, 20, 0, 0.9)), 
-                              repeating-linear-gradient(0deg, transparent, transparent 2px, #003300 3px); /* 掃描線效果 */
-            background-size: cover;
         }
-
-        /* 2. 強制覆蓋所有背景色 (移除黃色/藍色) */
-        body.hacker-mode nav,
-        body.hacker-mode header,
-        body.hacker-mode section,
-        body.hacker-mode footer,
-        body.hacker-mode div,
-        body.hacker-mode .bg-white,
-        body.hacker-mode .bg-gray-50,
-        body.hacker-mode .bg-indigo-900,
-        body.hacker-mode .bg-indigo-950,
-        body.hacker-mode .bg-amber-400,
-        body.hacker-mode .bg-indigo-50 {
-            background-color: #000000 !important;
-            color: #00ff41 !important;
-            border-color: #00ff41 !important;
-            box-shadow: none !important;
+        body.hacker-mode h1, body.hacker-mode h2, body.hacker-mode h3, body.hacker-mode .fun-font {
+            font-family: 'Share Tech Mono', monospace !important;
+            letter-spacing: -1px;
         }
-
-        /* 3. 邊框處理 (模擬終端機線條) */
-        body.hacker-mode nav { border-bottom: 1px solid #00ff41 !important; }
-        body.hacker-mode .rounded-2xl, 
-        body.hacker-mode input, 
-        body.hacker-mode textarea,
-        body.hacker-mode button {
-            border: 1px solid #00ff41 !important;
-            border-radius: 0 !important; /* 駭客不喜歡圓角 */
+        body.hacker-mode nav {
+            background-color: #000 !important;
+            border-bottom: 2px solid #00ff41;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
         }
-
-        /* 4. 按鈕特效 */
-        body.hacker-mode button:hover,
-        body.hacker-mode a:hover {
-            background-color: #00ff41 !important;
-            color: #000000 !important;
-            box-shadow: 0 0 10px #00ff41 !important;
+        body.hacker-mode header {
+            background-color: #111 !important;
         }
-
-        /* 5. 圖片濾鏡 (把彩色照片變成綠色單色螢幕風格) */
-        body.hacker-mode img {
-            filter: grayscale(100%) brightness(0.6) sepia(100%) hue-rotate(50deg) saturate(500%) contrast(1.2);
-            opacity: 0.8;
-            border: 1px solid #003300;
+        body.hacker-mode h1 span {
+            color: #00ff41 !important; /* Matrix Green */
+            text-shadow: 0 0 10px #00ff41;
         }
-        body.hacker-mode img:hover {
-            filter: grayscale(0%) brightness(1); /* 懸停時恢復原色，方便查看產品 */
-            opacity: 1;
-        }
-
-        /* 6. 隱藏不必要的裝飾 (黃色圓圈) */
-        body.hacker-mode .absolute.rounded-full, 
         body.hacker-mode .pattern-dots {
+            background-image: radial-gradient(#003b00 2px, transparent 2px);
+        }
+        
+        /* Hacker Mode: Hide Physical Games */
+        body.hacker-mode .gear-fragment,
+        body.hacker-mode #gear-lock-system {
             display: none !important;
         }
 
-        /* 7. Hidden Joy 文字特效 (駭客模式) */
-        body.hacker-mode #hiddenJoyTrigger {
+        /* Hacker Mode: Reward Modal Style */
+        body.hacker-mode #rewardModal > div {
+            background-color: #000 !important;
+            border: 2px solid #00ff41 !important;
+            color: #00ff41 !important;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
             font-family: 'Share Tech Mono', monospace !important;
+        }
+        body.hacker-mode #rewardTitle {
             color: #00ff41 !important;
-            text-shadow: 0 0 8px rgba(0, 255, 65, 0.8);
-            border-bottom: 1px dashed #00ff41;
-            padding: 0 5px;
+            text-shadow: 0 0 10px #00ff41;
+            font-size: 2.5rem;
         }
-        body.hacker-mode #hiddenJoyTrigger::before { content: '> '; }
-        body.hacker-mode #hiddenJoyTrigger::after {
-            content: '_';
-            animation: blink 0.8s step-end infinite;
-            margin-left: 2px;
-        }
-
-        /* 8. 確保 Unlock the 可讀 */
-        body.hacker-mode h1 span,
-        body.hacker-mode h1 {
+        body.hacker-mode #rewardMsg {
             color: #00ff41 !important;
         }
-        body.hacker-mode .text-gray-500,
-        body.hacker-mode .text-gray-600 {
-            color: #008f11 !important; /* 次要文字改為深綠色 */
+        body.hacker-mode #rewardCode {
+            color: #000 !important;
+            background-color: #00ff41 !important;
+            border: none !important;
+            padding: 5px 15px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        body.hacker-mode .text-indigo-900 {
+            color: #a3e635 !important;
+        }
+        body.hacker-mode .emoji-icon {
+            display: none;
         }
 
-        /* 9. 購物車 Hack */
+        /* Hacker Mode: Cart Styles */
         body.hacker-mode #cartContent {
-            background-color: #000000 !important;
+            background-color: #000 !important;
             border-left: 2px solid #00ff41;
+            color: #00ff41;
+        }
+        body.hacker-mode #cartContent .bg-amber-400 {
+            background-color: #003300 !important;
+            color: #00ff41 !important;
+            border-bottom: 1px solid #00ff41;
+        }
+        body.hacker-mode #cartContent .text-indigo-900 {
+            color: #00ff41 !important;
+        }
+        body.hacker-mode #cartContent .border-t, 
+        body.hacker-mode #cartContent .border-b {
+            border-color: #00ff41 !important;
+        }
+        body.hacker-mode #cartContent .bg-gray-50 {
+            background-color: #050505 !important;
+        }
+        body.hacker-mode #cartContent input {
+            background-color: #000 !important;
+            border: 1px solid #00ff41 !important;
+            color: #00ff41 !important;
+        }
+        body.hacker-mode #cartContent button {
+            border: 1px solid #00ff41;
+        }
+        body.hacker-mode #cartContent .text-gray-600,
+        body.hacker-mode #cartContent .text-gray-400 {
+            color: #00aa2c !important;
+        }
+        body.hacker-mode #cartContent .text-gray-800 {
+            color: #00ff41 !important;
         }
 
-        /* 
-         * ==============================================
-         * 互動與動畫
-         * ==============================================
-         */
-        
-        /* 拒絕訪問動畫 (一般模式) */
-        @keyframes shake-red {
-            0%, 100% { transform: translateX(0); color: white; }
-            20% { transform: translateX(-10px); color: #ef4444; }
-            40% { transform: translateX(10px); color: #ef4444; }
-            60% { transform: translateX(-10px); color: #ef4444; }
-            80% { transform: translateX(10px); color: #ef4444; }
+        /* --- 📟 Terminal / Blinking Cursor --- */
+        #nameModal, .cursor-container {
+            font-family: 'Share Tech Mono', monospace;
         }
-        .shake-denied { animation: shake-red 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+        .blinking-cursor::after {
+            content: '▋';
+            animation: blink 1s step-end infinite;
+            color: inherit;
+            margin-left: 2px;
+            vertical-align: middle;
+            font-size: 0.8em;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
 
-        /* 通用動畫 */
-        @keyframes spin { from {transform: rotate(0deg);} to {transform: rotate(360deg);} }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        /* --- 🕹️ Hidden Joy Trigger --- */
+        #hiddenJoyTrigger {
+            cursor: pointer;
+            display: inline-block;
+            transition: color 0.3s;
+        }
+        /* Mouse hover feedback */
+        #hiddenJoyTrigger:hover {
+            color: #fbbf24; 
+        }
+
+        .shake-denied {
+            animation: shake-hard 0.4s cubic-bezier(.36,.07,.19,.97) both;
+            color: #ef4444 !important;
+        }
+        @keyframes shake-hard {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+
+        /* Hacker Mode Trigger Style */
+        body.hacker-mode #hiddenJoyTrigger {
+            color: #00ff41 !important;
+            background-color: transparent !important;
+            text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+            padding: 2px 6px;
+            position: relative;
+            font-family: 'Share Tech Mono', monospace !important;
+        }
+        body.hacker-mode #hiddenJoyTrigger:hover {
+            background-color: rgba(0, 255, 65, 0.15) !important;
+        }
+        body.hacker-mode #hiddenJoyTrigger::before {
+            content: '> ';
+            color: #00ff41;
+            font-weight: bold;
+            opacity: 0.8;
+        }
+        body.hacker-mode #hiddenJoyTrigger::after {
+            content: '_'; 
+            display: inline-block;
+            margin-left: 2px;
+            color: #00ff41;
+            background-color: #00ff41; 
+            width: 10px;
+            height: 1.1em;
+            vertical-align: text-bottom;
+            animation: terminal-blink 1s step-end infinite;
+        }
+        @keyframes terminal-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* --- 🧩 Gear Fragments --- */
+        .gear-fragment {
+            position: absolute;
+            color: #fbbf24;
+            opacity: 0.8;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 60;
+            font-size: 1.5rem;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
+            animation: float-spin 4s infinite linear;
+            padding: 10px; 
+            margin: -10px;
+        }
+        @media (hover: hover) {
+            .gear-fragment:hover { 
+                opacity: 1; 
+                color: #f59e0b; 
+                transform: scale(1.2); 
+            }
+        }
+        .fragment-found { 
+            transform: scale(0) rotate(180deg) !important; 
+            opacity: 0 !important; 
+            pointer-events: none;
+        }
         @keyframes float-spin {
             0% { transform: translateY(0) rotate(0deg); }
             50% { transform: translateY(-5px) rotate(180deg); }
             100% { transform: translateY(0) rotate(360deg); }
         }
 
-        /* 其他原有樣式保留 */
-        .pattern-dots { background-image: radial-gradient(#4F46E5 2px, transparent 2px); background-size: 20px 20px; }
-        
-        /* Gear System */
-        #gear-lock-system { opacity: 0; pointer-events: none; transform: scale(0.5) translateY(20px); transition: all 0.5s; }
-        #gear-lock-system.repaired { opacity: 0.6; pointer-events: auto; transform: scale(0.75) translateY(0); }
-        #gear-lock-system.active-mode { transform: scale(1.1); opacity: 1; }
-        .gear-container { position: relative; width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; }
-        .main-gear { font-size: 3rem; color: #6b7280; transition: all 0.3s; z-index: 10; }
-        .gear-container.resonating .main-gear { color: var(--color-primary); text-shadow: 0 0 10px rgba(251, 191, 36, 0.6); }
-        .gear-container.unlocked .main-gear { color: #10b981; animation: spin-unlock 1s ease-out forwards; }
-        @keyframes spin-unlock { to { transform: rotate(720deg) scale(0); opacity: 0; } }
-        .status-lights { position: absolute; bottom: -5px; display: flex; gap: 4px; z-index: 30; }
-        .light { width: 6px; height: 6px; border-radius: 50%; background-color: #d1d5db; border: 1px solid #9ca3af; transition: all 0.3s; }
-        .light.active { background-color: #10b981; box-shadow: 0 0 4px #10b981; }
-        .gear-core { position: absolute; z-index: 20; color: #f3f4f6; font-size: 1rem; pointer-events: none; }
-        .scroll-marker { position: absolute; width: 1px; height: 150px; left: 0; pointer-events: none; opacity: 0; }
-        
-        /* Toast */
-        #toast {
-            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
-            background-color: rgba(17, 24, 39, 0.95); color: #fff;
-            padding: 12px 24px; border-radius: 50px; font-weight: 600; font-size: 0.9rem;
-            z-index: 100; transition: transform 0.3s, opacity 0.3s;
-            border: 1px solid var(--color-primary); opacity: 0;
-            width: max-content; max-width: 80vw;
+        /* --- ⚙️ Main Gear Lock System --- */
+        #gear-lock-system {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.5) translateY(20px);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        #gear-lock-system.repaired {
+            opacity: 0.6;
+            pointer-events: auto;
+            transform: scale(0.75) translateY(0);
+        }
+        #gear-lock-system.active-mode {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+        body.hacker-mode .main-gear {
+            color: #111 !important;
+            border: 1px dashed #00ff41;
+            border-radius: 50%;
+        }
+        body.hacker-mode .gear-container.resonating .main-gear {
+            color: #00ff41 !important;
+            box-shadow: 0 0 15px #00ff41;
+        }
 
-        /* Cart */
-        #cartModal { transition: opacity 0.3s; }
-        #cartContent { transition: transform 0.3s; transform: translateX(100%); }
-        .cart-open { transform: translateX(0) !important; }
-        
-        /* Utils */
-        img, video, svg { display: block; max-width: 100%; height: auto; }
-        .gear-fragment {
-            position: absolute; color: var(--color-primary); cursor: pointer; z-index: 40; font-size: 1.5rem;
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3)); animation: float-spin 4s infinite linear; padding: 10px; margin: -10px;
+        .gear-container {
+            position: relative;
+            width: 70px; 
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none; 
+            -webkit-tap-highlight-color: transparent;
         }
-        .fragment-found { transform: scale(0) rotate(180deg) !important; opacity: 0 !important; pointer-events: none; }
-        .blinking-cursor::after { content: '|'; animation: blink 1s infinite; }
+        .main-gear {
+            font-size: 3rem;
+            color: #6b7280;
+            transition: color 0.3s, text-shadow 0.3s, transform 0.1s linear;
+            z-index: 10;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+        .gear-core {
+            position: absolute;
+            z-index: 20;
+            color: #f3f4f6;
+            font-size: 1rem;
+            pointer-events: none;
+            transition: all 0.3s;
+        }
+        .status-lights {
+            position: absolute;
+            bottom: -5px;
+            display: flex;
+            gap: 4px;
+            z-index: 30;
+        }
+        .light {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #d1d5db;
+            border: 1px solid #9ca3af;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .light.active {
+            background-color: #10b981;
+            box-shadow: 0 0 4px #10b981;
+        }
+        body.hacker-mode .light.active {
+            background-color: #00ff41;
+            box-shadow: 0 0 8px #00ff41;
+        }
+
+        .gear-container.resonating .main-gear {
+            color: #fbbf24;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.6);
+        }
+        .gear-container.jammed { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+        .gear-container.jammed .main-gear { color: #ef4444 !important; }
+        .gear-container.unlocked .main-gear {
+            color: #10b981;
+            animation: spin-unlock 1s ease-out forwards;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+        @keyframes spin-unlock {
+            0% { transform: rotate(0deg) scale(1); }
+            100% { transform: rotate(720deg) scale(0); opacity: 0; }
+        }
+
+        .scroll-marker {
+            position: absolute;
+            width: 1px;
+            height: 150px; 
+            left: 0;
+            pointer-events: none;
+            opacity: 0; 
+        }
+
+        /* 🔔 Toast Fix */
+        #toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background-color: rgba(17, 24, 39, 0.9);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            z-index: 100;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+            border: 1px solid #f59e0b;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            pointer-events: none;
+            opacity: 0; /* Default invisible */
+        }
+        #toast.show { 
+            transform: translateX(-50%) translateY(0); 
+            opacity: 1; /* Fade in */
+        }
+
+        @media (max-width: 768px) {
+            #toast {
+                bottom: 90px !important;
+                bottom: calc(90px + env(safe-area-inset-bottom)) !important;
+            }
+        }
+        
+        body.hacker-mode #toast {
+            background-color: #000;
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        #cartModal { transition: opacity 0.3s ease-in-out; }
+        #cartContent { transition: transform 0.3s ease-in-out; }
+        .cart-open { transform: translateX(0) !important; }
+        .faq-content { transition: max-height 0.3s ease-out; max-height: 0; overflow: hidden; }
+        .faq-active .faq-content { max-height: 200px; }
+        .faq-active i { transform: rotate(180deg); }
     </style>
 </head>
-<body class="bg-[#FDFBF7] text-gray-800 flex flex-col min-h-screen relative w-full overflow-x-hidden">
-
-    <!-- 🌀 Preloader -->
-    <div id="preloader">
-        <i class="fas fa-cog loader-gear"></i>
-    </div>
+<body class="bg-[#FDFBF7] text-gray-800 flex flex-col min-h-screen relative">
 
     <!-- Sticky Navbar -->
-    <nav class="sticky top-0 z-50 w-full py-4 px-6 md:px-12 flex justify-between items-center bg-amber-400 shadow-md transition-colors duration-500">
-        <div class="text-3xl text-indigo-900 fun-font tracking-wider cursor-pointer select-none" onclick="window.scrollTo(0,0)" id="brandLogo">PuzzlerWJ</div>
+    <nav class="sticky top-0 z-50 w-full py-4 px-6 md:px-12 flex justify-between items-center bg-amber-400 shadow-md transition-all duration-300">
+        <div class="text-3xl text-indigo-900 fun-font tracking-wider cursor-pointer" onclick="window.scrollTo(0,0)" id="brandLogo">PuzzlerWJ</div>
         
         <div class="flex items-center space-x-6">
             <a href="#contact" class="hidden md:inline-block text-indigo-900 font-bold border-b-2 border-indigo-900 hover:text-white hover:border-white transition">
                 Contact
             </a>
             
-            <button onclick="toggleCart()" class="relative text-indigo-900 hover:text-white transition group p-2">
+            <button onclick="toggleCart()" class="relative text-indigo-900 hover:text-white transition group">
                 <i class="fas fa-shopping-cart text-2xl"></i>
-                <span id="cartCount" class="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full opacity-0 transition-opacity duration-300">0</span>
+                <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full opacity-0 transition-opacity duration-300">0</span>
             </button>
         </div>
     </nav>
 
     <!-- Header Section -->
-    <header class="relative w-full bg-amber-400 overflow-hidden pt-10 pb-20 md:pt-20 md:pb-32 transition-colors duration-500" id="home">
-        <!-- Decor (Hacker Mode會隱藏這些圓圈) -->
+    <header class="relative w-full bg-amber-400 overflow-hidden pt-10 pb-20 md:pt-20 md:pb-32" id="home">
+        <div id="marker-top" class="scroll-marker" style="top: 55%;"></div>
         <div class="absolute -top-20 -right-20 w-64 h-64 bg-amber-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
         <div class="absolute bottom-10 left-10 w-32 h-32 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
 
@@ -267,10 +410,8 @@
                 <div class="inline-block bg-indigo-900 text-amber-400 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-4 shadow-md">
                     Handcrafted in Taiwan
                 </div>
-                <!-- 🎯 Hidden Joy Trigger -->
                 <h1 class="text-5xl md:text-7xl text-indigo-950 leading-tight mb-6 drop-shadow-sm">
-                    Unlock the <br> 
-                    <span class="text-white cursor-pointer relative inline-block px-1" id="hiddenJoyTrigger">Hidden Joy.</span>
+                    Unlock the <br> <span class="text-white" id="hiddenJoyTrigger">Hidden Joy.</span>
                 </h1>
                 <p class="text-indigo-900 text-lg md:text-xl font-medium mb-8 max-w-md mx-auto md:mx-0">
                     "Puzzle is like a life, brimming with beauty."
@@ -280,30 +421,29 @@
                 </a>
             </div>
             
-            <div class="md:w-1/2 relative w-full">
-                <div id="marker-top" class="scroll-marker" style="top: 55%;"></div>
-                <div class="relative w-full aspect-square md:aspect-auto">
-                    <div class="absolute inset-0 bg-indigo-900 rounded-2xl transform rotate-3 translate-x-2 translate-y-2"></div>
-                    <img src="images/WJ.png" alt="Puzzle Box Hero" loading="eager" class="relative rounded-2xl shadow-xl w-full h-full object-cover transform -rotate-2 hover:rotate-0 transition duration-500 border-4 border-white">
-                    <button class="fas fa-cog gear-fragment absolute bg-transparent border-0" style="top: -15px; right: -10px;" 
-                       onclick="collectFragment(this, 'Small Gear')" aria-label="Collect Gear"></button>
-                </div>
+            <div class="md:w-1/2 relative">
+                <div class="absolute inset-0 bg-indigo-900 rounded-2xl transform rotate-3 translate-x-2 translate-y-2"></div>
+                <img src="images/WJ.png" alt="Puzzle Box Hero" class="relative rounded-2xl shadow-xl w-full object-cover transform -rotate-2 hover:rotate-0 transition duration-500 border-4 border-white">
+                <i class="fas fa-cog gear-fragment" style="top: -15px; right: -10px;" 
+                   onclick="collectFragment(this, 'Small Gear')" 
+                   ontouchstart="collectFragment(this, 'Small Gear'); event.preventDefault();"></i>
             </div>
         </div>
     </header>
 
     <!-- Story Section -->
-    <section class="bg-indigo-950 text-white py-24 px-6 pattern-dots relative overflow-hidden transition-colors duration-500">
-        <button class="fas fa-cog gear-fragment absolute bg-transparent border-0" style="bottom: 20px; left: 20px; color: #818cf8;" 
-           onclick="collectFragment(this, 'Drive Shaft')" aria-label="Collect Drive Shaft"></button>
+    <section class="bg-indigo-950 text-white py-24 px-6 pattern-dots relative">
+        <i class="fas fa-cog gear-fragment" style="bottom: 20px; left: 20px; color: #818cf8;" 
+           onclick="collectFragment(this, 'Drive Shaft')" 
+           ontouchstart="collectFragment(this, 'Drive Shaft'); event.preventDefault();"></i>
 
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16 relative z-10">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
             <div class="md:w-1/2">
                 <h2 class="text-4xl fun-font mb-6 text-amber-400">The Quiet Moment</h2>
-                <div class="text-indigo-100 text-lg leading-relaxed mb-6 relative">
+                <p class="text-indigo-100 text-lg leading-relaxed mb-6 relative">
                     <div id="marker-middle" class="scroll-marker" style="top: 0;"></div>
-                    <p>When you solve a puzzle box, it's just you and the box, sharing a quiet moment. As you uncover each clue, you feel a little victory that makes you forget everything else.</p>
-                </div>
+                    When you solve a puzzle box, it's just you and the box, sharing a quiet moment. As you uncover each clue, you feel a little victory that makes you forget everything else.
+                </p>
             </div>
             <div class="md:w-1/2 w-full">
                 <div class="bg-indigo-900 p-10 rounded-2xl border border-indigo-800 shadow-2xl">
@@ -324,12 +464,12 @@
             <h2 class="text-5xl text-indigo-950 fun-font mb-4">Shop Collection</h2>
             <p class="text-gray-500">Challenge your mind with our handcrafted designs.</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Product 1 -->
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-amber-300 transition duration-300 group flex flex-col w-full">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-amber-300 transition duration-300 group flex flex-col">
                 <div class="relative h-[24rem] overflow-hidden bg-gray-50 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-amber-400 text-indigo-900 text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Entry Level</div>
-                    <img src="images/ladybug.jpg" loading="lazy" alt="Ladybug" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
+                    <img src="images/ladybug.jpg" alt="Ladybug" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
                 </div>
                 <div class="p-8 flex-1 flex flex-col">
                     <div class="mb-4">
@@ -345,11 +485,11 @@
                 </div>
             </div>
             <!-- Product 2 (Target 3) -->
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-indigo-300 transition duration-300 group flex flex-col relative w-full">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-indigo-300 transition duration-300 group flex flex-col relative">
                 <div id="marker-bottom" class="scroll-marker" style="top: 50%;"></div>
                 <div class="relative h-[24rem] overflow-hidden bg-gray-50 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Advanced</div>
-                    <img src="images/skyscraper.jpg" loading="lazy" alt="Skyscraper" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
+                    <img src="images/skyscraper.jpg" alt="Skyscraper" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
                 </div>
                 <div class="p-8 flex-1 flex flex-col">
                     <div class="mb-4">
@@ -365,7 +505,7 @@
                 </div>
             </div>
             <!-- Product 3 -->
-            <div class="bg-gray-50 rounded-2xl shadow-lg overflow-hidden border border-gray-200 opacity-90 relative flex flex-col w-full">
+            <div class="bg-gray-50 rounded-2xl shadow-lg overflow-hidden border border-gray-200 opacity-90 relative flex flex-col">
                 <div class="relative h-[24rem] overflow-hidden bg-gray-200 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Coming Soon</div>
                     <div class="text-gray-400 text-6xl"><i class="fas fa-question-circle"></i></div>
@@ -374,7 +514,7 @@
                     <div class="mb-4">
                         <div class="flex justify-between items-center mb-1">
                             <h3 class="text-xl font-bold text-gray-700">Mystery Box</h3>
-                            <span class="text-lg font-bold text-gray-500">Coming Dec.</span>
+                            <span class="text-lg font-bold text-gray-500">Coming Soon.</span>
                         </div>
                         <p class="text-xs text-gray-400 font-medium">Weight: ???</p>
                     </div>
@@ -387,7 +527,7 @@
     <!-- Support Section -->
     <section id="contact" class="bg-indigo-50 py-20 px-6">
         <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
-            <div class="w-full">
+            <div>
                 <div class="text-center md:text-left mb-8">
                     <h2 class="text-3xl fun-font text-indigo-900 mb-4">Where is my Box?</h2>
                     <p class="text-gray-600">Enter your tracking number below to check the status.</p>
@@ -398,7 +538,7 @@
                     <div class="as-track-button" data-size="large" data-domain="track.aftership.com"></div>
                 </div>
             </div>
-            <div class="w-full">
+            <div>
                 <div class="text-center md:text-left mb-8">
                     <h2 class="text-3xl fun-font text-indigo-900 mb-4">Get in Touch</h2>
                     <p class="text-gray-600">Questions? Custom orders? Just say hi.</p>
@@ -412,11 +552,13 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer (Fix: Added overflow-hidden to prevent scrollbar flicker) -->
     <footer class="bg-indigo-950 text-white py-12 mt-auto relative overflow-hidden">
-        <button class="fas fa-cog gear-fragment absolute bg-transparent border-0" style="bottom: 15px; right: 25px;" 
-           onclick="collectFragment(this, 'Locking Pin')" aria-label="Collect Locking Pin"></button>
-        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+        <!-- Fix: Moved gear slightly left (right: 25px) to further prevent overflow -->
+        <i class="fas fa-cog gear-fragment" style="bottom: 15px; right: 25px;" 
+           onclick="collectFragment(this, 'Locking Pin')" 
+           ontouchstart="collectFragment(this, 'Locking Pin'); event.preventDefault();"></i>
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
             <div class="text-center md:text-left">
                 <div class="fun-font text-3xl mb-4 text-amber-400">PuzzlerWJ</div>
                 <p class="text-indigo-200 text-sm mb-4">Handcrafted puzzles designed to bring joy and challenge to your life.</p>
@@ -429,13 +571,14 @@
                 <div class="flex flex-col space-y-3 text-indigo-200 text-sm items-center md:items-end">
                     <a href="#home" class="hover:text-white transition">Home</a>
                     <a href="#products" class="hover:text-white transition">Shop</a>
+                    <!-- New Link Here -->
                     <a href="game.html" class="hover:text-white transition" title="More Games Coming Soon">Web Puzzle Game</a>
                     <a href="https://puzzlerwj.github.io/puzzlerwj-solutions/Solutions" class="text-amber-400 font-extrabold text-lg hover:text-white transition animate-pulse tracking-wide border-b-2 border-amber-400 pb-1"><i class="fas fa-key mr-1"></i> Solutions</a>
                 </div>
             </div>
         </div>
         
-        <div class="border-t border-indigo-900 mt-10 pt-6 text-center text-xs text-indigo-400 flex flex-col items-center justify-center relative z-10">
+        <div class="border-t border-indigo-900 mt-10 pt-6 text-center text-xs text-indigo-400 flex flex-col items-center justify-center">
             <p>&copy; 2024 PuzzlerWJ. All Rights Reserved.</p>
             <div id="versionHint" class="cursor-container text-[10px] text-indigo-400/30 mt-2 font-mono hover:text-indigo-400/80 transition cursor-help select-none inline-block p-2" title="System Version">
                 Ver. Konami Code <span class="blinking-cursor"></span>
@@ -456,7 +599,7 @@
         </div>
     </div>
 
-    <!-- 🔔 Toast -->
+    <!-- 🔔 Toast (Opacity 0 to prevent ghost box) -->
     <div id="toast" class="opacity-0"><i class="fas fa-check-circle text-amber-400"></i> <span id="toastMsg"></span></div>
 
     <!-- 📟 Name Input Modal -->
@@ -472,9 +615,9 @@
         </div>
     </div>
 
-    <!-- 🎉 Reward Modal -->
-    <div id="rewardModal" class="fixed top-0 left-0 w-full h-full bg-black/80 z-[100] hidden flex justify-center items-center px-4">
-        <div class="bg-white p-8 rounded-2xl max-w-sm w-full text-center relative border-4 border-amber-400 shadow-2xl transition-all duration-300 transform scale-100">
+    <!-- 🎉 Reward Modal (Fixed & No Bounce) -->
+    <div id="rewardModal" class="fixed top-0 left-0 w-full h-full bg-black/80 z-[100] hidden flex justify-center items-center">
+        <div class="bg-white p-8 rounded-2xl max-w-sm text-center relative border-4 border-amber-400 shadow-2xl transition-all duration-300 transform scale-100">
             <button onclick="document.getElementById('rewardModal').classList.add('hidden')" class="absolute top-2 right-4 text-2xl text-gray-400 hover:text-gray-800">&times;</button>
             <div class="text-5xl mb-4 emoji-icon">⚙️🎉</div>
             <h3 class="text-2xl font-bold text-indigo-900 mb-2" id="rewardTitle">You Found It!</h3>
@@ -486,26 +629,29 @@
         </div>
     </div>
 
-    <!-- 🛒 Shopping Cart Modal -->
+    <!-- 🛒 Shopping Cart Modal (Fix: h-[100dvh], min-h-0 for inner scroll, Hacker styling) -->
     <div id="cartModal" class="fixed inset-0 bg-indigo-900/50 backdrop-blur-sm z-[60] hidden opacity-0">
-        <div id="cartContent" class="fixed inset-y-0 right-0 w-full md:w-[400px] bg-white shadow-2xl flex flex-col overflow-hidden h-screen max-h-[100dvh]">
+        <div id="cartContent" class="fixed top-0 right-0 w-full md:w-[400px] h-[100dvh] bg-white shadow-2xl transform translate-x-full flex flex-col overflow-hidden">
             <div class="bg-amber-400 p-5 flex justify-between items-center shadow-sm flex-shrink-0">
                 <h2 class="text-indigo-900 text-xl font-bold fun-font"><i class="fas fa-shopping-bag mr-2"></i>Your Cart</h2>
                 <button onclick="toggleCart()" class="text-indigo-900 hover:text-white transition"><i class="fas fa-times text-2xl"></i></button>
             </div>
             
-            <div id="cartItemsContainer" class="flex-1 overflow-y-auto min-h-0 p-5 space-y-4 overscroll-contain">
+            <div id="cartItemsContainer" class="flex-1 overflow-y-auto min-h-0 p-5 space-y-4">
                 <div class="text-center text-gray-400 mt-10">Your cart is empty.</div>
             </div>
             
-            <div class="border-t border-gray-100 p-6 bg-gray-50 flex-shrink-0 pb-[env(safe-area-inset-bottom)]">
-                <!-- Promo Code -->
+            <div class="border-t border-gray-100 p-6 bg-gray-50 flex-shrink-0">
+                <!-- Promo Code Section -->
                 <div class="mb-4">
                     <div class="flex gap-2">
                         <input type="text" id="promoInput" placeholder="Promo Code" class="flex-1 px-3 py-2 border rounded text-sm focus:outline-none focus:border-amber-400 uppercase">
                         <button onclick="applyPromo()" class="bg-gray-800 text-white px-3 py-2 rounded text-sm font-bold hover:bg-gray-700">Apply</button>
                     </div>
-                    <p class="text-[10px] text-gray-500 mt-1 ml-1">*Codes apply to shipping only. Free Shipping over $100.</p>
+                    <!-- Rule Note -->
+                    <p class="text-[10px] text-gray-500 mt-1 ml-1">
+                        *Codes only apply to shipping fees. Not applicable if order is over $100 (Free Shipping).
+                    </p>
                     <div id="promoMessage" class="text-xs mt-1 hidden font-bold"></div>
                 </div>
 
@@ -540,41 +686,21 @@
     <script src="https://www.paypal.com/sdk/js?client-id=AR1JFEvjsUMt_DyqzDOZhhqtgmTC8BOsTYHVxZLFRMkULFDHl3xtpEEKsYFFsmYFhIPQXC9DaEZjg2Id&currency=USD&locale=en_US"></script>
 
     <script>
-        // --- 0. Preloader Logic ---
-        window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            setTimeout(() => {
-                preloader.style.opacity = '0';
-                setTimeout(() => { preloader.style.display = 'none'; }, 500);
-            }, 300);
-        });
-
-        // --- 1. Audio FX Engine ---
-        let audioCtx = null;
-        function initAudio() {
-            if (!audioCtx) {
-                const AudioContext = window.AudioContext || window.webkitAudioContext;
-                if (AudioContext) {
-                    audioCtx = new AudioContext();
-                    if (audioCtx.state === 'suspended') audioCtx.resume();
-                }
-            }
-        }
-        ['click', 'keydown', 'touchstart'].forEach(evt => window.addEventListener(evt, initAudio, { once: true }));
-
+        // --- 🎵 Audio FX Engine ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function playTone(freq, type, duration, vol=0.1) {
-            if (!audioCtx || audioCtx.state !== 'running') return;
-            try {
-                const osc = audioCtx.createOscillator();
-                const gainNode = audioCtx.createGain();
-                osc.type = type; osc.frequency.value = freq;
-                osc.connect(gainNode); gainNode.connect(audioCtx.destination);
-                gainNode.gain.setValueAtTime(vol, audioCtx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-                osc.start(); osc.stop(audioCtx.currentTime + duration);
-            } catch (e) {}
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            osc.type = type; 
+            osc.frequency.value = freq;
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            gainNode.gain.setValueAtTime(vol, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
         }
-
         const sfx = {
             collect: () => playTone(880, 'sine', 0.1),
             resonance: () => playTone(150, 'square', 0.1, 0.05),
@@ -623,7 +749,9 @@
         const gearIcon = document.getElementById('gearIcon');
         const lights = [ document.getElementById('light-1'), document.getElementById('light-2'), document.getElementById('light-3') ];
         const targets = [{ id: 'marker-middle' }, { id: 'marker-top' }, { id: 'marker-bottom' }];
-        let currentStage = 0; let isResonating = false; let isUnlocked = false;
+        let currentStage = 0; 
+        let isResonating = false; 
+        let isUnlocked = false;
 
         window.addEventListener('scroll', () => {
             const backToTopBtn = document.getElementById('backToTop');
@@ -632,7 +760,7 @@
 
             if (!isMechanismRepaired || isUnlocked) return;
             const rotation = window.scrollY / 5; 
-            if(gear) gear.style.transform = `rotate(${rotation}deg)`;
+            gear.style.transform = `rotate(${rotation}deg)`;
             checkProximity();
         });
 
@@ -640,6 +768,7 @@
             if (currentStage >= targets.length) return;
             const targetEl = document.getElementById(targets[currentStage].id);
             if (!targetEl) return;
+            
             const rect = targetEl.getBoundingClientRect();
             const distance = Math.abs((rect.top + rect.height/2) - (window.innerHeight/2));
 
@@ -648,14 +777,17 @@
                     sfx.resonance();
                     container.classList.add('resonating');
                     systemContainer.classList.add('active-mode'); 
-                    gearIcon.classList.remove('fa-lock'); gearIcon.classList.add('fa-crosshairs'); 
+                    gearIcon.classList.remove('fa-lock');
+                    gearIcon.classList.add('fa-crosshairs'); 
                     if (navigator.vibrate) navigator.vibrate(50);
                 }
                 isResonating = true;
             } else {
                 if (isResonating) {
-                    container.classList.remove('resonating'); systemContainer.classList.remove('active-mode');
-                    gearIcon.classList.add('fa-lock'); gearIcon.classList.remove('fa-crosshairs');
+                    container.classList.remove('resonating');
+                    systemContainer.classList.remove('active-mode');
+                    gearIcon.classList.add('fa-lock');
+                    gearIcon.classList.remove('fa-crosshairs');
                 }
                 isResonating = false;
             }
@@ -664,19 +796,25 @@
         function checkLock() {
             if (!isMechanismRepaired || isUnlocked) return;
             if (isResonating) {
-                sfx.collect(); successFeedback();
-                lights[currentStage].classList.add('active'); currentStage++;
+                sfx.collect();
+                successFeedback();
+                lights[currentStage].classList.add('active');
+                currentStage++;
                 if (currentStage >= targets.length) finalUnlock();
                 else {
                     isResonating = false; 
-                    container.classList.remove('resonating'); systemContainer.classList.remove('active-mode');
+                    container.classList.remove('resonating');
+                    systemContainer.classList.remove('active-mode');
                 }
-            } else { failFeedback(); }
+            } else {
+                failFeedback();
+            }
         }
 
         function successFeedback() {
             const icon = gearIcon;
-            icon.classList.remove('fa-crosshairs'); icon.classList.add('fa-check');
+            icon.classList.remove('fa-crosshairs');
+            icon.classList.add('fa-check');
             setTimeout(() => { icon.classList.remove('fa-check'); icon.classList.add('fa-lock'); }, 500);
         }
 
@@ -686,15 +824,23 @@
         }
 
         function resetLock() {
-            currentStage = 0; lights.forEach(l => l.classList.remove('active')); checkProximity();
+            currentStage = 0;
+            lights.forEach(l => l.classList.remove('active'));
+            checkProximity();
         }
 
         function finalUnlock() {
-            isUnlocked = true; sfx.unlock();
-            container.classList.remove('resonating'); container.classList.add('unlocked');
+            isUnlocked = true;
+            sfx.unlock();
+            container.classList.remove('resonating');
+            container.classList.add('unlocked');
             gearIcon.className = 'fas fa-lock-open gear-core';
+            // Show reward only if NOT in hacker mode (as hacker mode hides this game)
             if(!document.body.classList.contains('hacker-mode')){
-                setTimeout(() => { showReward("Mechanism Unlocked!", "You have aligned the gears of fate.", "R0VBUk1BU1RFUg=="); }, 800);
+                setTimeout(() => {
+                    // Pass Base64 code to showReward for display obfuscation
+                    showReward("Mechanism Unlocked!", "You have aligned the gears of fate.", "R0VBUk1BU1RFUg=="); 
+                }, 800);
             }
         }
 
@@ -705,7 +851,7 @@
             document.getElementById('rewardModal').classList.remove('hidden');
         }
 
-        // --- 🕵️ Konami Code & Hidden Joy Interaction ---
+        // --- 🕵️ Konami Code & 7-Tap ---
         const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
         let konamiIndex = 0;
         let currentUser = null; 
@@ -722,36 +868,63 @@
                     showNameInputModal();
                     konamiIndex = 0;
                 }
-            } else { konamiIndex = 0; }
+            } else {
+                konamiIndex = 0;
+            }
         });
 
-        // Hidden Joy Click Logic
+        let tapCount = 0;
+        let tapTimer;
+        const footerHint = document.getElementById('versionHint');
+        
+        footerHint.addEventListener('click', (e) => {
+            e.preventDefault(); 
+            tapCount++;
+            clearTimeout(tapTimer);
+            tapTimer = setTimeout(() => { tapCount = 0; }, 2000); 
+
+            if (tapCount === 1) showToast("Checking System Version...");
+            else if (tapCount === 3) showToast("Accessing Developer Tools...");
+            else if (tapCount === 5) showToast("Warning: System Override Imminent...");
+            else if (tapCount === 7) {
+                showNameInputModal();
+                tapCount = 0;
+            }
+        });
+
+        // 3. Hidden Joy Click Trigger
         const joyTrigger = document.getElementById('hiddenJoyTrigger');
         joyTrigger.addEventListener('click', () => {
             if (document.body.classList.contains('hacker-mode')) {
                 sfx.collect();
-                showReward("SYSTEM BYPASSED", `USER: ${currentUser || 'ADMIN'} // ROOT ACCESS`, "aGFja2VyOTk5"); 
+                showReward("SYSTEM BYPASSED", `USER: ${currentUser || 'ADMIN'} // ROOT ACCESS`, "aGFja2VyOTk5"); // hacker999
             } else {
                 sfx.denied();
-                joyTrigger.classList.remove('shake-denied');
-                void joyTrigger.offsetWidth; // Trigger reflow
                 joyTrigger.classList.add('shake-denied');
+                setTimeout(() => joyTrigger.classList.remove('shake-denied'), 400);
             }
         });
 
-        let tapCount = 0; let tapTimer;
-        document.getElementById('versionHint').addEventListener('click', (e) => {
-            e.preventDefault(); 
-            tapCount++; clearTimeout(tapTimer);
-            tapTimer = setTimeout(() => { tapCount = 0; }, 2000); 
-            if (tapCount === 1) showToast("Checking System Version...");
-            else if (tapCount === 3) showToast("Accessing Developer Tools...");
-            else if (tapCount === 7) { showNameInputModal(); tapCount = 0; }
+        // 4. JOY Typing Logic
+        let keyBuffer = "";
+        const secretCode = "JOY";
+        document.addEventListener('keydown', (e) => {
+            if (e.key.length === 1 && /[a-zA-Z]/.test(e.key)) {
+                keyBuffer += e.key.toUpperCase();
+                if (keyBuffer.length > 10) keyBuffer = keyBuffer.slice(-5);
+                if (keyBuffer.includes(secretCode)) {
+                    if (document.body.classList.contains('hacker-mode')) {
+                        sfx.collect();
+                        showReward("SYSTEM BYPASSED", `USER: ${currentUser || 'ADMIN'} // ROOT ACCESS`, "aGFja2VyOTk5"); // hacker999
+                        keyBuffer = "";
+                    }
+                }
+            }
         });
 
         function showNameInputModal() {
             document.getElementById('nameModal').classList.remove('hidden');
-            setTimeout(() => document.getElementById('hackerNameInput').focus(), 100);
+            document.getElementById('hackerNameInput').focus();
         }
 
         function confirmHackerMode() {
@@ -769,8 +942,11 @@
             showToast(`Welcome, ${name}. System Override Active.`);
         }
 
-        // --- 🛒 Shopping Cart Logic (不變) ---
-        let cart = []; let appliedDiscount = 0; const BASE_SHIPPING_COST = 9.99;
+        // --- 🛒 Shopping Cart Logic (With Quantity & Free Shipping Rules) ---
+
+        let cart = [];
+        let appliedDiscount = 0; 
+        const BASE_SHIPPING_COST = 9.99;
 
         window.addEventListener('DOMContentLoaded', () => {
             const savedCart = localStorage.getItem('puzzlerCart');
@@ -779,18 +955,33 @@
 
         function addToCart(id, name, price, img) { 
             const existingItem = cart.find(item => item.id === id);
-            if (existingItem) existingItem.quantity += 1;
-            else cart.push({ id, name, price, img, quantity: 1 }); 
-            saveCart(); updateCartBadge(); toggleCart(true); 
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ id, name, price, img, quantity: 1 }); 
+            }
+            saveCart(); 
+            updateCartBadge(); 
+            toggleCart(true); 
         }
 
         function changeQuantity(index, delta) {
             cart[index].quantity += delta;
-            if (cart[index].quantity <= 0) cart.splice(index, 1);
-            saveCart(); updateCartUI(); updateCartBadge();
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            saveCart();
+            updateCartUI(); 
+            updateCartBadge();
         }
 
-        function removeFromCart(index) { cart.splice(index, 1); saveCart(); updateCartUI(); updateCartBadge(); }
+        function removeFromCart(index) { 
+            cart.splice(index, 1); 
+            saveCart(); 
+            updateCartUI(); 
+            updateCartBadge(); 
+        }
+
         function saveCart() { localStorage.setItem('puzzlerCart', JSON.stringify(cart)); }
         
         function updateCartBadge() {
@@ -808,31 +999,50 @@
                 setTimeout(() => { modal.classList.remove('opacity-0'); content.classList.add('cart-open'); }, 10);
                 updateCartUI();
             } else {
-                modal.classList.add('opacity-0'); content.classList.remove('cart-open');
+                modal.classList.add('opacity-0');
+                content.classList.remove('cart-open');
                 setTimeout(() => { modal.classList.add('hidden'); }, 300);
             }
         }
 
+        // Promo Code: Plain text check + Shipping rule only
         function applyPromo() {
             const input = document.getElementById('promoInput');
             const msg = document.getElementById('promoMessage');
             const inputCode = input.value.trim().toUpperCase();
             
+            // Check subtotal for Free Shipping rule
             let currentSubtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
             msg.classList.remove('hidden', 'text-green-600', 'text-red-500', 'text-amber-500');
 
+            // Rule: If already free shipping (>100), block code
             if (currentSubtotal >= 100) {
-                appliedDiscount = 0; msg.innerText = "Shipping is already free! Code not needed.";
-                msg.classList.add('text-amber-500'); updateCartUI(); return;
+                appliedDiscount = 0;
+                msg.innerText = "Shipping is already free! Code not needed.";
+                msg.classList.add('text-amber-500');
+                updateCartUI();
+                return;
             }
 
+            // Hello Source Code Reader! 
+            // Please support PuzzlerWJ so I can keep making cool stuff! :)
             if (inputCode === 'HACKER999') { 
-                appliedDiscount = BASE_SHIPPING_COST; msg.innerText = "Free Shipping Code applied!"; msg.classList.add('text-green-600');
+                appliedDiscount = BASE_SHIPPING_COST; 
+                msg.innerText = "Free Shipping Code applied!"; 
+                msg.classList.add('text-green-600');
+            
             } else if (inputCode === 'GEARMASTER') { 
-                appliedDiscount = 1.99; msg.innerText = "Shipping discount ($1.99) applied."; msg.classList.add('text-green-600');
+                appliedDiscount = 1.99; 
+                msg.innerText = "Shipping discount ($1.99) applied."; 
+                msg.classList.add('text-green-600');
+                
             } else {
-                appliedDiscount = 0; msg.innerText = "Invalid code."; msg.classList.add('text-red-500');
+                appliedDiscount = 0; 
+                msg.innerText = "Invalid code."; 
+                msg.classList.add('text-red-500');
             }
+            
             updateCartUI(); 
         }
 
@@ -845,18 +1055,26 @@
             const discountEl = document.getElementById('cartDiscount');
             const paypalContainer = document.getElementById('paypal-button-container');
             
-            container.innerHTML = ''; paypalContainer.innerHTML = ''; 
+            container.innerHTML = ''; 
+            paypalContainer.innerHTML = ''; 
 
             if (cart.length === 0) {
                 container.innerHTML = '<div class="text-center text-gray-400 mt-10">Your cart is empty.</div>';
                 subtotalEl.innerText = '$0.00'; shippingEl.innerText = '$0.00'; totalEl.innerText = '$0.00';
-                discountRow.classList.add('hidden'); appliedDiscount = 0; return;
+                discountRow.classList.add('hidden'); 
+                appliedDiscount = 0;
+                document.getElementById('promoMessage').classList.add('hidden');
+                document.getElementById('promoInput').value = '';
+                return;
             }
 
             let subtotal = 0;
+            
+            // Render Items with Quantity Buttons
             cart.forEach((item, index) => {
                 const itemTotal = item.price * item.quantity;
                 subtotal += itemTotal;
+                
                 const itemEl = document.createElement('div');
                 itemEl.className = 'flex items-center justify-between border-b border-gray-100 pb-3';
                 itemEl.innerHTML = `
@@ -878,7 +1096,10 @@
                 container.appendChild(itemEl);
             });
 
+            // Calc Shipping
             let shipping = subtotal >= 100 ? 0 : BASE_SHIPPING_COST;
+
+            // Conflict Check: If shipping becomes 0, remove discount
             if (shipping === 0 && appliedDiscount > 0) {
                 appliedDiscount = 0;
                 const msg = document.getElementById('promoMessage');
@@ -890,31 +1111,49 @@
             let total = subtotal + shipping - appliedDiscount;
             if (total < 0) total = 0;
 
+            // Update DOM
             subtotalEl.innerText = '$' + subtotal.toFixed(2);
-            shippingEl.innerHTML = shipping === 0 ? '<span class="text-green-600 font-bold">Free</span>' : '$' + shipping.toFixed(2);
+            
+            if (shipping === 0) {
+                shippingEl.innerHTML = '<span class="text-green-600 font-bold">Free</span>';
+            } else {
+                shippingEl.innerText = '$' + shipping.toFixed(2);
+            }
+
             if (appliedDiscount > 0) { 
-                discountRow.classList.remove('hidden'); discountEl.innerText = '-$' + appliedDiscount.toFixed(2); 
-            } else { discountRow.classList.add('hidden'); }
+                discountRow.classList.remove('hidden'); 
+                discountEl.innerText = '-$' + appliedDiscount.toFixed(2); 
+            } else { 
+                discountRow.classList.add('hidden'); 
+            }
+            
             totalEl.innerText = '$' + total.toFixed(2);
 
-            if (window.paypal) {
-                paypal.Buttons({
-                    style: { shape: 'pill', color: 'gold', layout: 'vertical', label: 'checkout' },
-                    createOrder: function(data, actions) {
-                        return actions.order.create({
-                            purchase_units: [{
-                                description: "PuzzlerWJ Order",
-                                amount: { currency_code: "USD", value: total.toFixed(2) }
-                            }]
-                        });
-                    },
-                    onApprove: function(data, actions) {
-                        return actions.order.capture().then(function(details) {
-                            cart = []; saveCart(); updateCartBadge(); toggleCart(); alert('Thank you for your purchase!');
-                        });
-                    }
-                }).render('#paypal-button-container');
-            }
+            // PayPal
+            paypal.Buttons({
+                style: { shape: 'pill', color: 'gold', layout: 'vertical', label: 'checkout' },
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            description: "PuzzlerWJ Order",
+                            amount: { 
+                                currency_code: "USD", 
+                                value: total.toFixed(2), 
+                                breakdown: { 
+                                    item_total: { currency_code: "USD", value: subtotal.toFixed(2) }, 
+                                    shipping: { currency_code: "USD", value: shipping.toFixed(2) }, 
+                                    discount: { currency_code: "USD", value: appliedDiscount.toFixed(2) } 
+                                } 
+                            }
+                        }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        cart = []; saveCart(); updateCartBadge(); toggleCart(); window.location.href = "thankyou.html";
+                    });
+                }
+            }).render('#paypal-button-container');
         }
     </script>
 </body>
