@@ -494,7 +494,7 @@
                     </button>
                 </div>
             </div>
-            <!-- Product 2 (Target 3) -->
+            <!-- Product 2 (Skyscraper) -->
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-indigo-300 transition duration-300 group flex flex-col relative">
                 <div id="marker-bottom" class="scroll-marker" style="top: 50%;"></div>
                 <div class="relative h-[24rem] overflow-hidden bg-gray-50 flex items-center justify-center">
@@ -514,21 +514,27 @@
                     </button>
                 </div>
             </div>
-            <!-- Product 3 -->
-            <div class="bg-gray-50 rounded-2xl shadow-lg overflow-hidden border border-gray-200 opacity-90 relative flex flex-col">
-                <div class="relative h-[24rem] overflow-hidden bg-gray-200 flex items-center justify-center">
-                    <div class="absolute top-4 left-4 bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Coming Soon</div>
-                    <div class="text-gray-400 text-6xl"><i class="fas fa-question-circle"></i></div>
+            <!-- Product 3 (Ouroboros - White) -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-amber-300 transition duration-300 group flex flex-col">
+                <div class="relative h-[24rem] overflow-hidden bg-gray-50 flex items-center justify-center">
+                    <div class="absolute top-4 left-4 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Pre-Intermediate</div>
+                    <img src="images/Ouroboros_white.jpg" alt="Ouroboros-white" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
                 </div>
                 <div class="p-8 flex-1 flex flex-col">
                     <div class="mb-4">
-                        <div class="flex justify-between items-center mb-1">
-                            <h3 class="text-xl font-bold text-gray-700">Mystery Box</h3>
-                            <span class="text-lg font-bold text-gray-500">Coming Soon.</span>
+                        <!-- 使用 items-start 確保名稱變兩行時，價格仍在上方 -->
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="text-xl font-bold text-gray-800 leading-tight">
+                                Ouroboros<br>
+                                <span class="text-sm font-medium text-gray-500">- White</span>
+                            </h3>
+                            <span class="text-xl font-bold text-amber-500 ml-2">$49.99 USD</span>
                         </div>
-                        <p class="text-xs text-gray-400 font-medium">Weight: ???</p>
+                        <p class="text-xs text-gray-400 font-medium">Weight: 100g</p>
                     </div>
-                    <div class="w-full bg-gray-300 text-gray-500 font-bold py-3 rounded-full text-center cursor-not-allowed">Stay Tuned</div>
+                    <button onclick="addToCart('ouroboros-white', 'Ouroboros-white', 49.99, 'images/Ouroboros_white.jpg')" class="w-full bg-indigo-900 text-white font-bold py-3 rounded-full hover:bg-indigo-800 transition shadow-md flex items-center justify-center gap-2">
+                        <i class="fas fa-cart-plus"></i> Add to Cart
+                    </button>
                 </div>
             </div>
         </div>
@@ -562,9 +568,8 @@
         </div>
     </section>
 
-    <!-- Footer (Fix: Added overflow-hidden to prevent scrollbar flicker) -->
+    <!-- Footer -->
     <footer class="bg-indigo-950 text-white py-12 mt-auto relative overflow-hidden">
-        <!-- Fix: Moved gear slightly left (right: 25px) to further prevent overflow -->
         <i class="fas fa-cog gear-fragment" style="bottom: 15px; right: 25px;" 
            onclick="collectFragment(this, 'Locking Pin')" 
            ontouchstart="collectFragment(this, 'Locking Pin'); event.preventDefault();"></i>
@@ -609,7 +614,7 @@
         </div>
     </div>
 
-    <!-- 🔔 Toast (Opacity 0 to prevent ghost box) -->
+    <!-- 🔔 Toast -->
     <div id="toast" class="opacity-0"><i class="fas fa-check-circle text-amber-400"></i> <span id="toastMsg"></span></div>
 
     <!-- 📟 Name Input Modal -->
@@ -625,7 +630,7 @@
         </div>
     </div>
 
-    <!-- 🎉 Reward Modal (Fixed & No Bounce) -->
+    <!-- 🎉 Reward Modal -->
     <div id="rewardModal" class="fixed top-0 left-0 w-full h-full bg-black/80 z-[100] hidden flex justify-center items-center">
         <div class="bg-white p-8 rounded-2xl max-w-sm text-center relative border-4 border-amber-400 shadow-2xl transition-all duration-300 transform scale-100">
             <button onclick="document.getElementById('rewardModal').classList.add('hidden')" class="absolute top-2 right-4 text-2xl text-gray-400 hover:text-gray-800">&times;</button>
@@ -639,7 +644,7 @@
         </div>
     </div>
 
-    <!-- 🛒 Shopping Cart Modal (Fix: h-[100dvh], min-h-0 for inner scroll, Hacker styling) -->
+    <!-- 🛒 Shopping Cart Modal -->
     <div id="cartModal" class="fixed inset-0 bg-indigo-900/50 backdrop-blur-sm z-[60] hidden opacity-0">
         <div id="cartContent" class="fixed top-0 right-0 w-full md:w-[400px] h-[100dvh] bg-white shadow-2xl transform translate-x-full flex flex-col overflow-hidden">
             <div class="bg-amber-400 p-5 flex justify-between items-center shadow-sm flex-shrink-0">
@@ -658,7 +663,6 @@
                         <input type="text" id="promoInput" placeholder="Promo Code" class="flex-1 px-3 py-2 border rounded text-sm focus:outline-none focus:border-amber-400 uppercase">
                         <button onclick="applyPromo()" class="bg-gray-800 text-white px-3 py-2 rounded text-sm font-bold hover:bg-gray-700">Apply</button>
                     </div>
-                    <!-- Rule Note -->
                     <p class="text-[10px] text-gray-500 mt-1 ml-1">
                         *Codes only apply to shipping fees. Not applicable if order is over $100 (Free Shipping).
                     </p>
@@ -845,10 +849,8 @@
             container.classList.remove('resonating');
             container.classList.add('unlocked');
             gearIcon.className = 'fas fa-lock-open gear-core';
-            // Show reward only if NOT in hacker mode (as hacker mode hides this game)
             if(!document.body.classList.contains('hacker-mode')){
                 setTimeout(() => {
-                    // Pass Base64 code to showReward for display obfuscation
                     showReward("Mechanism Unlocked!", "You have aligned the gears of fate.", "R0VBUk1BU1RFUg=="); 
                 }, 800);
             }
@@ -902,12 +904,11 @@
             }
         });
 
-        // 3. Hidden Joy Click Trigger
         const joyTrigger = document.getElementById('hiddenJoyTrigger');
         joyTrigger.addEventListener('click', () => {
             if (document.body.classList.contains('hacker-mode')) {
                 sfx.collect();
-                showReward("SYSTEM BYPASSED", `USER: ${currentUser || 'ADMIN'} // ROOT ACCESS`, "aGFja2VyOTk5"); // hacker999
+                showReward("SYSTEM BYPASSED", `USER: ${currentUser || 'ADMIN'} // ROOT ACCESS`, "aGFja2VyOTk5"); 
             } else {
                 sfx.denied();
                 joyTrigger.classList.add('shake-denied');
@@ -915,7 +916,6 @@
             }
         });
 
-        // 4. JOY Typing Logic
         let keyBuffer = "";
         const secretCode = "JOY";
         document.addEventListener('keydown', (e) => {
@@ -925,7 +925,7 @@
                 if (keyBuffer.includes(secretCode)) {
                     if (document.body.classList.contains('hacker-mode')) {
                         sfx.collect();
-                        showReward("SYSTEM BYPASSED", `USER: ${currentUser || 'ADMIN'} // ROOT ACCESS`, "aGFja2VyOTk5"); // hacker999
+                        showReward("SYSTEM BYPASSED", `USER: ${currentUser || 'ADMIN'} // ROOT ACCESS`, "aGFja2VyOTk5"); 
                         keyBuffer = "";
                     }
                 }
@@ -952,8 +952,7 @@
             showToast(`Welcome, ${name}. System Override Active.`);
         }
 
-        // --- 🛒 Shopping Cart Logic (With Quantity & Free Shipping Rules) ---
-
+        // --- 🛒 Shopping Cart Logic ---
         let cart = [];
         let appliedDiscount = 0; 
         const BASE_SHIPPING_COST = 9.99;
@@ -1015,18 +1014,13 @@
             }
         }
 
-        // Promo Code: Plain text check + Shipping rule only
         function applyPromo() {
             const input = document.getElementById('promoInput');
             const msg = document.getElementById('promoMessage');
             const inputCode = input.value.trim().toUpperCase();
-            
-            // Check subtotal for Free Shipping rule
             let currentSubtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            
             msg.classList.remove('hidden', 'text-green-600', 'text-red-500', 'text-amber-500');
 
-            // Rule: If already free shipping (>100), block code
             if (currentSubtotal >= 100) {
                 appliedDiscount = 0;
                 msg.innerText = "Shipping is already free! Code not needed.";
@@ -1035,24 +1029,19 @@
                 return;
             }
 
-            // Hello Source Code Reader! 
-            // Please support PuzzlerWJ so I can keep making cool stuff! :)
             if (inputCode === 'HACKER999') { 
                 appliedDiscount = BASE_SHIPPING_COST; 
                 msg.innerText = "Free Shipping Code applied!"; 
                 msg.classList.add('text-green-600');
-            
             } else if (inputCode === 'GEARMASTER') { 
                 appliedDiscount = 1.99; 
                 msg.innerText = "Shipping discount ($1.99) applied."; 
                 msg.classList.add('text-green-600');
-                
             } else {
                 appliedDiscount = 0; 
                 msg.innerText = "Invalid code."; 
                 msg.classList.add('text-red-500');
             }
-            
             updateCartUI(); 
         }
 
@@ -1073,25 +1062,20 @@
                 subtotalEl.innerText = '$0.00'; shippingEl.innerText = '$0.00'; totalEl.innerText = '$0.00';
                 discountRow.classList.add('hidden'); 
                 appliedDiscount = 0;
-                document.getElementById('promoMessage').classList.add('hidden');
-                document.getElementById('promoInput').value = '';
                 return;
             }
 
             let subtotal = 0;
-            
-            // Render Items with Quantity Buttons
             cart.forEach((item, index) => {
                 const itemTotal = item.price * item.quantity;
                 subtotal += itemTotal;
-                
                 const itemEl = document.createElement('div');
                 itemEl.className = 'flex items-center justify-between border-b border-gray-100 pb-3';
                 itemEl.innerHTML = `
                     <div class="flex items-center gap-3">
                         <img src="${item.img}" class="w-12 h-12 object-contain bg-gray-50 rounded p-1">
                         <div>
-                            <div class="font-bold text-gray-800 text-sm">${item.name}</div>
+                            <div class="font-bold text-gray-800 text-sm leading-tight">${item.name}</div>
                             <div class="text-amber-500 text-sm">$${item.price}</div>
                         </div>
                     </div>
@@ -1106,40 +1090,20 @@
                 container.appendChild(itemEl);
             });
 
-            // Calc Shipping
             let shipping = subtotal >= 100 ? 0 : BASE_SHIPPING_COST;
-
-            // Conflict Check: If shipping becomes 0, remove discount
-            if (shipping === 0 && appliedDiscount > 0) {
-                appliedDiscount = 0;
-                const msg = document.getElementById('promoMessage');
-                msg.innerText = "Shipping is now free! Discount removed.";
-                msg.className = "text-xs mt-1 font-bold text-amber-500";
-                msg.classList.remove('hidden');
-            }
+            if (shipping === 0 && appliedDiscount > 0) appliedDiscount = 0;
 
             let total = subtotal + shipping - appliedDiscount;
             if (total < 0) total = 0;
 
-            // Update DOM
             subtotalEl.innerText = '$' + subtotal.toFixed(2);
-            
-            if (shipping === 0) {
-                shippingEl.innerHTML = '<span class="text-green-600 font-bold">Free</span>';
-            } else {
-                shippingEl.innerText = '$' + shipping.toFixed(2);
-            }
-
+            shippingEl.innerHTML = shipping === 0 ? '<span class="text-green-600 font-bold">Free</span>' : '$' + shipping.toFixed(2);
             if (appliedDiscount > 0) { 
                 discountRow.classList.remove('hidden'); 
                 discountEl.innerText = '-$' + appliedDiscount.toFixed(2); 
-            } else { 
-                discountRow.classList.add('hidden'); 
-            }
-            
+            } else { discountRow.classList.add('hidden'); }
             totalEl.innerText = '$' + total.toFixed(2);
 
-            // PayPal
             paypal.Buttons({
                 style: { shape: 'pill', color: 'gold', layout: 'vertical', label: 'checkout' },
                 createOrder: function(data, actions) {
