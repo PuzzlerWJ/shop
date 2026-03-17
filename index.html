@@ -1104,6 +1104,16 @@
             } else { discountRow.classList.add('hidden'); }
             totalEl.innerText = '$' + total.toFixed(2);
 
+            // --- 🔧 修改重點：構建 PayPal Items 明細 ---
+            const paypalItems = cart.map(item => ({
+                name: item.name,
+                unit_amount: {
+                    currency_code: "USD",
+                    value: item.price.toFixed(2)
+                },
+                quantity: item.quantity.toString()
+            }));
+
             paypal.Buttons({
                 style: { shape: 'pill', color: 'gold', layout: 'vertical', label: 'checkout' },
                 createOrder: function(data, actions) {
@@ -1112,13 +1122,14 @@
                             description: "PuzzlerWJ Order",
                             amount: { 
                                 currency_code: "USD", 
-                                value: total.toFixed(2), 
+                                value: total.toFixed(2), // 最終總付款金額
                                 breakdown: { 
-                                    item_total: { currency_code: "USD", value: subtotal.toFixed(2) }, 
-                                    shipping: { currency_code: "USD", value: shipping.toFixed(2) }, 
-                                    discount: { currency_code: "USD", value: appliedDiscount.toFixed(2) } 
+                                    item_total: { currency_code: "USD", value: subtotal.toFixed(2) }, // 所有商品的加總
+                                    shipping: { currency_code: "USD", value: shipping.toFixed(2) }, // 運費
+                                    discount: { currency_code: "USD", value: appliedDiscount.toFixed(2) } // 折扣
                                 } 
-                            }
+                            },
+                            items: paypalItems // 顯示購物清單
                         }]
                     });
                 },
