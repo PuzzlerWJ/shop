@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
+    <!-- Google tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5H98DJ9L4K"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-5H98DJ9L4K');
+    </script>
+
     <meta charset="UTF-8">
-    <!-- 支援現代手機全螢幕顯示 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>PuzzlerWJ | The Broken Mechanism</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Poppins:wght@300;400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    
-    <!-- Icons (FontAwesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -26,352 +30,78 @@
         }
 
         /* --- 🕵️ Hacker Mode Styles --- */
-        body.hacker-mode {
-            background-color: #050505 !important;
-            font-family: 'Share Tech Mono', monospace !important;
-        }
-        body.hacker-mode h1, body.hacker-mode h2, body.hacker-mode h3, body.hacker-mode .fun-font {
-            font-family: 'Share Tech Mono', monospace !important;
-            letter-spacing: -1px;
-        }
-        body.hacker-mode nav {
-            background-color: #000 !important;
-            border-bottom: 2px solid #00ff41;
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
-        }
-        body.hacker-mode header {
-            background-color: #111 !important;
-        }
-        body.hacker-mode h1 span {
-            color: #00ff41 !important; /* Matrix Green */
-            text-shadow: 0 0 10px #00ff41;
-        }
-        body.hacker-mode .pattern-dots {
-            background-image: radial-gradient(#003b00 2px, transparent 2px);
-        }
-        
-        /* Hacker Mode: Hide Physical Games */
-        body.hacker-mode .gear-fragment,
-        body.hacker-mode #gear-lock-system {
-            display: none !important;
-        }
-
-        /* Hacker Mode: Reward Modal Style */
-        body.hacker-mode #rewardModal > div {
-            background-color: #000 !important;
-            border: 2px solid #00ff41 !important;
-            color: #00ff41 !important;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
-            font-family: 'Share Tech Mono', monospace !important;
-        }
-        body.hacker-mode #rewardTitle {
-            color: #00ff41 !important;
-            text-shadow: 0 0 10px #00ff41;
-            font-size: 2.5rem;
-        }
-        body.hacker-mode #rewardMsg {
-            color: #00ff41 !important;
-        }
-        body.hacker-mode #rewardCode {
-            color: #000 !important;
-            background-color: #00ff41 !important;
-            border: none !important;
-            padding: 5px 15px;
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
-        body.hacker-mode .text-indigo-900 {
-            color: #a3e635 !important;
-        }
-        body.hacker-mode .emoji-icon {
-            display: none;
-        }
-
-        /* Hacker Mode: Cart Styles */
-        body.hacker-mode #cartContent {
-            background-color: #000 !important;
-            border-left: 2px solid #00ff41;
-            color: #00ff41;
-        }
-        body.hacker-mode #cartContent .bg-amber-400 {
-            background-color: #003300 !important;
-            color: #00ff41 !important;
-            border-bottom: 1px solid #00ff41;
-        }
-        body.hacker-mode #cartContent .text-indigo-900 {
-            color: #00ff41 !important;
-        }
-        body.hacker-mode #cartContent .border-t, 
-        body.hacker-mode #cartContent .border-b {
-            border-color: #00ff41 !important;
-        }
-        body.hacker-mode #cartContent .bg-gray-50 {
-            background-color: #050505 !important;
-        }
-        body.hacker-mode #cartContent input {
-            background-color: #000 !important;
-            border: 1px solid #00ff41 !important;
-            color: #00ff41 !important;
-        }
-        body.hacker-mode #cartContent button {
-            border: 1px solid #00ff41;
-        }
-        body.hacker-mode #cartContent .text-gray-600,
-        body.hacker-mode #cartContent .text-gray-400 {
-            color: #00aa2c !important;
-        }
-        body.hacker-mode #cartContent .text-gray-800 {
-            color: #00ff41 !important;
-        }
+        body.hacker-mode { background-color: #050505 !important; font-family: 'Share Tech Mono', monospace !important; }
+        body.hacker-mode h1, body.hacker-mode h2, body.hacker-mode h3, body.hacker-mode .fun-font { font-family: 'Share Tech Mono', monospace !important; letter-spacing: -1px; }
+        body.hacker-mode nav { background-color: #000 !important; border-bottom: 2px solid #00ff41; box-shadow: 0 0 15px rgba(0, 255, 65, 0.2); }
+        body.hacker-mode header { background-color: #111 !important; }
+        body.hacker-mode h1 span { color: #00ff41 !important; text-shadow: 0 0 10px #00ff41; }
+        body.hacker-mode .pattern-dots { background-image: radial-gradient(#003b00 2px, transparent 2px); }
+        body.hacker-mode .gear-fragment, body.hacker-mode #gear-lock-system { display: none !important; }
+        body.hacker-mode #rewardModal > div { background-color: #000 !important; border: 2px solid #00ff41 !important; color: #00ff41 !important; box-shadow: 0 0 20px rgba(0, 255, 65, 0.5); font-family: 'Share Tech Mono', monospace !important; }
+        body.hacker-mode #rewardTitle { color: #00ff41 !important; text-shadow: 0 0 10px #00ff41; font-size: 2.5rem; }
+        body.hacker-mode #rewardMsg { color: #00ff41 !important; }
+        body.hacker-mode #rewardCode { color: #000 !important; background-color: #00ff41 !important; border: none !important; padding: 5px 15px; font-weight: bold; letter-spacing: 2px; }
+        body.hacker-mode .text-indigo-900 { color: #a3e635 !important; }
+        body.hacker-mode emoji-icon { display: none; }
+        body.hacker-mode #cartContent { background-color: #000 !important; border-left: 2px solid #00ff41; color: #00ff41; }
+        body.hacker-mode #cartContent .bg-amber-400 { background-color: #003300 !important; color: #00ff41 !important; border-bottom: 1px solid #00ff41; }
+        body.hacker-mode #cartContent .text-indigo-900 { color: #00ff41 !important; }
+        body.hacker-mode #cartContent .border-t, body.hacker-mode #cartContent .border-b { border-color: #00ff41 !important; }
+        body.hacker-mode #cartContent .bg-gray-50 { background-color: #050505 !important; }
+        body.hacker-mode #cartContent input { background-color: #000 !important; border: 1px solid #00ff41 !important; color: #00ff41 !important; }
+        body.hacker-mode #cartContent button { border: 1px solid #00ff41; }
+        body.hacker-mode #cartContent .text-gray-600, body.hacker-mode #cartContent .text-gray-400 { color: #00aa2c !important; }
+        body.hacker-mode #cartContent .text-gray-800 { color: #00ff41 !important; }
 
         /* --- 📟 Terminal / Blinking Cursor --- */
-        #nameModal, .cursor-container {
-            font-family: 'Share Tech Mono', monospace;
-        }
-        .blinking-cursor::after {
-            content: '▋';
-            animation: blink 1s step-end infinite;
-            color: inherit;
-            margin-left: 2px;
-            vertical-align: middle;
-            font-size: 0.8em;
-        }
+        #nameModal, .cursor-container { font-family: 'Share Tech Mono', monospace; }
+        .blinking-cursor::after { content: '▋'; animation: blink 1s step-end infinite; color: inherit; margin-left: 2px; vertical-align: middle; font-size: 0.8em; }
         @keyframes blink { 50% { opacity: 0; } }
 
-        /* --- 🕹️ Hidden Joy Trigger --- */
-        #hiddenJoyTrigger {
-            cursor: pointer;
-            display: inline-block;
-            transition: color 0.3s;
-        }
-        /* Mouse hover feedback */
-        #hiddenJoyTrigger:hover {
-            color: #fbbf24; 
-        }
+        #hiddenJoyTrigger { cursor: pointer; display: inline-block; transition: color 0.3s; }
+        #hiddenJoyTrigger:hover { color: #fbbf24; }
+        .shake-denied { animation: shake-hard 0.4s cubic-bezier(.36,.07,.19,.97) both; color: #ef4444 !important; }
+        @keyframes shake-hard { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
 
-        .shake-denied {
-            animation: shake-hard 0.4s cubic-bezier(.36,.07,.19,.97) both;
-            color: #ef4444 !important;
-        }
-        @keyframes shake-hard {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
-        }
-
-        /* Hacker Mode Trigger Style */
-        body.hacker-mode #hiddenJoyTrigger {
-            color: #00ff41 !important;
-            background-color: transparent !important;
-            text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
-            padding: 2px 6px;
-            position: relative;
-            font-family: 'Share Tech Mono', monospace !important;
-        }
-        body.hacker-mode #hiddenJoyTrigger:hover {
-            background-color: rgba(0, 255, 65, 0.15) !important;
-        }
-        body.hacker-mode #hiddenJoyTrigger::before {
-            content: '> ';
-            color: #00ff41;
-            font-weight: bold;
-            opacity: 0.8;
-        }
-        body.hacker-mode #hiddenJoyTrigger::after {
-            content: '_'; 
-            display: inline-block;
-            margin-left: 2px;
-            color: #00ff41;
-            background-color: #00ff41; 
-            width: 10px;
-            height: 1.1em;
-            vertical-align: text-bottom;
-            animation: terminal-blink 1s step-end infinite;
-        }
-        @keyframes terminal-blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
+        body.hacker-mode #hiddenJoyTrigger { color: #00ff41 !important; background-color: transparent !important; text-shadow: 0 0 5px rgba(0, 255, 65, 0.5); padding: 2px 6px; position: relative; font-family: 'Share Tech Mono', monospace !important; }
+        body.hacker-mode #hiddenJoyTrigger:hover { background-color: rgba(0, 255, 65, 0.15) !important; }
+        body.hacker-mode #hiddenJoyTrigger::before { content: '> '; color: #00ff41; font-weight: bold; opacity: 0.8; }
+        body.hacker-mode #hiddenJoyTrigger::after { content: '_'; display: inline-block; margin-left: 2px; color: #00ff41; background-color: #00ff41; width: 10px; height: 1.1em; vertical-align: text-bottom; animation: terminal-blink 1s step-end infinite; }
+        @keyframes terminal-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         /* --- 🧩 Gear Fragments --- */
-        .gear-fragment {
-            position: absolute;
-            color: #fbbf24;
-            opacity: 0.8;
-            cursor: pointer;
-            transition: all 0.3s;
-            z-index: 60;
-            font-size: 1.5rem;
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
-            animation: float-spin 4s infinite linear;
-            padding: 10px; 
-            margin: -10px;
-        }
-        @media (hover: hover) {
-            .gear-fragment:hover { 
-                opacity: 1; 
-                color: #f59e0b; 
-                transform: scale(1.2); 
-            }
-        }
-        .fragment-found { 
-            transform: scale(0) rotate(180deg) !important; 
-            opacity: 0 !important; 
-            pointer-events: none;
-        }
-        @keyframes float-spin {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-5px) rotate(180deg); }
-            100% { transform: translateY(0) rotate(360deg); }
-        }
+        .gear-fragment { position: absolute; color: #fbbf24; opacity: 0.8; cursor: pointer; transition: all 0.3s; z-index: 60; font-size: 1.5rem; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3)); animation: float-spin 4s infinite linear; padding: 10px; margin: -10px; }
+        @media (hover: hover) { .gear-fragment:hover { opacity: 1; color: #f59e0b; transform: scale(1.2); } }
+        .fragment-found { transform: scale(0) rotate(180deg) !important; opacity: 0 !important; pointer-events: none; }
+        @keyframes float-spin { 0% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-5px) rotate(180deg); } 100% { transform: translateY(0) rotate(360deg); } }
 
         /* --- ⚙️ Main Gear Lock System --- */
-        #gear-lock-system {
-            opacity: 0;
-            pointer-events: none;
-            transform: scale(0.5) translateY(20px);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        #gear-lock-system.repaired {
-            opacity: 0.6;
-            pointer-events: auto;
-            transform: scale(0.75) translateY(0);
-        }
-        #gear-lock-system.active-mode {
-            transform: scale(1.1);
-            opacity: 1;
-        }
-        body.hacker-mode .main-gear {
-            color: #111 !important;
-            border: 1px dashed #00ff41;
-            border-radius: 50%;
-        }
-        body.hacker-mode .gear-container.resonating .main-gear {
-            color: #00ff41 !important;
-            box-shadow: 0 0 15px #00ff41;
-        }
-
-        .gear-container {
-            position: relative;
-            width: 70px; 
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            user-select: none; 
-            -webkit-tap-highlight-color: transparent;
-        }
-        .main-gear {
-            font-size: 3rem;
-            color: #6b7280;
-            transition: color 0.3s, text-shadow 0.3s, transform 0.1s linear;
-            z-index: 10;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-        }
-        .gear-core {
-            position: absolute;
-            z-index: 20;
-            color: #f3f4f6;
-            font-size: 1rem;
-            pointer-events: none;
-            transition: all 0.3s;
-        }
-        .status-lights {
-            position: absolute;
-            bottom: -5px;
-            display: flex;
-            gap: 4px;
-            z-index: 30;
-        }
-        .light {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background-color: #d1d5db;
-            border: 1px solid #9ca3af;
-            transition: background-color 0.3s, box-shadow 0.3s;
-        }
-        .light.active {
-            background-color: #10b981;
-            box-shadow: 0 0 4px #10b981;
-        }
-        body.hacker-mode .light.active {
-            background-color: #00ff41;
-            box-shadow: 0 0 8px #00ff41;
-        }
-
-        .gear-container.resonating .main-gear {
-            color: #fbbf24;
-            text-shadow: 0 0 10px rgba(251, 191, 36, 0.6);
-        }
+        #gear-lock-system { opacity: 0; pointer-events: none; transform: scale(0.5) translateY(20px); transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        #gear-lock-system.repaired { opacity: 0.6; pointer-events: auto; transform: scale(0.75) translateY(0); }
+        #gear-lock-system.active-mode { transform: scale(1.1); opacity: 1; }
+        body.hacker-mode .main-gear { color: #111 !important; border: 1px dashed #00ff41; border-radius: 50%; }
+        body.hacker-mode .gear-container.resonating .main-gear { color: #00ff41 !important; box-shadow: 0 0 15px #00ff41; }
+        .gear-container { position: relative; width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
+        .main-gear { font-size: 3rem; color: #6b7280; transition: color 0.3s, text-shadow 0.3s, transform 0.1s linear; z-index: 10; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
+        .gear-core { position: absolute; z-index: 20; color: #f3f4f6; font-size: 1rem; pointer-events: none; transition: all 0.3s; }
+        .status-lights { position: absolute; bottom: -5px; display: flex; gap: 4px; z-index: 30; }
+        .light { width: 6px; height: 6px; border-radius: 50%; background-color: #d1d5db; border: 1px solid #9ca3af; transition: background-color 0.3s, box-shadow 0.3s; }
+        .light.active { background-color: #10b981; box-shadow: 0 0 4px #10b981; }
+        body.hacker-mode .light.active { background-color: #00ff41; box-shadow: 0 0 8px #00ff41; }
+        .gear-container.resonating .main-gear { color: #fbbf24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.6); }
         .gear-container.jammed { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
         .gear-container.jammed .main-gear { color: #ef4444 !important; }
-        .gear-container.unlocked .main-gear {
-            color: #10b981;
-            animation: spin-unlock 1s ease-out forwards;
-        }
+        .gear-container.unlocked .main-gear { color: #10b981; animation: spin-unlock 1s ease-out forwards; }
+        @keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
+        @keyframes spin-unlock { 0% { transform: rotate(0deg) scale(1); } 100% { transform: rotate(720deg) scale(0); opacity: 0; } }
 
-        @keyframes shake {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
-        }
-        @keyframes spin-unlock {
-            0% { transform: rotate(0deg) scale(1); }
-            100% { transform: rotate(720deg) scale(0); opacity: 0; }
-        }
+        .scroll-marker { position: absolute; width: 1px; height: 150px; left: 0; pointer-events: none; opacity: 0; }
 
-        .scroll-marker {
-            position: absolute;
-            width: 1px;
-            height: 150px; 
-            left: 0;
-            pointer-events: none;
-            opacity: 0; 
-        }
-
-        /* 🔔 Toast Fix */
-        #toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background-color: rgba(17, 24, 39, 0.9);
-            color: #fff;
-            padding: 12px 24px;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            z-index: 100;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
-            border: 1px solid #f59e0b;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            pointer-events: none;
-            opacity: 0; /* Default invisible */
-        }
-        #toast.show { 
-            transform: translateX(-50%) translateY(0); 
-            opacity: 1; /* Fade in */
-        }
-
-        @media (max-width: 768px) {
-            #toast {
-                bottom: 90px !important;
-                bottom: calc(90px + env(safe-area-inset-bottom)) !important;
-            }
-        }
-        
-        body.hacker-mode #toast {
-            background-color: #000;
-            border: 1px solid #00ff41;
-            color: #00ff41;
-            font-family: 'Share Tech Mono', monospace;
-        }
+        /* 🔔 Toast */
+        #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background-color: rgba(17, 24, 39, 0.9); color: #fff; padding: 12px 24px; border-radius: 9999px; font-size: 0.875rem; font-weight: 600; z-index: 100; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease; border: 1px solid #f59e0b; display: flex; align-items: center; gap: 10px; pointer-events: none; opacity: 0; }
+        #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        @media (max-width: 768px) { #toast { bottom: 90px !important; bottom: calc(90px + env(safe-area-inset-bottom)) !important; } }
+        body.hacker-mode #toast { background-color: #000; border: 1px solid #00ff41; color: #00ff41; font-family: 'Share Tech Mono', monospace; }
 
         #cartModal { transition: opacity 0.3s ease-in-out; }
         #cartContent { transition: transform 0.3s ease-in-out; }
@@ -386,12 +116,8 @@
     <!-- Sticky Navbar -->
     <nav class="sticky top-0 z-50 w-full py-4 px-6 md:px-12 flex justify-between items-center bg-amber-400 shadow-md transition-all duration-300">
         <div class="text-3xl text-indigo-900 fun-font tracking-wider cursor-pointer" onclick="window.scrollTo(0,0)" id="brandLogo">PuzzlerWJ</div>
-        
         <div class="flex items-center space-x-6">
-            <a href="#contact" class="hidden md:inline-block text-indigo-900 font-bold border-b-2 border-indigo-900 hover:text-white hover:border-white transition">
-                Contact
-            </a>
-            
+            <a href="#contact" class="hidden md:inline-block text-indigo-900 font-bold border-b-2 border-indigo-900 hover:text-white hover:border-white transition">Contact</a>
             <button onclick="toggleCart()" class="relative text-indigo-900 hover:text-white transition group">
                 <i class="fas fa-shopping-cart text-2xl"></i>
                 <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full opacity-0 transition-opacity duration-300">0</span>
@@ -404,39 +130,24 @@
         <div id="marker-top" class="scroll-marker" style="top: 55%;"></div>
         <div class="absolute -top-20 -right-20 w-64 h-64 bg-amber-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
         <div class="absolute bottom-10 left-10 w-32 h-32 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
-
         <div class="relative z-10 max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
             <div class="md:w-1/2 text-center md:text-left">
-                <div class="inline-block bg-indigo-900 text-amber-400 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-4 shadow-md">
-                    Handcrafted in Taiwan
-                </div>
-                <h1 class="text-5xl md:text-7xl text-indigo-950 leading-tight mb-6 drop-shadow-sm">
-                    Unlock the <br> <span class="text-white" id="hiddenJoyTrigger">Hidden Joy.</span>
-                </h1>
-                <p class="text-indigo-900 text-lg md:text-xl font-medium mb-8 max-w-md mx-auto md:mx-0">
-                    "Puzzle is like a life, brimming with beauty."
-                </p>
-                <a href="#products" class="inline-block bg-indigo-900 text-white px-8 py-4 rounded-lg font-bold hover:bg-indigo-800 hover:shadow-lg hover:-translate-y-1 transition duration-300">
-                    Start Exploring ↓
-                </a>
+                <div class="inline-block bg-indigo-900 text-amber-400 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-4 shadow-md">Handcrafted in Taiwan</div>
+                <h1 class="text-5xl md:text-7xl text-indigo-950 leading-tight mb-6 drop-shadow-sm">Unlock the <br> <span class="text-white" id="hiddenJoyTrigger">Hidden Joy.</span></h1>
+                <p class="text-indigo-900 text-lg md:text-xl font-medium mb-8 max-w-md mx-auto md:mx-0">"Puzzle is like a life, brimming with beauty."</p>
+                <a href="#products" class="inline-block bg-indigo-900 text-white px-8 py-4 rounded-lg font-bold hover:bg-indigo-800 hover:shadow-lg hover:-translate-y-1 transition duration-300">Start Exploring ↓</a>
             </div>
-            
             <div class="md:w-1/2 relative">
                 <div class="absolute inset-0 bg-indigo-900 rounded-2xl transform rotate-3 translate-x-2 translate-y-2"></div>
                 <img src="images/WJ.png" alt="Puzzle Box Hero" class="relative rounded-2xl shadow-xl w-full object-cover transform -rotate-2 hover:rotate-0 transition duration-500 border-4 border-white">
-                <i class="fas fa-cog gear-fragment" style="top: -15px; right: -10px;" 
-                   onclick="collectFragment(this, 'Small Gear')" 
-                   ontouchstart="collectFragment(this, 'Small Gear'); event.preventDefault();"></i>
+                <i class="fas fa-cog gear-fragment" style="top: -15px; right: -10px;" onclick="collectFragment(this, 'Small Gear')" ontouchstart="collectFragment(this, 'Small Gear'); event.preventDefault();"></i>
             </div>
         </div>
     </header>
 
     <!-- Story Section -->
     <section class="bg-indigo-950 text-white py-24 px-6 pattern-dots relative">
-        <i class="fas fa-cog gear-fragment" style="bottom: 20px; left: 20px; color: #818cf8;" 
-           onclick="collectFragment(this, 'Drive Shaft')" 
-           ontouchstart="collectFragment(this, 'Drive Shaft'); event.preventDefault();"></i>
-
+        <i class="fas fa-cog gear-fragment" style="bottom: 20px; left: 20px; color: #818cf8;" onclick="collectFragment(this, 'Drive Shaft')" ontouchstart="collectFragment(this, 'Drive Shaft'); event.preventDefault();"></i>
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
             <div class="md:w-1/2">
                 <h2 class="text-4xl fun-font mb-6 text-amber-400">The Quiet Moment</h2>
@@ -464,63 +175,99 @@
             <h2 class="text-5xl text-indigo-950 fun-font mb-4">Shop Collection</h2>
             <p class="text-gray-500">Challenge your mind with our handcrafted designs.</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Product 1 -->
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-amber-300 transition duration-300 group flex flex-col">
-                <div class="relative h-[24rem] overflow-hidden bg-gray-50 flex items-center justify-center">
+        
+        <!-- Grid: 改為 lg:grid-cols-4 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <!-- Product 1: Ladybug -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-amber-300 transition duration-300 group flex flex-col h-full">
+                <div class="relative h-72 overflow-hidden bg-gray-50 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-amber-400 text-indigo-900 text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Entry Level</div>
                     <img src="images/ladybug.jpg" alt="Ladybug" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
                 </div>
-                <div class="p-8 flex-1 flex flex-col">
-                    <div class="mb-4">
-                        <div class="flex justify-between items-center mb-1">
-                            <h3 class="text-xl font-bold text-gray-800">Ladybug</h3>
-                            <span class="text-xl font-bold text-amber-500">$39.99 USD</span>
+                <div class="p-8 flex-1 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-1 gap-2">
+                            <h3 class="text-xl font-bold text-gray-800 leading-tight">Ladybug</h3>
+                            <span class="text-xl font-bold text-amber-500 whitespace-nowrap">$39.99 USD</span>
                         </div>
-                        <p class="text-xs text-gray-400 font-medium">Weight: 60g</p>
                     </div>
-                    <button onclick="addToCart('ladybug', 'Ladybug', 39.99, 'images/ladybug.jpg')" class="w-full bg-indigo-900 text-white font-bold py-3 rounded-full hover:bg-indigo-800 transition shadow-md flex items-center justify-center gap-2">
-                        <i class="fas fa-cart-plus"></i> Add to Cart
-                    </button>
+                    <div class="mt-4">
+                        <p class="text-xs text-gray-400 font-medium mb-3">Weight: 60g</p>
+                        <button onclick="addToCart('ladybug', 'Ladybug', 39.99, 'images/ladybug.jpg')" class="w-full bg-indigo-900 text-white font-bold py-3 rounded-full hover:bg-indigo-800 transition shadow-md flex items-center justify-center gap-2">
+                            <i class="fas fa-cart-plus"></i> Add to Cart
+                        </button>
+                    </div>
                 </div>
             </div>
-            <!-- Product 2 (Target 3) -->
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-indigo-300 transition duration-300 group flex flex-col relative">
+
+            <!-- Product 2: Ouroboros - White -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-amber-300 transition duration-300 group flex flex-col h-full">
+                <div class="relative h-72 overflow-hidden bg-gray-50 flex items-center justify-center">
+                    <div class="absolute top-4 left-4 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Pre-Intermediate</div>
+                    <img src="images/Ouroboros_white.jpg" alt="Ouroboros-white" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
+                </div>
+                <div class="p-8 flex-1 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-1 gap-2">
+                            <h3 class="text-xl font-bold text-gray-800 leading-tight">Ouroboros<br><span class="text-sm font-medium text-gray-500">- White</span></h3>
+                            <span class="text-xl font-bold text-amber-500 whitespace-nowrap">$49.99 USD</span>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-xs text-gray-400 font-medium mb-3">Weight: 100g</p>
+                        <button onclick="addToCart('ouroboros-white', 'Ouroboros-white', 49.99, 'images/Ouroboros_white.jpg')" class="w-full bg-indigo-900 text-white font-bold py-3 rounded-full hover:bg-indigo-800 transition shadow-md flex items-center justify-center gap-2">
+                            <i class="fas fa-cart-plus"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 3: Ouroboros - Black (Coming Soon) -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 transition duration-300 flex flex-col h-full opacity-75">
+                <div class="relative h-72 overflow-hidden bg-gray-200 flex items-center justify-center">
+                    <div class="absolute top-4 left-4 bg-indigo-400 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Intermediate</div>
+                    <span class="text-6xl text-gray-400">?</span>
+                </div>
+                <div class="p-8 flex-1 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-1 gap-2">
+                            <h3 class="text-xl font-bold text-gray-800 leading-tight">Ouroboros<br><span class="text-sm font-medium text-gray-500">- Black</span></h3>
+                            <span class="text-xl font-bold text-gray-400 whitespace-nowrap">$??.?? USD</span>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-xs text-gray-400 font-medium mb-3">Weight: ???g</p>
+                        <button disabled class="w-full bg-gray-300 text-gray-500 font-bold py-3 rounded-full cursor-not-allowed flex items-center justify-center gap-2">
+                            Coming Soon
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 4: Skyscraper -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-indigo-300 transition duration-300 group flex flex-col h-full">
                 <div id="marker-bottom" class="scroll-marker" style="top: 50%;"></div>
-                <div class="relative h-[24rem] overflow-hidden bg-gray-50 flex items-center justify-center">
+                <div class="relative h-72 overflow-hidden bg-gray-50 flex items-center justify-center">
                     <div class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Advanced</div>
                     <img src="images/skyscraper.jpg" alt="Skyscraper" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
                 </div>
-                <div class="p-8 flex-1 flex flex-col">
-                    <div class="mb-4">
-                        <div class="flex justify-between items-center mb-1">
-                            <h3 class="text-xl font-bold text-gray-800">Skyscraper</h3>
-                            <span class="text-xl font-bold text-amber-500">$89.99 USD</span>
+                <div class="p-8 flex-1 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-1 gap-2">
+                            <h3 class="text-xl font-bold text-gray-800 leading-tight">Skyscraper</h3>
+                            <span class="text-xl font-bold text-amber-500 whitespace-nowrap">$89.99 USD</span>
                         </div>
-                        <p class="text-xs text-gray-400 font-medium">Weight: 160g</p>
                     </div>
-                    <button onclick="addToCart('skyscraper', 'Skyscraper', 89.99, 'images/skyscraper.jpg')" class="w-full bg-indigo-900 text-white font-bold py-3 rounded-full hover:bg-indigo-800 transition shadow-md flex items-center justify-center gap-2">
-                        <i class="fas fa-cart-plus"></i> Add to Cart
-                    </button>
+                    <div class="mt-4">
+                        <p class="text-xs text-gray-400 font-medium mb-3">Weight: 160g</p>
+                        <button onclick="addToCart('skyscraper', 'Skyscraper', 89.99, 'images/skyscraper.jpg')" class="w-full bg-indigo-900 text-white font-bold py-3 rounded-full hover:bg-indigo-800 transition shadow-md flex items-center justify-center gap-2">
+                            <i class="fas fa-cart-plus"></i> Add to Cart
+                        </button>
+                    </div>
                 </div>
             </div>
-            <!-- Product 3 -->
-            <div class="bg-gray-50 rounded-2xl shadow-lg overflow-hidden border border-gray-200 opacity-90 relative flex flex-col">
-                <div class="relative h-[24rem] overflow-hidden bg-gray-200 flex items-center justify-center">
-                    <div class="absolute top-4 left-4 bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Coming Soon</div>
-                    <div class="text-gray-400 text-6xl"><i class="fas fa-question-circle"></i></div>
-                </div>
-                <div class="p-8 flex-1 flex flex-col">
-                    <div class="mb-4">
-                        <div class="flex justify-between items-center mb-1">
-                            <h3 class="text-xl font-bold text-gray-700">Mystery Box</h3>
-                            <span class="text-lg font-bold text-gray-500">Coming Soon.</span>
-                        </div>
-                        <p class="text-xs text-gray-400 font-medium">Weight: ???</p>
-                    </div>
-                    <div class="w-full bg-gray-300 text-gray-500 font-bold py-3 rounded-full text-center cursor-not-allowed">Stay Tuned</div>
-                </div>
-            </div>
+
         </div>
     </section>
 
@@ -552,12 +299,9 @@
         </div>
     </section>
 
-    <!-- Footer (Fix: Added overflow-hidden to prevent scrollbar flicker) -->
+    <!-- Footer -->
     <footer class="bg-indigo-950 text-white py-12 mt-auto relative overflow-hidden">
-        <!-- Fix: Moved gear slightly left (right: 25px) to further prevent overflow -->
-        <i class="fas fa-cog gear-fragment" style="bottom: 15px; right: 25px;" 
-           onclick="collectFragment(this, 'Locking Pin')" 
-           ontouchstart="collectFragment(this, 'Locking Pin'); event.preventDefault();"></i>
+        <i class="fas fa-cog gear-fragment" style="bottom: 15px; right: 25px;" onclick="collectFragment(this, 'Locking Pin')" ontouchstart="collectFragment(this, 'Locking Pin'); event.preventDefault();"></i>
         <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
             <div class="text-center md:text-left">
                 <div class="fun-font text-3xl mb-4 text-amber-400">PuzzlerWJ</div>
@@ -571,18 +315,14 @@
                 <div class="flex flex-col space-y-3 text-indigo-200 text-sm items-center md:items-end">
                     <a href="#home" class="hover:text-white transition">Home</a>
                     <a href="#products" class="hover:text-white transition">Shop</a>
-                    <!-- New Link Here -->
                     <a href="game.html" class="hover:text-white transition" title="More Games Coming Soon">Web Puzzle Game</a>
                     <a href="https://puzzlerwj.github.io/puzzlerwj-solutions/Solutions" class="text-amber-400 font-extrabold text-lg hover:text-white transition animate-pulse tracking-wide border-b-2 border-amber-400 pb-1"><i class="fas fa-key mr-1"></i> Solutions</a>
                 </div>
             </div>
         </div>
-        
         <div class="border-t border-indigo-900 mt-10 pt-6 text-center text-xs text-indigo-400 flex flex-col items-center justify-center">
             <p>&copy; 2024 PuzzlerWJ. All Rights Reserved.</p>
-            <div id="versionHint" class="cursor-container text-[10px] text-indigo-400/30 mt-2 font-mono hover:text-indigo-400/80 transition cursor-help select-none inline-block p-2" title="System Version">
-                Ver. Konami Code <span class="blinking-cursor"></span>
-            </div>
+            <div id="versionHint" class="cursor-container text-[10px] text-indigo-400/30 mt-2 font-mono hover:text-indigo-400/80 transition cursor-help select-none inline-block p-2" title="System Version">Ver. Konami Code <span class="blinking-cursor"></span></div>
         </div>
     </footer>
 
@@ -599,196 +339,110 @@
         </div>
     </div>
 
-    <!-- 🔔 Toast (Opacity 0 to prevent ghost box) -->
+    <!-- 🔔 Toast -->
     <div id="toast" class="opacity-0"><i class="fas fa-check-circle text-amber-400"></i> <span id="toastMsg"></span></div>
 
-    <!-- 📟 Name Input Modal -->
-    <div id="nameModal" class="hidden fixed inset-0 bg-black z-[80] flex items-center justify-center font-mono">
-        <div class="max-w-md w-full p-8">
-            <p class="text-green-500 mb-2">> SYSTEM OVERRIDE INITIATED...</p>
-            <p class="text-green-500 mb-4">> IDENTIFY YOURSELF:</p>
-            <div class="flex items-center">
-                <span class="text-green-500 mr-2">></span>
-                <input type="text" id="hackerNameInput" class="bg-black border-b-2 border-green-500 text-green-500 text-2xl w-full focus:outline-none uppercase blinking-cursor" autofocus autocomplete="off">
-            </div>
-            <p class="text-green-700 text-xs mt-4">PRESS ENTER TO CONFIRM</p>
-        </div>
-    </div>
-
-    <!-- 🎉 Reward Modal (Fixed & No Bounce) -->
-    <div id="rewardModal" class="fixed top-0 left-0 w-full h-full bg-black/80 z-[100] hidden flex justify-center items-center">
-        <div class="bg-white p-8 rounded-2xl max-w-sm text-center relative border-4 border-amber-400 shadow-2xl transition-all duration-300 transform scale-100">
-            <button onclick="document.getElementById('rewardModal').classList.add('hidden')" class="absolute top-2 right-4 text-2xl text-gray-400 hover:text-gray-800">&times;</button>
-            <div class="text-5xl mb-4 emoji-icon">⚙️🎉</div>
-            <h3 class="text-2xl font-bold text-indigo-900 mb-2" id="rewardTitle">You Found It!</h3>
-            <p class="text-gray-600 mb-4" id="rewardMsg">The mechanism is open:</p>
-            <div class="bg-gray-100 p-3 rounded-lg border-dashed border-2 border-amber-400 mb-4">
-                <span class="text-2xl font-bold tracking-wider text-indigo-900" id="rewardCode">CODE</span>
-            </div>
-            <p class="text-xs text-gray-400">Enter this code at checkout.</p>
-        </div>
-    </div>
-
-    <!-- 🛒 Shopping Cart Modal (Fix: h-[100dvh], min-h-0 for inner scroll, Hacker styling) -->
+    <!-- 🛒 Shopping Cart Modal -->
     <div id="cartModal" class="fixed inset-0 bg-indigo-900/50 backdrop-blur-sm z-[60] hidden opacity-0">
         <div id="cartContent" class="fixed top-0 right-0 w-full md:w-[400px] h-[100dvh] bg-white shadow-2xl transform translate-x-full flex flex-col overflow-hidden">
             <div class="bg-amber-400 p-5 flex justify-between items-center shadow-sm flex-shrink-0">
                 <h2 class="text-indigo-900 text-xl font-bold fun-font"><i class="fas fa-shopping-bag mr-2"></i>Your Cart</h2>
                 <button onclick="toggleCart()" class="text-indigo-900 hover:text-white transition"><i class="fas fa-times text-2xl"></i></button>
             </div>
-            
             <div id="cartItemsContainer" class="flex-1 overflow-y-auto min-h-0 p-5 space-y-4">
                 <div class="text-center text-gray-400 mt-10">Your cart is empty.</div>
             </div>
-            
             <div class="border-t border-gray-100 p-6 bg-gray-50 flex-shrink-0">
-                <!-- Promo Code Section -->
                 <div class="mb-4">
                     <div class="flex gap-2">
                         <input type="text" id="promoInput" placeholder="Promo Code" class="flex-1 px-3 py-2 border rounded text-sm focus:outline-none focus:border-amber-400 uppercase">
                         <button onclick="applyPromo()" class="bg-gray-800 text-white px-3 py-2 rounded text-sm font-bold hover:bg-gray-700">Apply</button>
                     </div>
-                    <!-- Rule Note -->
-                    <p class="text-[10px] text-gray-500 mt-1 ml-1">
-                        *Codes only apply to shipping fees. Not applicable if order is over $100 (Free Shipping).
-                    </p>
+                    <p class="text-[10px] text-gray-500 mt-1 ml-1">*Codes only apply to shipping fees. Not applicable if order is over $100 (Free Shipping).</p>
                     <div id="promoMessage" class="text-xs mt-1 hidden font-bold"></div>
                 </div>
-
-                <!-- Totals -->
-                <div class="flex justify-between text-sm mb-2 text-gray-600">
-                    <span>Subtotal</span>
-                    <span id="cartSubtotal">$0.00</span>
-                </div>
-                <div class="flex justify-between text-sm mb-2 text-gray-600">
-                    <span>Shipping <span class="text-[10px] text-amber-600 font-bold bg-amber-100 px-1 rounded ml-1">Free over $100</span></span>
-                    <span id="cartShipping">$9.99</span>
-                </div>
-                <div id="discountRow" class="flex justify-between text-sm mb-4 text-green-600 font-bold hidden">
-                    <span>Shipping Discount</span>
-                    <span id="cartDiscount">-$0.00</span>
-                </div>
-                <div class="flex justify-between text-xl font-bold text-indigo-900 mb-6">
-                    <span>Total</span>
-                    <span id="cartTotal">$0.00</span>
-                </div>
+                <div class="flex justify-between text-sm mb-2 text-gray-600"><span>Subtotal</span><span id="cartSubtotal">$0.00</span></div>
+                <div class="flex justify-between text-sm mb-2 text-gray-600"><span>Shipping <span class="text-[10px] text-amber-600 font-bold bg-amber-100 px-1 rounded ml-1">Free over $100</span></span><span id="cartShipping">$9.99</span></div>
+                <div id="discountRow" class="flex justify-between text-sm mb-4 text-green-600 font-bold hidden"><span>Shipping Discount</span><span id="cartDiscount">-$0.00</span></div>
+                <div class="flex justify-between text-xl font-bold text-indigo-900 mb-6"><span>Total</span><span id="cartTotal">$0.00</span></div>
                 <div id="paypal-button-container" class="w-full"></div>
             </div>
         </div>
     </div>
 
-    <!-- Back to Top Button -->
-    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" id="backToTop" class="fixed bottom-6 right-6 bg-amber-400 text-indigo-900 w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-amber-300 transition duration-300 transform translate-y-20 opacity-0 z-50">
-        <i class="fas fa-arrow-up"></i>
-    </button>
+    <div id="nameModal" class="hidden fixed inset-0 bg-black z-[80] flex items-center justify-center font-mono">
+        <div class="max-w-md w-full p-8">
+            <p class="text-green-500 mb-2">> SYSTEM OVERRIDE INITIATED...</p>
+            <p class="text-green-500 mb-4">> IDENTIFY YOURSELF:</p>
+            <div class="flex items-center"><span class="text-green-500 mr-2">></span><input type="text" id="hackerNameInput" class="bg-black border-b-2 border-green-500 text-green-500 text-2xl w-full focus:outline-none uppercase blinking-cursor" autofocus autocomplete="off"></div>
+            <p class="text-green-700 text-xs mt-4">PRESS ENTER TO CONFIRM</p>
+        </div>
+    </div>
 
-    <!-- PayPal SDK -->
+    <div id="rewardModal" class="fixed top-0 left-0 w-full h-full bg-black/80 z-[100] hidden flex justify-center items-center">
+        <div class="bg-white p-8 rounded-2xl max-w-sm text-center relative border-4 border-amber-400 shadow-2xl transition-all duration-300 transform scale-100">
+            <button onclick="document.getElementById('rewardModal').classList.add('hidden')" class="absolute top-2 right-4 text-2xl text-gray-400 hover:text-gray-800">&times;</button>
+            <div class="text-5xl mb-4 emoji-icon">⚙️🎉</div>
+            <h3 class="text-2xl font-bold text-indigo-900 mb-2" id="rewardTitle">You Found It!</h3>
+            <p class="text-gray-600 mb-4" id="rewardMsg">The mechanism is open:</p>
+            <div class="bg-gray-100 p-3 rounded-lg border-dashed border-2 border-amber-400 mb-4"><span class="text-2xl font-bold tracking-wider text-indigo-900" id="rewardCode">CODE</span></div>
+            <p class="text-xs text-gray-400">Enter this code at checkout.</p>
+        </div>
+    </div>
+
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" id="backToTop" class="fixed bottom-6 right-6 bg-amber-400 text-indigo-900 w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-amber-300 transition duration-300 transform translate-y-20 opacity-0 z-50"><i class="fas fa-arrow-up"></i></button>
+
     <script src="https://www.paypal.com/sdk/js?client-id=AR1JFEvjsUMt_DyqzDOZhhqtgmTC8BOsTYHVxZLFRMkULFDHl3xtpEEKsYFFsmYFhIPQXC9DaEZjg2Id&currency=USD&locale=en_US"></script>
 
     <script>
-        // --- 🎵 Audio FX Engine ---
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function playTone(freq, type, duration, vol=0.1) {
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator();
             const gainNode = audioCtx.createGain();
-            osc.type = type; 
-            osc.frequency.value = freq;
-            osc.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            gainNode.gain.setValueAtTime(vol, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-            osc.start();
-            osc.stop(audioCtx.currentTime + duration);
+            osc.type = type; osc.frequency.value = freq; osc.connect(gainNode); gainNode.connect(audioCtx.destination);
+            gainNode.gain.setValueAtTime(vol, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+            osc.start(); osc.stop(audioCtx.currentTime + duration);
         }
         const sfx = {
             collect: () => playTone(880, 'sine', 0.1),
             resonance: () => playTone(150, 'square', 0.1, 0.05),
             unlock: () => { playTone(440, 'triangle', 0.3); setTimeout(() => playTone(554, 'triangle', 0.3), 100); setTimeout(() => playTone(659, 'triangle', 0.5), 200); },
             hacker: () => { playTone(100, 'sawtooth', 0.5); setTimeout(() => playTone(200, 'sawtooth', 0.5), 100); setTimeout(() => playTone(400, 'sawtooth', 0.5), 200); },
-            denied: () => { playTone(150, 'sawtooth', 0.2); setTimeout(() => playTone(100, 'sawtooth', 0.2), 100); } 
+            denied: () => { playTone(150, 'sawtooth', 0.2); setTimeout(() => playTone(100, 'sawtooth', 0.2), 100); }
         };
 
-        // --- 🧩 Part 1: Fragment Collection ---
-        let fragmentsFound = 0;
-        const totalFragments = 3;
-        let isMechanismRepaired = false;
-
+        let fragmentsFound = 0; const totalFragments = 3; let isMechanismRepaired = false;
         function collectFragment(element, partName) {
             if (element.classList.contains('fragment-found')) return;
-            sfx.collect(); 
-            element.classList.add('fragment-found');
-            fragmentsFound++;
-            if (fragmentsFound < totalFragments) {
-                showToast(`Found: ${partName} (${fragmentsFound}/${totalFragments})`);
-            } else {
-                showToast(`Final Part Acquired: ${partName}.`);
-                setTimeout(repairMechanism, 1000);
-            }
+            sfx.collect(); element.classList.add('fragment-found'); fragmentsFound++;
+            if (fragmentsFound < totalFragments) showToast(`Found: ${partName} (${fragmentsFound}/${totalFragments})`);
+            else { showToast(`Final Part Acquired: ${partName}.`); setTimeout(repairMechanism, 1000); }
         }
+        function showToast(msg) { const toast = document.getElementById('toast'); document.getElementById('toastMsg').innerText = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 3000); }
+        function repairMechanism() { isMechanismRepaired = true; const system = document.getElementById('gear-lock-system'); system.classList.remove('opacity-0', 'pointer-events-none'); system.classList.add('repaired'); showToast("Mechanism Repaired. System Online."); }
 
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toastMsg').innerText = msg;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
-        }
-
-        function repairMechanism() {
-            isMechanismRepaired = true;
-            const system = document.getElementById('gear-lock-system');
-            system.classList.remove('opacity-0', 'pointer-events-none');
-            system.classList.add('repaired');
-            showToast("Mechanism Repaired. System Online.");
-        }
-
-        // --- ⚙️ Part 2: Trinity Lock ---
-        const gear = document.getElementById('mainGear');
-        const systemContainer = document.getElementById('gear-lock-system');
-        const container = document.querySelector('.gear-container');
-        const gearIcon = document.getElementById('gearIcon');
-        const lights = [ document.getElementById('light-1'), document.getElementById('light-2'), document.getElementById('light-3') ];
-        const targets = [{ id: 'marker-middle' }, { id: 'marker-top' }, { id: 'marker-bottom' }];
-        let currentStage = 0; 
-        let isResonating = false; 
-        let isUnlocked = false;
+        const gear = document.getElementById('mainGear'); const systemContainer = document.getElementById('gear-lock-system'); const container = document.querySelector('.gear-container'); const gearIcon = document.getElementById('gearIcon'); const lights = [ document.getElementById('light-1'), document.getElementById('light-2'), document.getElementById('light-3') ]; const targets = [{ id: 'marker-middle' }, { id: 'marker-top' }, { id: 'marker-bottom' }];
+        let currentStage = 0; let isResonating = false; let isUnlocked = false;
 
         window.addEventListener('scroll', () => {
-            const backToTopBtn = document.getElementById('backToTop');
-            if (window.scrollY > 300) backToTopBtn.classList.remove('translate-y-20', 'opacity-0');
-            else backToTopBtn.classList.add('translate-y-20', 'opacity-0');
-
+            const btn = document.getElementById('backToTop');
+            if (window.scrollY > 300) btn.classList.remove('translate-y-20', 'opacity-0'); else btn.classList.add('translate-y-20', 'opacity-0');
             if (!isMechanismRepaired || isUnlocked) return;
-            const rotation = window.scrollY / 5; 
-            gear.style.transform = `rotate(${rotation}deg)`;
-            checkProximity();
+            gear.style.transform = `rotate(${window.scrollY / 5}deg)`; checkProximity();
         });
 
         function checkProximity() {
             if (currentStage >= targets.length) return;
             const targetEl = document.getElementById(targets[currentStage].id);
             if (!targetEl) return;
-            
             const rect = targetEl.getBoundingClientRect();
             const distance = Math.abs((rect.top + rect.height/2) - (window.innerHeight/2));
-
-            if (distance < 75) { 
-                if (!isResonating) {
-                    sfx.resonance();
-                    container.classList.add('resonating');
-                    systemContainer.classList.add('active-mode'); 
-                    gearIcon.classList.remove('fa-lock');
-                    gearIcon.classList.add('fa-crosshairs'); 
-                    if (navigator.vibrate) navigator.vibrate(50);
-                }
+            if (distance < 75) {
+                if (!isResonating) { sfx.resonance(); container.classList.add('resonating'); systemContainer.classList.add('active-mode'); gearIcon.className = 'fas fa-crosshairs gear-core'; if (navigator.vibrate) navigator.vibrate(50); }
                 isResonating = true;
             } else {
-                if (isResonating) {
-                    container.classList.remove('resonating');
-                    systemContainer.classList.remove('active-mode');
-                    gearIcon.classList.add('fa-lock');
-                    gearIcon.classList.remove('fa-crosshairs');
-                }
+                if (isResonating) { container.classList.remove('resonating'); systemContainer.classList.remove('active-mode'); gearIcon.className = 'fas fa-lock gear-core'; }
                 isResonating = false;
             }
         }
@@ -796,363 +450,91 @@
         function checkLock() {
             if (!isMechanismRepaired || isUnlocked) return;
             if (isResonating) {
-                sfx.collect();
-                successFeedback();
-                lights[currentStage].classList.add('active');
-                currentStage++;
+                sfx.collect(); successFeedback(); lights[currentStage].classList.add('active'); currentStage++;
                 if (currentStage >= targets.length) finalUnlock();
-                else {
-                    isResonating = false; 
-                    container.classList.remove('resonating');
-                    systemContainer.classList.remove('active-mode');
-                }
-            } else {
-                failFeedback();
-            }
+                else { isResonating = false; container.classList.remove('resonating'); systemContainer.classList.remove('active-mode'); }
+            } else failFeedback();
         }
+        function successFeedback() { const icon = gearIcon; icon.className = 'fas fa-check gear-core'; setTimeout(() => { icon.className = 'fas fa-lock gear-core'; }, 500); }
+        function failFeedback() { container.classList.add('jammed'); setTimeout(() => { container.classList.remove('jammed'); resetLock(); }, 1000); }
+        function resetLock() { currentStage = 0; lights.forEach(l => l.classList.remove('active')); checkProximity(); }
+        function finalUnlock() { isUnlocked = true; sfx.unlock(); container.classList.remove('resonating'); container.classList.add('unlocked'); gearIcon.className = 'fas fa-lock-open gear-core'; if(!document.body.classList.contains('hacker-mode')) setTimeout(() => showReward("Mechanism Unlocked!", "You have aligned the gears of fate.", "R0VBUk1BU1RFUg=="), 800); }
+        function showReward(title, msg, codeB64) { document.getElementById('rewardTitle').innerText = title; document.getElementById('rewardMsg').innerText = msg; document.getElementById('rewardCode').innerText = atob(codeB64); document.getElementById('rewardModal').classList.remove('hidden'); }
 
-        function successFeedback() {
-            const icon = gearIcon;
-            icon.classList.remove('fa-crosshairs');
-            icon.classList.add('fa-check');
-            setTimeout(() => { icon.classList.remove('fa-check'); icon.classList.add('fa-lock'); }, 500);
-        }
-
-        function failFeedback() {
-            container.classList.add('jammed');
-            setTimeout(() => { container.classList.remove('jammed'); resetLock(); }, 1000);
-        }
-
-        function resetLock() {
-            currentStage = 0;
-            lights.forEach(l => l.classList.remove('active'));
-            checkProximity();
-        }
-
-        function finalUnlock() {
-            isUnlocked = true;
-            sfx.unlock();
-            container.classList.remove('resonating');
-            container.classList.add('unlocked');
-            gearIcon.className = 'fas fa-lock-open gear-core';
-            // Show reward only if NOT in hacker mode (as hacker mode hides this game)
-            if(!document.body.classList.contains('hacker-mode')){
-                setTimeout(() => {
-                    // Pass Base64 code to showReward for display obfuscation
-                    showReward("Mechanism Unlocked!", "You have aligned the gears of fate.", "R0VBUk1BU1RFUg=="); 
-                }, 800);
-            }
-        }
-
-        function showReward(title, msg, codeB64) {
-            document.getElementById('rewardTitle').innerText = title;
-            document.getElementById('rewardMsg').innerText = msg;
-            document.getElementById('rewardCode').innerText = atob(codeB64);
-            document.getElementById('rewardModal').classList.remove('hidden');
-        }
-
-        // --- 🕵️ Konami Code & 7-Tap ---
         const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-        let konamiIndex = 0;
-        let currentUser = null; 
-        
+        let konamiIndex = 0; let currentUser = null;
         document.addEventListener('keydown', (e) => {
-            const nameModal = document.getElementById('nameModal');
-            if (!nameModal.classList.contains('hidden')) {
-                if (e.key === 'Enter') confirmHackerMode();
-                return;
-            }
-            if (e.key === konamiCode[konamiIndex]) {
-                konamiIndex++;
-                if (konamiIndex === konamiCode.length) {
-                    showNameInputModal();
-                    konamiIndex = 0;
-                }
-            } else {
-                konamiIndex = 0;
-            }
+            const modal = document.getElementById('nameModal');
+            if (!modal.classList.contains('hidden')) { if (e.key === 'Enter') confirmHackerMode(); return; }
+            if (e.key === konamiCode[konamiIndex]) { konamiIndex++; if (konamiIndex === konamiCode.length) { showNameInputModal(); konamiIndex = 0; } } else konamiIndex = 0;
         });
-
-        let tapCount = 0;
-        let tapTimer;
-        const footerHint = document.getElementById('versionHint');
-        
-        footerHint.addEventListener('click', (e) => {
-            e.preventDefault(); 
-            tapCount++;
-            clearTimeout(tapTimer);
-            tapTimer = setTimeout(() => { tapCount = 0; }, 2000); 
-
+        let tapCount = 0; let tapTimer;
+        document.getElementById('versionHint').addEventListener('click', (e) => {
+            e.preventDefault(); tapCount++; clearTimeout(tapTimer); tapTimer = setTimeout(() => tapCount = 0, 2000);
             if (tapCount === 1) showToast("Checking System Version...");
-            else if (tapCount === 3) showToast("Accessing Developer Tools...");
-            else if (tapCount === 5) showToast("Warning: System Override Imminent...");
-            else if (tapCount === 7) {
-                showNameInputModal();
-                tapCount = 0;
-            }
+            else if (tapCount === 7) { showNameInputModal(); tapCount = 0; }
         });
-
-        // 3. Hidden Joy Click Trigger
-        const joyTrigger = document.getElementById('hiddenJoyTrigger');
-        joyTrigger.addEventListener('click', () => {
-            if (document.body.classList.contains('hacker-mode')) {
-                sfx.collect();
-                showReward("SYSTEM BYPASSED", `USER: ${currentUser || 'ADMIN'} // ROOT ACCESS`, "aGFja2VyOTk5"); // hacker999
-            } else {
-                sfx.denied();
-                joyTrigger.classList.add('shake-denied');
-                setTimeout(() => joyTrigger.classList.remove('shake-denied'), 400);
-            }
+        document.getElementById('hiddenJoyTrigger').addEventListener('click', () => {
+            if (document.body.classList.contains('hacker-mode')) { sfx.collect(); showReward("SYSTEM BYPASSED", `USER: ${currentUser || 'ADMIN'} // ROOT ACCESS`, "aGFja2VyOTk5"); }
+            else { sfx.denied(); const j = document.getElementById('hiddenJoyTrigger'); j.classList.add('shake-denied'); setTimeout(() => j.classList.remove('shake-denied'), 400); }
         });
+        function showNameInputModal() { document.getElementById('nameModal').classList.remove('hidden'); document.getElementById('hackerNameInput').focus(); }
+        function confirmHackerMode() { const v = document.getElementById('hackerNameInput').value.trim(); currentUser = v ? v.toUpperCase() : "UNKNOWN"; document.getElementById('nameModal').classList.add('hidden'); activateHackerMode(currentUser); }
+        function activateHackerMode(name) { sfx.hacker(); document.body.classList.add('hacker-mode'); document.getElementById('brandLogo').innerText = `${name} // SYSTEM`; showToast(`Welcome, ${name}. System Override Active.`); }
 
-        // 4. JOY Typing Logic
-        let keyBuffer = "";
-        const secretCode = "JOY";
-        document.addEventListener('keydown', (e) => {
-            if (e.key.length === 1 && /[a-zA-Z]/.test(e.key)) {
-                keyBuffer += e.key.toUpperCase();
-                if (keyBuffer.length > 10) keyBuffer = keyBuffer.slice(-5);
-                if (keyBuffer.includes(secretCode)) {
-                    if (document.body.classList.contains('hacker-mode')) {
-                        sfx.collect();
-                        showReward("SYSTEM BYPASSED", `USER: ${currentUser || 'ADMIN'} // ROOT ACCESS`, "aGFja2VyOTk5"); // hacker999
-                        keyBuffer = "";
-                    }
-                }
-            }
-        });
-
-        function showNameInputModal() {
-            document.getElementById('nameModal').classList.remove('hidden');
-            document.getElementById('hackerNameInput').focus();
-        }
-
-        function confirmHackerMode() {
-            const inputName = document.getElementById('hackerNameInput').value.trim();
-            currentUser = inputName ? inputName.toUpperCase() : "UNKNOWN";
-            document.getElementById('nameModal').classList.add('hidden');
-            activateHackerMode(currentUser);
-        }
-
-        function activateHackerMode(name) {
-            sfx.hacker();
-            document.body.classList.add('hacker-mode');
-            const logo = document.getElementById('brandLogo');
-            logo.innerText = `${name} // SYSTEM`;
-            showToast(`Welcome, ${name}. System Override Active.`);
-        }
-
-        // --- 🛒 Shopping Cart Logic (With Quantity & Free Shipping Rules) ---
-
-        let cart = [];
-        let appliedDiscount = 0; 
-        const BASE_SHIPPING_COST = 9.99;
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedCart = localStorage.getItem('puzzlerCart');
-            if (savedCart) { cart = JSON.parse(savedCart); updateCartBadge(); }
-        });
-
-        function addToCart(id, name, price, img) { 
-            const existingItem = cart.find(item => item.id === id);
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({ id, name, price, img, quantity: 1 }); 
-            }
-            saveCart(); 
-            updateCartBadge(); 
-            toggleCart(true); 
-        }
-
-        function changeQuantity(index, delta) {
-            cart[index].quantity += delta;
-            if (cart[index].quantity <= 0) {
-                cart.splice(index, 1);
-            }
-            saveCart();
-            updateCartUI(); 
-            updateCartBadge();
-        }
-
-        function removeFromCart(index) { 
-            cart.splice(index, 1); 
-            saveCart(); 
-            updateCartUI(); 
-            updateCartBadge(); 
-        }
-
+        // --- 🛒 Cart ---
+        let cart = []; let appliedDiscount = 0; const BASE_SHIPPING_COST = 9.99;
+        window.addEventListener('DOMContentLoaded', () => { const s = localStorage.getItem('puzzlerCart'); if (s) { cart = JSON.parse(s); updateCartBadge(); } });
+        function addToCart(id, name, price, img) { const i = cart.find(x => x.id === id); if (i) i.quantity++; else cart.push({ id, name, price, img, quantity: 1 }); saveCart(); updateCartBadge(); toggleCart(true); }
+        function changeQuantity(idx, delta) { cart[idx].quantity += delta; if (cart[idx].quantity <= 0) cart.splice(idx, 1); saveCart(); updateCartUI(); updateCartBadge(); }
+        function removeFromCart(idx) { cart.splice(idx, 1); saveCart(); updateCartUI(); updateCartBadge(); }
         function saveCart() { localStorage.setItem('puzzlerCart', JSON.stringify(cart)); }
-        
-        function updateCartBadge() {
-            const badge = document.getElementById('cartCount');
-            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-            badge.innerText = totalCount;
-            if(totalCount > 0) badge.classList.remove('opacity-0'); else badge.classList.add('opacity-0');
-        }
-
+        function updateCartBadge() { const b = document.getElementById('cartCount'); const t = cart.reduce((s, i) => s + i.quantity, 0); b.innerText = t; if(t > 0) b.classList.remove('opacity-0'); else b.classList.add('opacity-0'); }
         function toggleCart(forceOpen = false) {
-            const modal = document.getElementById('cartModal');
-            const content = document.getElementById('cartContent');
-            if (forceOpen || modal.classList.contains('hidden')) {
-                modal.classList.remove('hidden');
-                setTimeout(() => { modal.classList.remove('opacity-0'); content.classList.add('cart-open'); }, 10);
-                updateCartUI();
-            } else {
-                modal.classList.add('opacity-0');
-                content.classList.remove('cart-open');
-                setTimeout(() => { modal.classList.add('hidden'); }, 300);
-            }
+            const m = document.getElementById('cartModal'); const c = document.getElementById('cartContent');
+            if (forceOpen || m.classList.contains('hidden')) { m.classList.remove('hidden'); setTimeout(() => { m.classList.remove('opacity-0'); c.classList.add('cart-open'); }, 10); updateCartUI(); }
+            else { m.classList.add('opacity-0'); c.classList.remove('cart-open'); setTimeout(() => m.classList.add('hidden'), 300); }
         }
-
-        // Promo Code: Plain text check + Shipping rule only
         function applyPromo() {
-            const input = document.getElementById('promoInput');
-            const msg = document.getElementById('promoMessage');
-            const inputCode = input.value.trim().toUpperCase();
-            
-            // Check subtotal for Free Shipping rule
-            let currentSubtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            
-            msg.classList.remove('hidden', 'text-green-600', 'text-red-500', 'text-amber-500');
-
-            // Rule: If already free shipping (>100), block code
-            if (currentSubtotal >= 100) {
-                appliedDiscount = 0;
-                msg.innerText = "Shipping is already free! Code not needed.";
-                msg.classList.add('text-amber-500');
-                updateCartUI();
-                return;
-            }
-
-            // Hello Source Code Reader! 
-            // Please support PuzzlerWJ so I can keep making cool stuff! :)
-            if (inputCode === 'HACKER999') { 
-                appliedDiscount = BASE_SHIPPING_COST; 
-                msg.innerText = "Free Shipping Code applied!"; 
-                msg.classList.add('text-green-600');
-            
-            } else if (inputCode === 'GEARMASTER') { 
-                appliedDiscount = 1.99; 
-                msg.innerText = "Shipping discount ($1.99) applied."; 
-                msg.classList.add('text-green-600');
-                
-            } else {
-                appliedDiscount = 0; 
-                msg.innerText = "Invalid code."; 
-                msg.classList.add('text-red-500');
-            }
-            
-            updateCartUI(); 
+            const v = document.getElementById('promoInput').value.trim().toUpperCase(); const m = document.getElementById('promoMessage');
+            let s = cart.reduce((a, i) => a + (i.price * i.quantity), 0);
+            m.className = "text-xs mt-1 hidden font-bold";
+            if (s >= 100) { appliedDiscount = 0; m.innerText = "Shipping is already free!"; m.classList.add('text-amber-500', 'block'); updateCartUI(); return; }
+            if (v === 'HACKER999') { appliedDiscount = BASE_SHIPPING_COST; m.innerText = "Free Shipping applied!"; m.classList.add('text-green-600', 'block'); }
+            else if (v === 'GEARMASTER') { appliedDiscount = 1.99; m.innerText = "Discount applied."; m.classList.add('text-green-600', 'block'); }
+            else { appliedDiscount = 0; m.innerText = "Invalid code."; m.classList.add('text-red-500', 'block'); }
+            updateCartUI();
         }
 
         function updateCartUI() {
-            const container = document.getElementById('cartItemsContainer');
-            const subtotalEl = document.getElementById('cartSubtotal');
-            const shippingEl = document.getElementById('cartShipping');
-            const totalEl = document.getElementById('cartTotal');
-            const discountRow = document.getElementById('discountRow');
-            const discountEl = document.getElementById('cartDiscount');
-            const paypalContainer = document.getElementById('paypal-button-container');
-            
-            container.innerHTML = ''; 
-            paypalContainer.innerHTML = ''; 
-
-            if (cart.length === 0) {
-                container.innerHTML = '<div class="text-center text-gray-400 mt-10">Your cart is empty.</div>';
-                subtotalEl.innerText = '$0.00'; shippingEl.innerText = '$0.00'; totalEl.innerText = '$0.00';
-                discountRow.classList.add('hidden'); 
-                appliedDiscount = 0;
-                document.getElementById('promoMessage').classList.add('hidden');
-                document.getElementById('promoInput').value = '';
-                return;
-            }
-
+            const container = document.getElementById('cartItemsContainer'); const paypalContainer = document.getElementById('paypal-button-container');
+            container.innerHTML = ''; paypalContainer.innerHTML = '';
+            if (cart.length === 0) { container.innerHTML = '<div class="text-center text-gray-400 mt-10">Your cart is empty.</div>'; document.getElementById('cartSubtotal').innerText = '$0.00'; document.getElementById('cartShipping').innerText = '$0.00'; document.getElementById('cartTotal').innerText = '$0.00'; return; }
             let subtotal = 0;
-            
-            // Render Items with Quantity Buttons
-            cart.forEach((item, index) => {
-                const itemTotal = item.price * item.quantity;
-                subtotal += itemTotal;
-                
-                const itemEl = document.createElement('div');
-                itemEl.className = 'flex items-center justify-between border-b border-gray-100 pb-3';
-                itemEl.innerHTML = `
-                    <div class="flex items-center gap-3">
-                        <img src="${item.img}" class="w-12 h-12 object-contain bg-gray-50 rounded p-1">
-                        <div>
-                            <div class="font-bold text-gray-800 text-sm">${item.name}</div>
-                            <div class="text-amber-500 text-sm">$${item.price}</div>
-                        </div>
-                    </div>
-                    <div class="flex flex-col items-end gap-1">
-                        <div class="flex items-center border border-gray-300 rounded overflow-hidden">
-                            <button onclick="changeQuantity(${index}, -1)" class="px-2 py-0.5 bg-gray-100 hover:bg-gray-200 text-gray-600 transition">-</button>
-                            <span class="px-2 text-sm font-mono w-8 text-center">${item.quantity}</span>
-                            <button onclick="changeQuantity(${index}, 1)" class="px-2 py-0.5 bg-gray-100 hover:bg-gray-200 text-gray-600 transition">+</button>
-                        </div>
-                        <button onclick="removeFromCart(${index})" class="text-xs text-gray-300 hover:text-red-500 transition underline">Remove</button>
-                    </div>`;
-                container.appendChild(itemEl);
+            cart.forEach((i, idx) => {
+                subtotal += i.price * i.quantity;
+                const el = document.createElement('div'); el.className = 'flex items-center justify-between border-b border-gray-100 pb-3';
+                el.innerHTML = `<div class="flex items-center gap-3"><img src="${i.img}" class="w-12 h-12 object-contain bg-gray-50 rounded p-1"><div><div class="font-bold text-gray-800 text-sm leading-tight">${i.name}</div><div class="text-amber-500 text-sm">$${i.price}</div></div></div><div class="flex flex-col items-end gap-1"><div class="flex items-center border border-gray-300 rounded overflow-hidden"><button onclick="changeQuantity(${idx}, -1)" class="px-2 py-0.5 bg-gray-100">-</button><span class="px-2 text-sm font-mono w-8 text-center">${i.quantity}</span><button onclick="changeQuantity(${idx}, 1)" class="px-2 py-0.5 bg-gray-100">+</button></div><button onclick="removeFromCart(${idx})" class="text-xs text-gray-300 underline">Remove</button></div>`;
+                container.appendChild(el);
             });
+            let ship = subtotal >= 100 ? 0 : BASE_SHIPPING_COST; let total = subtotal + ship - appliedDiscount;
+            document.getElementById('cartSubtotal').innerText = '$' + subtotal.toFixed(2);
+            document.getElementById('cartShipping').innerHTML = ship === 0 ? '<span class="text-green-600 font-bold">Free</span>' : '$' + ship.toFixed(2);
+            if (appliedDiscount > 0) { document.getElementById('discountRow').classList.remove('hidden'); document.getElementById('cartDiscount').innerText = '-$' + appliedDiscount.toFixed(2); } else document.getElementById('discountRow').classList.add('hidden');
+            document.getElementById('cartTotal').innerText = '$' + total.toFixed(2);
 
-            // Calc Shipping
-            let shipping = subtotal >= 100 ? 0 : BASE_SHIPPING_COST;
-
-            // Conflict Check: If shipping becomes 0, remove discount
-            if (shipping === 0 && appliedDiscount > 0) {
-                appliedDiscount = 0;
-                const msg = document.getElementById('promoMessage');
-                msg.innerText = "Shipping is now free! Discount removed.";
-                msg.className = "text-xs mt-1 font-bold text-amber-500";
-                msg.classList.remove('hidden');
-            }
-
-            let total = subtotal + shipping - appliedDiscount;
-            if (total < 0) total = 0;
-
-            // Update DOM
-            subtotalEl.innerText = '$' + subtotal.toFixed(2);
-            
-            if (shipping === 0) {
-                shippingEl.innerHTML = '<span class="text-green-600 font-bold">Free</span>';
-            } else {
-                shippingEl.innerText = '$' + shipping.toFixed(2);
-            }
-
-            if (appliedDiscount > 0) { 
-                discountRow.classList.remove('hidden'); 
-                discountEl.innerText = '-$' + appliedDiscount.toFixed(2); 
-            } else { 
-                discountRow.classList.add('hidden'); 
-            }
-            
-            totalEl.innerText = '$' + total.toFixed(2);
-
-            // PayPal
+            const paypalItems = cart.map(i => ({ name: i.name, unit_amount: { currency_code: "USD", value: i.price.toFixed(2) }, quantity: i.quantity.toString() }));
             paypal.Buttons({
                 style: { shape: 'pill', color: 'gold', layout: 'vertical', label: 'checkout' },
                 createOrder: function(data, actions) {
                     return actions.order.create({
                         purchase_units: [{
-                            description: "PuzzlerWJ Order",
-                            amount: { 
-                                currency_code: "USD", 
-                                value: total.toFixed(2), 
-                                breakdown: { 
-                                    item_total: { currency_code: "USD", value: subtotal.toFixed(2) }, 
-                                    shipping: { currency_code: "USD", value: shipping.toFixed(2) }, 
-                                    discount: { currency_code: "USD", value: appliedDiscount.toFixed(2) } 
-                                } 
-                            }
+                            amount: { currency_code: "USD", value: total.toFixed(2), breakdown: { item_total: { currency_code: "USD", value: subtotal.toFixed(2) }, shipping: { currency_code: "USD", value: ship.toFixed(2) }, discount: { currency_code: "USD", value: appliedDiscount.toFixed(2) } } },
+                            items: paypalItems
                         }]
                     });
                 },
-                onApprove: function(data, actions) {
-                    return actions.order.capture().then(function(details) {
-                        cart = []; saveCart(); updateCartBadge(); toggleCart(); window.location.href = "thankyou.html";
-                    });
-                }
+                onApprove: function(data, actions) { return actions.order.capture().then(() => { cart = []; saveCart(); updateCartBadge(); toggleCart(); window.location.href = "thankyou.html"; }); }
             }).render('#paypal-button-container');
         }
     </script>
