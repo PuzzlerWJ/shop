@@ -1,398 +1,420 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <!-- Google tag (gtag.js) - Google Analytics -->
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5H98DJ9L4K"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-      gtag('config', 'G-5H98DJ9L4K');
+    gtag('config', 'G-5H98DJ9L4K');
     </script>
-
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PuzzlerWJ | The Broken Mechanism</title>
-    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Poppins:wght@300;400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <script src="https://www.paypal.com/sdk/js?client-id=AZ3O8M8mZ280mXfVz7ZlH6m3-GfB-pQvS_1X-U2V664-O-j70k8z448V46Y_279_664_000_1&currency=USD"></script>
     <style>
-        h1, h2, h3, .fun-font { font-family: 'Abril Fatface', cursive; }
-        body { font-family: 'Poppins', sans-serif; transition: background-color 0.5s, filter 0.5s; }
-        .pattern-dots {
-            background-image: radial-gradient(#4F46E5 2px, transparent 2px);
-            background-size: 20px 20px;
-        }
-
-        /* --- 🕵️ Hacker Mode Styles --- */
-        body.hacker-mode { background-color: #050505 !important; font-family: 'Share Tech Mono', monospace !important; }
-        body.hacker-mode h1, body.hacker-mode h2, body.hacker-mode h3, body.hacker-mode .fun-font { font-family: 'Share Tech Mono', monospace !important; letter-spacing: -1px; }
-        body.hacker-mode nav { background-color: #000 !important; border-bottom: 2px solid #00ff41; box-shadow: 0 0 15px rgba(0, 255, 65, 0.2); }
-        body.hacker-mode header { background-color: #111 !important; }
-        body.hacker-mode h1 span { color: #00ff41 !important; text-shadow: 0 0 10px #00ff41; }
-        body.hacker-mode .pattern-dots { background-image: radial-gradient(#003b00 2px, transparent 2px); }
-        body.hacker-mode .gear-fragment, body.hacker-mode #gear-lock-system { display: none !important; }
-        body.hacker-mode #rewardModal > div { background-color: #000 !important; border: 2px solid #00ff41 !important; color: #00ff41 !important; box-shadow: 0 0 20px rgba(0, 255, 65, 0.5); font-family: 'Share Tech Mono', monospace !important; }
-        body.hacker-mode #rewardTitle { color: #00ff41 !important; text-shadow: 0 0 10px #00ff41; font-size: 2.5rem; }
-        body.hacker-mode #rewardMsg { color: #00ff41 !important; }
-        body.hacker-mode #rewardCode { color: #000 !important; background-color: #00ff41 !important; border: none !important; padding: 5px 15px; font-weight: bold; letter-spacing: 2px; }
-        body.hacker-mode .text-indigo-900 { color: #a3e635 !important; }
-        body.hacker-mode emoji-icon { display: none; }
-        body.hacker-mode #cartContent { background-color: #000 !important; border-left: 2px solid #00ff41; color: #00ff41; }
-        body.hacker-mode #cartContent .bg-amber-400 { background-color: #003300 !important; color: #00ff41 !important; border-bottom: 1px solid #00ff41; }
-        body.hacker-mode #cartContent .text-indigo-900 { color: #00ff41 !important; }
-        body.hacker-mode #cartContent .border-t, body.hacker-mode #cartContent .border-b { border-color: #00ff41 !important; }
-        body.hacker-mode #cartContent .bg-gray-50 { background-color: #050505 !important; }
-        body.hacker-mode #cartContent input { background-color: #000 !important; border: 1px solid #00ff41 !important; color: #00ff41 !important; }
-        body.hacker-mode #cartContent button { border: 1px solid #00ff41; }
-        body.hacker-mode #cartContent .text-gray-600, body.hacker-mode #cartContent .text-gray-400 { color: #00aa2c !important; }
-        body.hacker-mode #cartContent .text-gray-800 { color: #00ff41 !important; }
-
-        /* --- 📟 Terminal / Blinking Cursor --- */
-        #nameModal, .cursor-container { font-family: 'Share Tech Mono', monospace; }
-        .blinking-cursor::after { content: '▋'; animation: blink 1s step-end infinite; color: inherit; margin-left: 2px; vertical-align: middle; font-size: 0.8em; }
-        @keyframes blink { 50% { opacity: 0; } }
-
-        #hiddenJoyTrigger { cursor: pointer; display: inline-block; transition: color 0.3s; }
-        #hiddenJoyTrigger:hover { color: #fbbf24; }
-        .shake-denied { animation: shake-hard 0.4s cubic-bezier(.36,.07,.19,.97) both; color: #ef4444 !important; }
-        @keyframes shake-hard { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
-
-        body.hacker-mode #hiddenJoyTrigger { color: #00ff41 !important; background-color: transparent !important; text-shadow: 0 0 5px rgba(0, 255, 65, 0.5); padding: 2px 6px; position: relative; font-family: 'Share Tech Mono', monospace !important; }
-        body.hacker-mode #hiddenJoyTrigger:hover { background-color: rgba(0, 255, 65, 0.15) !important; }
-        body.hacker-mode #hiddenJoyTrigger::before { content: '> '; color: #00ff41; font-weight: bold; opacity: 0.8; }
-        body.hacker-mode #hiddenJoyTrigger::after { content: '_'; display: inline-block; margin-left: 2px; color: #00ff41; background-color: #00ff41; width: 10px; height: 1.1em; vertical-align: text-bottom; animation: terminal-blink 1s step-end infinite; }
-        @keyframes terminal-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-        /* --- 🧩 Gear Fragments --- */
-        .gear-fragment { position: absolute; color: #fbbf24; opacity: 0.8; cursor: pointer; transition: all 0.3s; z-index: 60; font-size: 1.5rem; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3)); animation: float-spin 4s infinite linear; padding: 10px; margin: -10px; }
-        @media (hover: hover) { .gear-fragment:hover { opacity: 1; color: #f59e0b; transform: scale(1.2); } }
-        .fragment-found { transform: scale(0) rotate(180deg) !important; opacity: 0 !important; pointer-events: none; }
-        @keyframes float-spin { 0% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-5px) rotate(180deg); } 100% { transform: translateY(0) rotate(360deg); } }
-
-        /* --- ⚙️ Main Gear Lock System --- */
-        #gear-lock-system { opacity: 0; pointer-events: none; transform: scale(0.5) translateY(20px); transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        #gear-lock-system.repaired { opacity: 0.6; pointer-events: auto; transform: scale(0.75) translateY(0); }
-        #gear-lock-system.active-mode { transform: scale(1.1); opacity: 1; }
-        body.hacker-mode .main-gear { color: #111 !important; border: 1px dashed #00ff41; border-radius: 50%; }
-        body.hacker-mode .gear-container.resonating .main-gear { color: #00ff41 !important; box-shadow: 0 0 15px #00ff41; }
-        .gear-container { position: relative; width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
-        .main-gear { font-size: 3rem; color: #6b7280; transition: color 0.3s, text-shadow 0.3s, transform 0.1s linear; z-index: 10; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
-        .gear-core { position: absolute; z-index: 20; color: #f3f4f6; font-size: 1rem; pointer-events: none; transition: all 0.3s; }
-        .status-lights { position: absolute; bottom: -5px; display: flex; gap: 4px; z-index: 30; }
-        .light { width: 6px; height: 6px; border-radius: 50%; background-color: #d1d5db; border: 1px solid #9ca3af; transition: background-color 0.3s, box-shadow 0.3s; }
-        .light.active { background-color: #10b981; box-shadow: 0 0 4px #10b981; }
-        body.hacker-mode .light.active { background-color: #00ff41; box-shadow: 0 0 8px #00ff41; }
-        .gear-container.resonating .main-gear { color: #fbbf24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.6); }
-        .gear-container.jammed { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
-        .gear-container.jammed .main-gear { color: #ef4444 !important; }
-        .gear-container.unlocked .main-gear { color: #10b981; animation: spin-unlock 1s ease-out forwards; }
-        @keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
-        @keyframes spin-unlock { 0% { transform: rotate(0deg) scale(1); } 100% { transform: rotate(720deg) scale(0); opacity: 0; } }
-
-        .scroll-marker { position: absolute; width: 1px; height: 150px; left: 0; pointer-events: none; opacity: 0; }
-
-        /* 🔔 Toast */
-        #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background-color: rgba(17, 24, 39, 0.9); color: #fff; padding: 12px 24px; border-radius: 9999px; font-size: 0.875rem; font-weight: 600; z-index: 100; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease; border: 1px solid #f59e0b; display: flex; align-items: center; gap: 10px; pointer-events: none; opacity: 0; }
-        #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-        @media (max-width: 768px) { #toast { bottom: 90px !important; bottom: calc(90px + env(safe-area-inset-bottom)) !important; } }
-        body.hacker-mode #toast { background-color: #000; border: 1px solid #00ff41; color: #00ff41; font-family: 'Share Tech Mono', monospace; }
-
-        #cartModal { transition: opacity 0.3s ease-in-out; }
-        #cartContent { transition: transform 0.3s ease-in-out; }
+        :root { --accent: #d97706; }
+        body { font-family: 'Plus+Jakarta+Sans', sans-serif; background-color: #fafafa; }
+        .heading-font { font-family: 'Space+Grotesk', sans-serif; }
+        
+        .product-card { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .product-card:hover { transform: translateY(-10px); }
+        
         .cart-open { transform: translateX(0) !important; }
-        .faq-content { transition: max-height 0.3s ease-out; max-height: 0; overflow: hidden; }
-        .faq-active .faq-content { max-height: 200px; }
-        .faq-active i { transform: rotate(180deg); }
+        .cart-overlay { backdrop-filter: blur(4px); transition: all 0.3s; }
+        
+        .hacker-mode { background-color: #050505 !important; color: #00ff41 !important; }
+        .hacker-mode .bg-white { background-color: #0a0a0a !important; border-color: #00ff41 !important; color: #00ff41 !important; }
+        .hacker-mode h1, .hacker-mode h2, .hacker-mode h3, .hacker-mode p, .hacker-mode span { color: #00ff41 !important; }
+        .hacker-mode button { background: #00ff41 !important; color: #000 !important; }
+        
+        .fragment-found { animation: pulse 1s infinite; filter: drop-shadow(0 0 8px #d97706); cursor: crosshair; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        
+        .gear-container { perspective: 1000px; }
+        .gear-main { transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .resonating { animation: resonance 0.2s infinite; }
+        @keyframes resonance { 0% { transform: translate(1px, 1px) rotate(0deg); } 100% { transform: translate(-1px, -1px) rotate(1deg); } }
+        
+        #toast { transform: translateX(-50%) translateY(100px); transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+        #toast.show { translateY(0px) !important; transform: translateX(-50%) translateY(-20px); }
+
+        .shake-denied { animation: shake 0.4s ease-in-out; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
     </style>
 </head>
-<body class="bg-[#FDFBF7] text-gray-800 flex flex-col min-h-screen relative">
+<body class="overflow-x-hidden" id="home">
 
-    <!-- Sticky Navbar -->
-    <nav class="sticky top-0 z-50 w-full py-4 px-6 md:px-12 flex justify-between items-center bg-amber-400 shadow-md transition-all duration-300">
-        <div class="text-3xl text-indigo-900 fun-font tracking-wider cursor-pointer" onclick="window.scrollTo(0,0)" id="brandLogo">PuzzlerWJ</div>
-        <div class="flex items-center space-x-6">
-            <a href="#contact" class="hidden md:inline-block text-indigo-900 font-bold border-b-2 border-indigo-900 hover:text-white hover:border-white transition">Contact</a>
-            <button onclick="toggleCart()" class="relative text-indigo-900 hover:text-white transition group">
-                <i class="fas fa-shopping-cart text-2xl"></i>
-                <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full opacity-0 transition-opacity duration-300">0</span>
-            </button>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="text-2xl font-black tracking-tighter heading-font flex items-center gap-2" id="brandLogo">
+                <span class="text-amber-600">Puzzler</span>WJ
+            </a>
+            <div class="flex items-center gap-8">
+                <a href="#contact" class="hidden md:block text-sm font-bold text-gray-500 hover:text-amber-600 transition-colors uppercase tracking-widest">Contact</a>
+                <button onclick="toggleCart()" class="relative p-2 group">
+                    <i class="fas fa-shopping-bag text-xl text-gray-800 group-hover:text-amber-600 transition-colors"></i>
+                    <span id="cartCount" class="absolute -top-1 -right-1 bg-amber-600 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center opacity-0 transition-opacity">0</span>
+                </button>
+            </div>
         </div>
     </nav>
 
-    <!-- Header Section -->
-    <header class="relative w-full bg-amber-400 overflow-hidden pt-10 pb-20 md:pt-20 md:pb-32" id="home">
-        <div id="marker-top" class="scroll-marker" style="top: 55%;"></div>
-        <div class="absolute -top-20 -right-20 w-64 h-64 bg-amber-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
-        <div class="absolute bottom-10 left-10 w-32 h-32 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
-        <div class="relative z-10 max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
-            <div class="md:w-1/2 text-center md:text-left">
-                <div class="inline-block bg-indigo-900 text-amber-400 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-4 shadow-md">Handcrafted in Taiwan</div>
-                <h1 class="text-5xl md:text-7xl text-indigo-950 leading-tight mb-6 drop-shadow-sm">Unlock the <br> <span class="text-white" id="hiddenJoyTrigger">Hidden Joy.</span></h1>
-                <p class="text-indigo-900 text-lg md:text-xl font-medium mb-8 max-w-md mx-auto md:mx-0">"Puzzle is like a life, brimming with beauty."</p>
-                <a href="#products" class="inline-block bg-indigo-900 text-white px-8 py-4 rounded-lg font-bold hover:bg-indigo-800 hover:shadow-lg hover:-translate-y-1 transition duration-300">Start Exploring ↓</a>
-            </div>
-            <div class="md:w-1/2 relative">
-                <div class="absolute inset-0 bg-indigo-900 rounded-2xl transform rotate-3 translate-x-2 translate-y-2"></div>
-                <img src="images/WJ.png" alt="Puzzle Box Hero" class="relative rounded-2xl shadow-xl w-full object-cover transform -rotate-2 hover:rotate-0 transition duration-500 border-4 border-white">
-                <i class="fas fa-cog gear-fragment" style="top: -15px; right: -10px;" onclick="collectFragment(this, 'Small Gear')" ontouchstart="collectFragment(this, 'Small Gear'); event.preventDefault();"></i>
-            </div>
-        </div>
-    </header>
-
-    <!-- Story Section -->
-    <section class="bg-indigo-950 text-white py-24 px-6 pattern-dots relative">
-        <i class="fas fa-cog gear-fragment" style="bottom: 20px; left: 20px; color: #818cf8;" onclick="collectFragment(this, 'Drive Shaft')" ontouchstart="collectFragment(this, 'Drive Shaft'); event.preventDefault();"></i>
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
-            <div class="md:w-1/2">
-                <h2 class="text-4xl fun-font mb-6 text-amber-400">The Quiet Moment</h2>
-                <p class="text-indigo-100 text-lg leading-relaxed mb-6 relative">
-                    <div id="marker-middle" class="scroll-marker" style="top: 0;"></div>
-                    When you solve a puzzle box, it's just you and the box, sharing a quiet moment. As you uncover each clue, you feel a little victory that makes you forget everything else.
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-6">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-100">
+                    <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
+                    <span class="text-xs font-bold text-amber-700 uppercase tracking-widest">Handcrafted in Taiwan</span>
+                </div>
+                <h1 class="text-6xl md:text-8xl font-black text-gray-900 leading-none heading-font">
+                    Unlock the <br><span class="text-amber-600 fragment-trigger" onclick="collectFragment(this, 'Core Gear')">Hidden</span> Joy.
+                </h1>
+                <p class="text-xl text-gray-500 leading-relaxed max-w-lg">
+                    "Puzzle is like a life, brimming with beauty."
                 </p>
+                <div class="flex gap-4">
+                    <a href="#products" class="bg-gray-900 text-white px-8 py-5 rounded-2xl font-bold hover:bg-amber-600 transition-all flex items-center gap-3 active:scale-95">
+                        Start Exploring
+                        <i class="fas fa-arrow-down text-sm"></i>
+                    </a>
+                </div>
             </div>
-            <div class="md:w-1/2 w-full">
-                <div class="bg-indigo-900 p-10 rounded-2xl border border-indigo-800 shadow-2xl">
-                    <p class="text-2xl font-semibold mb-6 text-white fun-font">Why PuzzlerWJ?</p>
-                    <ul class="space-y-4 text-indigo-200 text-lg">
-                        <li class="flex items-center"><span class="w-3 h-3 bg-amber-400 rounded-full mr-4"></span>Original Mechanisms</li>
-                        <li class="flex items-center"><span class="w-3 h-3 bg-amber-400 rounded-full mr-4"></span>Narrative Design</li>
-                        <li class="flex items-center"><span class="w-3 h-3 bg-amber-400 rounded-full mr-4"></span>Affordable Fun</li>
-                    </ul>
+            <div class="relative">
+                <div class="absolute -inset-4 bg-amber-100 rounded-[3rem] -rotate-3 -z-10"></div>
+                <img src="images/WJ.png" alt="Puzzle Box Hero" class="w-full rounded-[2.5rem] shadow-2xl fragment-trigger" onclick="collectFragment(this, 'Outer Shell')">
+            </div>
+        </div>
+    </section>
+
+    <!-- The Secret Story -->
+    <section class="py-24 bg-gray-900 text-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-20 items-center">
+                <div class="relative">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-8 heading-font">The Quiet Moment</h2>
+                    <div class="space-y-6 text-gray-400 text-lg">
+                        <p>
+                            When you solve a puzzle box, it's just you and the box, sharing a quiet moment. As you uncover each clue, you feel a little victory that makes you forget everything else.
+                        </p>
+                    </div>
+                    <div class="mt-12 grid grid-cols-2 gap-8">
+                        <div>
+                            <div class="text-amber-500 text-3xl font-black mb-1">Why PuzzlerWJ?</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-4 text-gray-400">
+                    <div class="flex items-center gap-4 group">
+                        <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center group-hover:bg-amber-600 transition-colors">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <span class="text-xl">Original Mechanisms</span>
+                    </div>
+                    <div class="flex items-center gap-4 group">
+                        <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center group-hover:bg-amber-600 transition-colors">
+                            <i class="fas fa-feather"></i>
+                        </div>
+                        <span class="text-xl">Narrative Design</span>
+                    </div>
+                    <div class="flex items-center gap-4 group">
+                        <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center group-hover:bg-amber-600 transition-colors">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <span class="text-xl">Affordable Fun</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Products Section -->
-    <section id="products" class="max-w-7xl mx-auto px-6 py-24">
-        <div class="text-center mb-16">
-            <h2 class="text-5xl text-indigo-950 fun-font mb-4">Shop Collection</h2>
-            <p class="text-gray-500">Challenge your mind with our handcrafted designs.</p>
-        </div>
-        
-        <!-- Grid: 改為 lg:grid-cols-4 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            
-            <!-- Product 1: Ladybug -->
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-amber-300 transition duration-300 group flex flex-col h-full">
-                <div class="relative h-72 overflow-hidden bg-gray-50 flex items-center justify-center">
-                    <div class="absolute top-4 left-4 bg-amber-400 text-indigo-900 text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Entry Level</div>
-                    <img src="images/ladybug.jpg" alt="Ladybug" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
+    <!-- Product Grid -->
+    <section id="products" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div>
+                    <h2 class="text-5xl font-black text-gray-900 mb-4 heading-font">Shop Collection</h2>
+                    <p class="text-gray-500 text-lg">Challenge your mind with our handcrafted designs.</p>
                 </div>
-                <div class="p-8 flex-1 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-start mb-1 gap-2">
-                            <h3 class="text-xl font-bold text-gray-800 leading-tight">Ladybug</h3>
-                            <span class="text-xl font-bold text-amber-500 whitespace-nowrap">$39.99 USD</span>
-                        </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Ladybug -->
+                <div class="product-card group relative bg-white rounded-2xl p-4 shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col h-full">
+                    <div class="absolute top-4 left-4 z-10">
+                        <span class="bg-amber-100/90 backdrop-blur-sm text-amber-700 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider border border-amber-200">
+                            Entry Level
+                        </span>
                     </div>
-                    <div class="mt-4">
-                        <p class="text-xs text-gray-400 font-medium mb-3">Weight: 60g</p>
-                        <button onclick="addToCart('ladybug', 'Ladybug', 39.99, 'images/ladybug.jpg')" class="w-full bg-indigo-900 text-white font-bold py-3 rounded-full hover:bg-indigo-800 transition shadow-md flex items-center justify-center gap-2">
-                            <i class="fas fa-cart-plus"></i> Add to Cart
+                    <div class="relative aspect-square mb-6 overflow-hidden rounded-xl bg-gray-50">
+                        <img src="images/ladybug.jpg" alt="Ladybug" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-amber-600 transition-colors">Ladybug</h3>
+                        <div class="flex items-baseline gap-2 mb-4">
+                            <span class="text-2xl font-black text-gray-900">$39.99</span>
+                            <span class="text-sm font-medium text-gray-400 uppercase tracking-tighter">USD</span>
+                        </div>
+                        <div class="space-y-2 mb-6">
+                            <div class="flex items-center gap-2 text-sm text-gray-500">
+                                <i class="fas fa-weight-hanging w-4"></i>
+                                <span>Weight: 60g</span>
+                            </div>
+                        </div>
+                        <button onclick="addToCart('ladybug', 'Ladybug', 39.99, 'images/ladybug.jpg')" class="w-full bg-gray-900 text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-amber-600 transition-all active:scale-95 shadow-lg shadow-gray-200">
+                            <i class="fas fa-shopping-cart text-sm"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ouroboros- White -->
+                <div class="product-card group relative bg-white rounded-2xl p-4 shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col h-full">
+                    <div class="absolute top-4 left-4 z-10">
+                        <span class="bg-amber-100/90 backdrop-blur-sm text-amber-700 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider border border-amber-200">
+                            Pre-Intermediate
+                        </span>
+                    </div>
+                    <div class="relative aspect-square mb-6 overflow-hidden rounded-xl bg-gray-50">
+                        <img src="images/Ouroboros_white.jpg" alt="Ouroboros-white" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-amber-600 transition-colors">Ouroboros- White</h3>
+                        <div class="flex items-baseline gap-2 mb-4">
+                            <span class="text-2xl font-black text-gray-900">$49.99</span>
+                            <span class="text-sm font-medium text-gray-400 uppercase tracking-tighter">USD</span>
+                        </div>
+                        <div class="space-y-2 mb-6">
+                            <div class="flex items-center gap-2 text-sm text-gray-500">
+                                <i class="fas fa-weight-hanging w-4"></i>
+                                <span>Weight: 100g</span>
+                            </div>
+                        </div>
+                        <button onclick="addToCart('ouroboros-white', 'Ouroboros- White', 49.99, 'images/Ouroboros_white.jpg')" class="w-full bg-gray-900 text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-amber-600 transition-all active:scale-95 shadow-lg shadow-gray-200">
+                            <i class="fas fa-shopping-cart text-sm"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ouroboros- Black (修改部分) -->
+                <div class="product-card group relative bg-white rounded-2xl p-4 shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col h-full">
+                    <div class="absolute top-4 left-4 z-10">
+                        <span class="bg-amber-100/90 backdrop-blur-sm text-amber-700 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider border border-amber-200">
+                            Intermediate
+                        </span>
+                    </div>
+                    <div class="relative aspect-square mb-6 overflow-hidden rounded-xl bg-gray-50">
+                        <img src="images/Ouroboros_black.jpg" alt="Ouroboros- Black" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-amber-600 transition-colors">Ouroboros- Black</h3>
+                        <div class="flex items-baseline gap-2 mb-4">
+                            <span class="text-2xl font-black text-gray-900">$69.99</span>
+                            <span class="text-sm font-medium text-gray-400 uppercase tracking-tighter">USD</span>
+                        </div>
+                        <div class="space-y-2 mb-6">
+                            <div class="flex items-center gap-2 text-sm text-gray-500">
+                                <i class="fas fa-weight-hanging w-4"></i>
+                                <span>Weight: 100g</span>
+                            </div>
+                        </div>
+                        <button onclick="addToCart('ouroboros-black', 'Ouroboros- Black', 69.99, 'images/Ouroboros_black.jpg')" class="w-full bg-gray-900 text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-amber-600 transition-all active:scale-95 shadow-lg shadow-gray-200">
+                            <i class="fas fa-shopping-cart text-sm"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Skyscraper -->
+                <div class="product-card group relative bg-white rounded-2xl p-4 shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col h-full">
+                    <div class="absolute top-4 left-4 z-10">
+                        <span class="bg-amber-100/90 backdrop-blur-sm text-amber-700 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider border border-amber-200">
+                            Advanced
+                        </span>
+                    </div>
+                    <div class="relative aspect-square mb-6 overflow-hidden rounded-xl bg-gray-50">
+                        <img src="images/skyscraper.jpg" alt="Skyscraper" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-amber-600 transition-colors">Skyscraper</h3>
+                        <div class="flex items-baseline gap-2 mb-4">
+                            <span class="text-2xl font-black text-gray-900">$89.99</span>
+                            <span class="text-sm font-medium text-gray-400 uppercase tracking-tighter">USD</span>
+                        </div>
+                        <div class="space-y-2 mb-6">
+                            <div class="flex items-center gap-2 text-sm text-gray-500">
+                                <i class="fas fa-weight-hanging w-4"></i>
+                                <span>Weight: 160g</span>
+                            </div>
+                        </div>
+                        <button onclick="addToCart('skyscraper', 'Skyscraper', 89.99, 'images/skyscraper.jpg')" class="w-full bg-gray-900 text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-amber-600 transition-all active:scale-95 shadow-lg shadow-gray-200">
+                            <i class="fas fa-shopping-cart text-sm"></i> Add to Cart
                         </button>
                     </div>
                 </div>
             </div>
-
-            <!-- Product 2: Ouroboros - White -->
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-amber-300 transition duration-300 group flex flex-col h-full">
-                <div class="relative h-72 overflow-hidden bg-gray-50 flex items-center justify-center">
-                    <div class="absolute top-4 left-4 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Pre-Intermediate</div>
-                    <img src="images/Ouroboros_white.jpg" alt="Ouroboros-white" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
-                </div>
-                <div class="p-8 flex-1 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-start mb-1 gap-2">
-                            <h3 class="text-xl font-bold text-gray-800 leading-tight">Ouroboros<br><span class="text-sm font-medium text-gray-500">- White</span></h3>
-                            <span class="text-xl font-bold text-amber-500 whitespace-nowrap">$49.99 USD</span>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <p class="text-xs text-gray-400 font-medium mb-3">Weight: 100g</p>
-                        <button onclick="addToCart('ouroboros-white', 'Ouroboros-white', 49.99, 'images/Ouroboros_white.jpg')" class="w-full bg-indigo-900 text-white font-bold py-3 rounded-full hover:bg-indigo-800 transition shadow-md flex items-center justify-center gap-2">
-                            <i class="fas fa-cart-plus"></i> Add to Cart
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 3: Ouroboros - Black (Coming Soon) -->
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 transition duration-300 flex flex-col h-full opacity-75">
-                <div class="relative h-72 overflow-hidden bg-gray-200 flex items-center justify-center">
-                    <div class="absolute top-4 left-4 bg-indigo-400 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Intermediate</div>
-                    <span class="text-6xl text-gray-400">?</span>
-                </div>
-                <div class="p-8 flex-1 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-start mb-1 gap-2">
-                            <h3 class="text-xl font-bold text-gray-800 leading-tight">Ouroboros<br><span class="text-sm font-medium text-gray-500">- Black</span></h3>
-                            <span class="text-xl font-bold text-gray-400 whitespace-nowrap">$??.?? USD</span>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <p class="text-xs text-gray-400 font-medium mb-3">Weight: ???g</p>
-                        <button disabled class="w-full bg-gray-300 text-gray-500 font-bold py-3 rounded-full cursor-not-allowed flex items-center justify-center gap-2">
-                            Coming Soon
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 4: Skyscraper -->
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-indigo-300 transition duration-300 group flex flex-col h-full">
-                <div id="marker-bottom" class="scroll-marker" style="top: 50%;"></div>
-                <div class="relative h-72 overflow-hidden bg-gray-50 flex items-center justify-center">
-                    <div class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded shadow-sm z-10">Advanced</div>
-                    <img src="images/skyscraper.jpg" alt="Skyscraper" class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700">
-                </div>
-                <div class="p-8 flex-1 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-start mb-1 gap-2">
-                            <h3 class="text-xl font-bold text-gray-800 leading-tight">Skyscraper</h3>
-                            <span class="text-xl font-bold text-amber-500 whitespace-nowrap">$89.99 USD</span>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <p class="text-xs text-gray-400 font-medium mb-3">Weight: 160g</p>
-                        <button onclick="addToCart('skyscraper', 'Skyscraper', 89.99, 'images/skyscraper.jpg')" class="w-full bg-indigo-900 text-white font-bold py-3 rounded-full hover:bg-indigo-800 transition shadow-md flex items-center justify-center gap-2">
-                            <i class="fas fa-cart-plus"></i> Add to Cart
-                        </button>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </section>
 
-    <!-- Support Section -->
-    <section id="contact" class="bg-indigo-50 py-20 px-6">
-        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
-            <div>
-                <div class="text-center md:text-left mb-8">
-                    <h2 class="text-3xl fun-font text-indigo-900 mb-4">Where is my Box?</h2>
-                    <p class="text-gray-600">Enter your tracking number below to check the status.</p>
-                </div>
-                <div class="bg-white p-8 rounded-2xl shadow-lg border border-indigo-100 w-full">
-                    <div id="as-root"></div>
-                    <script>(function(e,t,n){var r,i=e.getElementsByTagName(t)[0];if(e.getElementById(n))return;r=e.createElement(t);r.id=n;r.src="//button.aftership.com/all.js";i.parentNode.insertBefore(r,i)})(document,"script","aftership-jssdk")</script>
-                    <div class="as-track-button" data-size="large" data-domain="track.aftership.com"></div>
-                </div>
-            </div>
-            <div>
-                <div class="text-center md:text-left mb-8">
-                    <h2 class="text-3xl fun-font text-indigo-900 mb-4">Get in Touch</h2>
-                    <p class="text-gray-600">Questions? Custom orders? Just say hi.</p>
-                </div>
-                <form action="https://formspree.io/f/xjkddywe" method="POST" class="space-y-6 bg-white p-8 rounded-2xl shadow-lg border border-indigo-100">
-                    <input type="email" name="email" required placeholder="Your Email" class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-amber-400 focus:outline-none transition mb-4">
-                    <textarea name="message" rows="4" required placeholder="Message" class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-amber-400 focus:outline-none transition mb-4"></textarea>
-                    <button type="submit" class="w-full bg-indigo-900 text-white font-bold py-3 rounded-lg hover:bg-indigo-800 transition shadow-md">Send Message</button>
-                </form>
-            </div>
+    <!-- Logistics Tracking -->
+    <section class="py-24 bg-gray-50">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-6 heading-font">Where is my Box?</h2>
+            <p class="text-gray-500 mb-10">Enter your tracking number below to check the status.</p>
+            <div id="as-root"></div>
+            <script>(function(e,t,n){var r,i=e.getElementsByTagName(t)[0];if(e.getElementById(n))return;r=e.createElement(t);r.id=n;r.src="//button.aftership.com/all.js";i.parentNode.insertBefore(r,i)})(document,"script","aftership-jssdk")</script>
+            <div class="as-track-button" data-size="large" data-domain="puzzlerwj.aftership.com" data-btn-color="#d97706"></div>
+        </div>
+    </section>
+
+    <!-- Simple Contact -->
+    <section id="contact" class="py-24">
+        <div class="max-w-xl mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-6 heading-font">Get in Touch</h2>
+            <p class="text-gray-500 mb-10">Questions? Custom orders? Just say hi.</p>
+            <form action="https://formspree.io/f/mbljryzz" method="POST" class="space-y-4">
+                <input type="email" name="email" placeholder="Your Email" class="w-full px-6 py-4 rounded-2xl border border-gray-200 focus:ring-2 focus:ring-amber-500 outline-none transition-all" required>
+                <textarea name="message" placeholder="What's on your mind?" rows="4" class="w-full px-6 py-4 rounded-2xl border border-gray-200 focus:ring-2 focus:ring-amber-500 outline-none transition-all" required></textarea>
+                <button type="submit" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold hover:bg-amber-600 transition-all">Send Message</button>
+            </form>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-indigo-950 text-white py-12 mt-auto relative overflow-hidden">
-        <i class="fas fa-cog gear-fragment" style="bottom: 15px; right: 25px;" onclick="collectFragment(this, 'Locking Pin')" ontouchstart="collectFragment(this, 'Locking Pin'); event.preventDefault();"></i>
-        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+    <footer class="py-12 border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
             <div class="text-center md:text-left">
-                <div class="fun-font text-3xl mb-4 text-amber-400">PuzzlerWJ</div>
-                <p class="text-indigo-200 text-sm mb-4">Handcrafted puzzles designed to bring joy and challenge to your life.</p>
-                <div class="flex justify-center md:justify-start space-x-4">
-                    <a href="https://www.instagram.com/puzzlerwj/" target="_blank" class="w-8 h-8 rounded-full bg-indigo-800 flex items-center justify-center hover:bg-amber-400 hover:text-indigo-900 transition"><i class="fab fa-instagram"></i></a>
-                </div>
+                <div class="text-2xl font-black heading-font mb-2">PuzzlerWJ</div>
+                <p class="text-gray-400 text-sm">Handcrafted puzzles designed to bring joy and challenge to your life.</p>
             </div>
-            <div class="text-center md:text-right">
-                <h4 class="font-bold text-lg mb-4 text-amber-400">Quick Links</h4>
-                <div class="flex flex-col space-y-3 text-indigo-200 text-sm items-center md:items-end">
-                    <a href="#home" class="hover:text-white transition">Home</a>
-                    <a href="#products" class="hover:text-white transition">Shop</a>
-                    <a href="game.html" class="hover:text-white transition" title="More Games Coming Soon">Web Puzzle Game</a>
-                    <a href="https://puzzlerwj.github.io/puzzlerwj-solutions/Solutions" class="text-amber-400 font-extrabold text-lg hover:text-white transition animate-pulse tracking-wide border-b-2 border-amber-400 pb-1"><i class="fas fa-key mr-1"></i> Solutions</a>
+            <div class="flex gap-8">
+                <div class="flex flex-col gap-2">
+                    <h4 class="text-xs font-bold text-gray-900 uppercase tracking-widest mb-2">Quick Links</h4>
+                    <a href="#home" class="text-sm text-gray-500 hover:text-amber-600">Home</a>
+                    <a href="#products" class="text-sm text-gray-500 hover:text-amber-600">Shop</a>
+                    <a href="game.html" title="More Games Coming Soon" class="text-sm text-gray-500 hover:text-amber-600">Web Puzzle Game</a>
+                    <a href="https://puzzlerwj.github.io/puzzlerwj-solutions/Solutions" class="text-sm text-gray-500 hover:text-amber-600">Solutions</a>
                 </div>
             </div>
         </div>
-        <div class="border-t border-indigo-900 mt-10 pt-6 text-center text-xs text-indigo-400 flex flex-col items-center justify-center">
-            <p>&copy; 2024 PuzzlerWJ. All Rights Reserved.</p>
-            <div id="versionHint" class="cursor-container text-[10px] text-indigo-400/30 mt-2 font-mono hover:text-indigo-400/80 transition cursor-help select-none inline-block p-2" title="System Version">Ver. Konami Code <span class="blinking-cursor"></span></div>
+        <div class="max-w-7xl mx-auto px-6 mt-12 pt-8 border-t border-gray-50 text-center">
+            <p class="text-xs text-gray-400 mb-4">&copy; 2024 PuzzlerWJ. All Rights Reserved.</p>
+            <a href="#" id="versionHint" class="text-[10px] text-gray-200 hover:text-amber-600 transition-colors uppercase tracking-[0.2em]">Ver. Konami Code</a>
         </div>
     </footer>
 
-    <!-- ⚙️ Gear Lock Widget -->
-    <div id="gear-lock-system" class="fixed bottom-6 left-6 z-40">
-        <div class="gear-container" onclick="checkLock()">
-            <i class="fas fa-gear main-gear" id="mainGear"></i>
-            <i class="fas fa-lock gear-core" id="gearIcon"></i>
-            <div class="status-lights">
-                <div class="light" id="light-1"></div>
-                <div class="light" id="light-2"></div>
-                <div class="light" id="light-3"></div>
+    <!-- Mechanism Secret: Hidden Gear System -->
+    <div id="gear-lock-system" class="fixed bottom-10 right-10 z-[60] opacity-0 pointer-events-none transition-all duration-1000">
+        <div class="gear-container relative w-32 h-32 flex items-center justify-center">
+            <div id="mainGear" class="gear-main absolute w-full h-full flex items-center justify-center">
+                <svg viewBox="0 0 100 100" class="w-full h-full fill-amber-600/20 stroke-amber-600 stroke-[0.5]">
+                    <path d="M50 20 L55 5 L65 10 L60 25 A30 30 0 1 1 40 25 L35 10 L45 5 Z" />
+                    <circle cx="50" cy="50" r="15" fill="none" />
+                </svg>
+            </div>
+            <div onclick="checkLock()" class="relative z-10 w-16 h-16 bg-white rounded-full shadow-xl border-4 border-amber-600 flex items-center justify-center cursor-pointer active:scale-90 transition-transform">
+                <i id="gearIcon" class="fas fa-lock text-amber-600 text-xl gear-core"></i>
+            </div>
+            <!-- Alignment Lights -->
+            <div class="absolute -top-4 flex gap-2">
+                <div id="light-1" class="w-2 h-2 rounded-full bg-gray-300 transition-colors"></div>
+                <div id="light-2" class="w-2 h-2 rounded-full bg-gray-300 transition-colors"></div>
+                <div id="light-3" class="w-2 h-2 rounded-full bg-gray-300 transition-colors"></div>
             </div>
         </div>
     </div>
 
-    <!-- 🔔 Toast -->
-    <div id="toast" class="opacity-0"><i class="fas fa-check-circle text-amber-400"></i> <span id="toastMsg"></span></div>
+    <!-- Hidden Alignment Markers (Invisible but reachable via scroll) -->
+    <div id="marker-top" class="absolute top-[1200px]"></div>
+    <div id="marker-middle" class="absolute top-[2800px]"></div>
+    <div id="marker-bottom" class="absolute top-[4500px]"></div>
 
-    <!-- 🛒 Shopping Cart Modal -->
-    <div id="cartModal" class="fixed inset-0 bg-indigo-900/50 backdrop-blur-sm z-[60] hidden opacity-0">
-        <div id="cartContent" class="fixed top-0 right-0 w-full md:w-[400px] h-[100dvh] bg-white shadow-2xl transform translate-x-full flex flex-col overflow-hidden">
-            <div class="bg-amber-400 p-5 flex justify-between items-center shadow-sm flex-shrink-0">
-                <h2 class="text-indigo-900 text-xl font-bold fun-font"><i class="fas fa-shopping-bag mr-2"></i>Your Cart</h2>
-                <button onclick="toggleCart()" class="text-indigo-900 hover:text-white transition"><i class="fas fa-times text-2xl"></i></button>
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 z-[100] bg-gray-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3">
+        <i class="fas fa-cog text-amber-500 animate-spin"></i>
+        <span id="toastMsg" class="font-bold">Mechanism Initialized...</span>
+    </div>
+
+    <!-- Name Input Modal -->
+    <div id="nameModal" class="fixed inset-0 z-[200] bg-black/90 flex items-center justify-center p-6 hidden">
+        <div class="max-w-md w-full bg-[#0a0a0a] border border-[#00ff41] p-10 rounded-3xl text-center space-y-6">
+            <div class="text-[#00ff41] font-mono text-lg animate-pulse">> SYSTEM OVERRIDE INITIATED...</div>
+            <div class="text-white font-bold text-2xl heading-font uppercase tracking-widest">> IDENTIFY YOURSELF:</div>
+            <input type="text" id="hackerNameInput" class="w-full bg-transparent border-b-2 border-[#00ff41] text-[#00ff41] text-3xl font-black text-center outline-none py-4" placeholder="USER_NAME">
+            <div class="text-gray-500 text-xs">> PRESS ENTER TO CONFIRM</div>
+            <button onclick="confirmHackerMode()" class="hidden"></button>
+        </div>
+    </div>
+
+    <!-- Reward Modal -->
+    <div id="rewardModal" class="fixed inset-0 z-[200] bg-white/95 backdrop-blur-xl flex items-center justify-center p-6 hidden">
+        <div class="max-w-lg w-full text-center space-y-8">
+            <div class="text-6xl">⚙️🎉</div>
+            <h3 id="rewardTitle" class="text-4xl font-black heading-font text-gray-900">You Found It!</h3>
+            <p id="rewardMsg" class="text-gray-500 text-xl">The mechanism is open:</p>
+            <div class="bg-amber-50 border-2 border-dashed border-amber-600 p-8 rounded-[2rem]">
+                <div class="text-amber-600 font-mono text-5xl font-black tracking-tighter" id="rewardCode">CODE</div>
+                <div class="text-amber-600/50 text-xs mt-4 font-bold uppercase tracking-widest">Enter this code at checkout.</div>
             </div>
-            <div id="cartItemsContainer" class="flex-1 overflow-y-auto min-h-0 p-5 space-y-4">
+            <button onclick="document.getElementById('rewardModal').classList.add('hidden')" class="text-gray-400 font-bold hover:text-gray-900 transition-colors uppercase tracking-widest">Close Discovery</button>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="fixed inset-0 z-[100] hidden opacity-0 transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/30 backdrop-blur-sm" onclick="toggleCart()"></div>
+        <div id="cartContent" class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl transition-transform duration-500 translate-x-full flex flex-col">
+            <div class="p-8 border-b border-gray-100 flex items-center justify-between">
+                <h2 class="text-2xl font-black heading-font">Your Cart</h2>
+                <button onclick="toggleCart()" class="text-gray-400 hover:text-gray-900"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            
+            <div id="cartItemsContainer" class="flex-grow overflow-y-auto p-8 space-y-6">
+                <!-- Items injected by JS -->
                 <div class="text-center text-gray-400 mt-10">Your cart is empty.</div>
             </div>
-            <div class="border-t border-gray-100 p-6 bg-gray-50 flex-shrink-0">
-                <div class="mb-4">
-                    <div class="flex gap-2">
-                        <input type="text" id="promoInput" placeholder="Promo Code" class="flex-1 px-3 py-2 border rounded text-sm focus:outline-none focus:border-amber-400 uppercase">
-                        <button onclick="applyPromo()" class="bg-gray-800 text-white px-3 py-2 rounded text-sm font-bold hover:bg-gray-700">Apply</button>
-                    </div>
-                    <p class="text-[10px] text-gray-500 mt-1 ml-1">*Codes only apply to shipping fees. Not applicable if order is over $100 (Free Shipping).</p>
-                    <div id="promoMessage" class="text-xs mt-1 hidden font-bold"></div>
+
+            <div class="p-8 bg-gray-50 border-t border-gray-100 space-y-6">
+                <!-- Promo Code -->
+                <div class="flex gap-2">
+                    <input type="text" id="promoInput" placeholder="Promo Code" class="flex-grow px-4 py-3 rounded-xl border border-gray-200 text-sm focus:ring-2 focus:ring-amber-500 outline-none">
+                    <button onclick="applyPromo()" class="px-6 py-3 bg-gray-900 text-white rounded-xl font-bold text-sm hover:bg-amber-600 transition-all">Apply</button>
                 </div>
-                <div class="flex justify-between text-sm mb-2 text-gray-600"><span>Subtotal</span><span id="cartSubtotal">$0.00</span></div>
-                <div class="flex justify-between text-sm mb-2 text-gray-600"><span>Shipping <span class="text-[10px] text-amber-600 font-bold bg-amber-100 px-1 rounded ml-1">Free over $100</span></span><span id="cartShipping">$9.99</span></div>
-                <div id="discountRow" class="flex justify-between text-sm mb-4 text-green-600 font-bold hidden"><span>Shipping Discount</span><span id="cartDiscount">-$0.00</span></div>
-                <div class="flex justify-between text-xl font-bold text-indigo-900 mb-6"><span>Total</span><span id="cartTotal">$0.00</span></div>
-                <div id="paypal-button-container" class="w-full"></div>
+                <div id="promoMessage" class="text-xs mt-1 hidden font-bold"></div>
+                <p class="text-[10px] text-gray-400 italic mt-2">*Codes only apply to shipping fees. Not applicable if order is over $100 (Free Shipping).</p>
+
+                <div class="space-y-2">
+                    <div class="flex justify-between text-gray-500">
+                        <span>Subtotal</span>
+                        <span id="cartSubtotal">$0.00</span>
+                    </div>
+                    <div class="flex justify-between text-gray-500">
+                        <span>Shipping <span class="text-[10px] opacity-50">Free over $100</span></span>
+                        <span id="cartShipping">$9.99</span>
+                    </div>
+                    <div id="discountRow" class="flex justify-between text-green-600 hidden">
+                        <span>Shipping Discount</span>
+                        <span id="cartDiscount">-$0.00</span>
+                    </div>
+                    <div class="flex justify-between text-2xl font-black text-gray-900 pt-4 border-t border-gray-200">
+                        <span>Total</span>
+                        <span id="cartTotal">$0.00</span>
+                    </div>
+                </div>
+                <div id="paypal-button-container" class="mt-4"></div>
             </div>
         </div>
     </div>
 
-    <div id="nameModal" class="hidden fixed inset-0 bg-black z-[80] flex items-center justify-center font-mono">
-        <div class="max-w-md w-full p-8">
-            <p class="text-green-500 mb-2">> SYSTEM OVERRIDE INITIATED...</p>
-            <p class="text-green-500 mb-4">> IDENTIFY YOURSELF:</p>
-            <div class="flex items-center"><span class="text-green-500 mr-2">></span><input type="text" id="hackerNameInput" class="bg-black border-b-2 border-green-500 text-green-500 text-2xl w-full focus:outline-none uppercase blinking-cursor" autofocus autocomplete="off"></div>
-            <p class="text-green-700 text-xs mt-4">PRESS ENTER TO CONFIRM</p>
-        </div>
-    </div>
-
-    <div id="rewardModal" class="fixed top-0 left-0 w-full h-full bg-black/80 z-[100] hidden flex justify-center items-center">
-        <div class="bg-white p-8 rounded-2xl max-w-sm text-center relative border-4 border-amber-400 shadow-2xl transition-all duration-300 transform scale-100">
-            <button onclick="document.getElementById('rewardModal').classList.add('hidden')" class="absolute top-2 right-4 text-2xl text-gray-400 hover:text-gray-800">&times;</button>
-            <div class="text-5xl mb-4 emoji-icon">⚙️🎉</div>
-            <h3 class="text-2xl font-bold text-indigo-900 mb-2" id="rewardTitle">You Found It!</h3>
-            <p class="text-gray-600 mb-4" id="rewardMsg">The mechanism is open:</p>
-            <div class="bg-gray-100 p-3 rounded-lg border-dashed border-2 border-amber-400 mb-4"><span class="text-2xl font-bold tracking-wider text-indigo-900" id="rewardCode">CODE</span></div>
-            <p class="text-xs text-gray-400">Enter this code at checkout.</p>
-        </div>
-    </div>
-
-    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" id="backToTop" class="fixed bottom-6 right-6 bg-amber-400 text-indigo-900 w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-amber-300 transition duration-300 transform translate-y-20 opacity-0 z-50"><i class="fas fa-arrow-up"></i></button>
-
-    <script src="https://www.paypal.com/sdk/js?client-id=AR1JFEvjsUMt_DyqzDOZhhqtgmTC8BOsTYHVxZLFRMkULFDHl3xtpEEKsYFFsmYFhIPQXC9DaEZjg2Id&currency=USD&locale=en_US"></script>
+    <!-- Back to Top / Secret Trigger -->
+    <button id="backToTop" class="fixed bottom-10 left-10 z-[50] w-14 h-14 bg-white rounded-2xl shadow-xl flex items-center justify-center text-gray-400 hover:text-amber-600 hover:scale-110 transition-all opacity-0 translate-y-20">
+        <i class="fas fa-arrow-up" id="hiddenJoyTrigger"></i>
+    </button>
 
     <script>
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -458,7 +480,7 @@
         function successFeedback() { const icon = gearIcon; icon.className = 'fas fa-check gear-core'; setTimeout(() => { icon.className = 'fas fa-lock gear-core'; }, 500); }
         function failFeedback() { container.classList.add('jammed'); setTimeout(() => { container.classList.remove('jammed'); resetLock(); }, 1000); }
         function resetLock() { currentStage = 0; lights.forEach(l => l.classList.remove('active')); checkProximity(); }
-        function finalUnlock() { isUnlocked = true; sfx.unlock(); container.classList.remove('resonating'); container.classList.add('unlocked'); gearIcon.className = 'fas fa-lock-open gear-core'; if(!document.body.classList.contains('hacker-mode')) setTimeout(() => showReward("Mechanism Unlocked!", "You have aligned the gears of fate.", "R0VBUk1BU1RFUg=="), 800); }
+        function finalUnlock() { isUnlocked = true; sfx.unlock(); container.classList.remove('resonating'); container.classList.add('unlocked'); gearIcon.className = 'fas fa-lock-open gear-core'; if(!document.body.classList.contains('hacker-mode')) setTimeout(() => showReward("Mechanism Unlocked!", "You have aligned the gears of fate.", "R0VBUk1BU1RFUg== text here would be GEARMASTER in base64"), 800); }
         function showReward(title, msg, codeB64) { document.getElementById('rewardTitle').innerText = title; document.getElementById('rewardMsg').innerText = msg; document.getElementById('rewardCode').innerText = atob(codeB64); document.getElementById('rewardModal').classList.remove('hidden'); }
 
         const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
@@ -482,7 +504,7 @@
         function confirmHackerMode() { const v = document.getElementById('hackerNameInput').value.trim(); currentUser = v ? v.toUpperCase() : "UNKNOWN"; document.getElementById('nameModal').classList.add('hidden'); activateHackerMode(currentUser); }
         function activateHackerMode(name) { sfx.hacker(); document.body.classList.add('hacker-mode'); document.getElementById('brandLogo').innerText = `${name} // SYSTEM`; showToast(`Welcome, ${name}. System Override Active.`); }
 
-        // --- 🛒 Cart ---
+        // --- 🛒 Cart Logic ---
         let cart = []; let appliedDiscount = 0; const BASE_SHIPPING_COST = 9.99;
         window.addEventListener('DOMContentLoaded', () => { const s = localStorage.getItem('puzzlerCart'); if (s) { cart = JSON.parse(s); updateCartBadge(); } });
         function addToCart(id, name, price, img) { const i = cart.find(x => x.id === id); if (i) i.quantity++; else cart.push({ id, name, price, img, quantity: 1 }); saveCart(); updateCartBadge(); toggleCart(true); }
